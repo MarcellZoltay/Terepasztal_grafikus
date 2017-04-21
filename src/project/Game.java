@@ -12,7 +12,7 @@ public class Game implements State {
 
     public Game() {
         map = new Model();
-        numberOfTrains = 0;
+        numberOfTrains = 5;
         waitingTime = 1;
     }
     
