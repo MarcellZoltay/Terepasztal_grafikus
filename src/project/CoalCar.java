@@ -69,6 +69,9 @@ public class CoalCar extends Train {
         prevNode.removeTrain(this);
         next.addTrain(this);
 
+        x=next.getX();
+        y=next.getY();
+
         if(nextCar != null)
             return nextCar.move();
 

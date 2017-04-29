@@ -5,7 +5,7 @@ import java.util.*;
 /**
  * A Car osztály, Vagon megvalósítása.
  */
-public class Car extends Train {
+public class Car extends Train{
 
     //******************************//
     //         Tagvaltozok          //
@@ -84,6 +84,9 @@ public class Car extends Train {
         Node next = onNode.getNextNode(this);
         prevNode.removeTrain(this);
         next.addTrain(this);
+
+        x=next.getX();
+        y=next.getY();
 
         if (nextCar != null && nextCar.move().equals(Status.DELETE_TRAIN)) {
             if (color.isEmpty()) return Status.DELETE_TRAIN;
