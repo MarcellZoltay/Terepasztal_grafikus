@@ -1,11 +1,6 @@
 package project;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 /** Attributes are stored as a map hash, in order to be able to reference them by the user
  *  The final product wont have it like that, its just the purpose of the prototype
@@ -15,11 +10,6 @@ public class Model {
     //******************************//
     //         Tagvaltozok          //
     //******************************//
-    /**
-     * 
-     */
-    private View view;
-
     /**
      * A mozdonyokat tároló Map
      */
@@ -69,7 +59,6 @@ public class Model {
      * Inicializálja a tagváltozókat
      */
     public Model() {
-        //view = new View();
         engines = new TreeMap<>();
         cars = new TreeMap<>();
         coalCars = new TreeMap<>();
@@ -374,7 +363,7 @@ public class Model {
                         for (int i = 0; i < nexts.length; i++) {
                             next[i] = getNode(nexts[i]);
                             if (next[i] == null) throw new Exception("there is no node with the name " + nexts[i] + " to set previous");
-                            if (!setPrev(nexts[i], node)) throw new Exception("previous node cannot be set for " + nexts[i]);
+                            //if (!setPrev(nexts[i], node)) throw new Exception("previous node cannot be set for " + nexts[i]);
                             if (!setNext(name, next[i])) throw new Exception("next node cannot be set for " + name);
                         }
                     }
@@ -385,14 +374,22 @@ public class Model {
                         for (int i = 0; i < prevs.length; i++) {
                             prev[i] = getNode(prevs[i]);
                             if (prev[i] == null) throw new Exception("there is no train with the name " + prevs[i] + " to set previous");
-                            if (!setNext(prevs[i], node)) throw new Exception("next node cannot be set for " + prevs[i]);
+                            //if (!setNext(prevs[i], node)) throw new Exception("next node cannot be set for " + prevs[i]);
                             if (!setPrev(name, prev[i])) throw new Exception("previous node cannot be set for " + name);
                         }
                     }
                     if (tunnelEntrances.size() == 2) {
-                        tunnelEntrances.forEach((String key, TunnelEntrance te) -> {
-                            te.changeOutput();
-                        });
+                        //tunnelEntrances.forEach((String key, TunnelEntrance te) -> {
+                        //    te.changeOutput();
+                        //});
+                        //ArrayList<TunnelEntrance> tunnelEntrance_array = new ArrayList<>();
+//
+                        //String keys[] = tunnelEntrances.keySet().toArray(new String[0]);
+//
+                        //for (int i = 0; i < keys.length; i++ )
+                        //    tunnelEntrance_array.add(tunnelEntrances.get(keys[i]));
+//
+                        //tunnelEntrance_array.get(0).changeOutput();
                     }
                 }
                 if (!remove.isEmpty()) {                        //Checks if user wants to remove a TunnelEntrance
@@ -469,7 +466,7 @@ public class Model {
                         Status s = moveEngines();
                         if (s == Status.CRASHED) return s;                                                  // Checks if the trains had crashed on the map
                         else if (s == Status.GAME_WON) return s;
-                    }      
+                    }
                 break;
             case "ls":
                 if (type == null) throw new Exception("missing type parameter");
@@ -534,6 +531,7 @@ public class Model {
                     System.out.println(nodeName);
                     System.out.println("\tcoordinates: " + node.getX() + ", " + node.getY());
                     System.out.println("\tnextNode: " + getNodeName(node.getNext()));
+                    System.out.println("\tnext2Node: " + getNodeName(node.getSecond()));
                     System.out.println("\tprevNode: " + getNodeName(node.getPrev()));
                     System.out.print("\ttrains:");
                     for (Train t : node.getTrains()) {
@@ -580,6 +578,35 @@ public class Model {
         return Status.CONTINUE;
     }
 
+    public void decideActions(int x1, int y1, int x2, int y2) {
+
+        boolean torles = false;
+
+        ArrayList<Switch> switches = getSwitches();
+        for(Switch s: switches){
+            if( (x1>(s.getX()-10) && x1<(s.getX()+10)) && (y1>(s.getY()-10) && y1<(s.getY()+10)))
+                s.changeOutput();
+        }
+
+        ArrayList<TunnelEntrance> tunnelEntrances = getTunnelEntrances();
+        TunnelEntrance torlendo = null;
+        // Törlés
+        for(TunnelEntrance t: tunnelEntrances){
+            if( (x1>(t.getX()-10) && x1<(t.getX()+10)) && (y1>(t.getY()-10) && y1<(t.getY()+10)))
+                torlendo = t;
+        }
+        if(torlendo!=null) {
+            removeTunnelEntrance(torlendo);
+            torles = true;
+        }
+
+        // Hozzáadás
+        if(!torles && tunnelEntrances.size()<2) {
+
+        }
+
+    }
+
     /**
      * @param x1 
      * @param y1 
@@ -594,7 +621,7 @@ public class Model {
      * Törli a paraméterül kapott alagút bejáratot a tárolójából.
      * @param tE A törlendő alagút bejárat
      */
-    private void removeTunnelEntrance(TunnelEntrance tE) throws Exception {
+    private void removeTunnelEntrance(TunnelEntrance tE) {
         if (tunnelEntrances.size() == 2) {
             try {
                 ((TunnelEntrance)tE.getNext()).getSecond();
@@ -653,6 +680,98 @@ public class Model {
      */
     private boolean isMapEmpty() {
         return engines.isEmpty();
+    }
+
+
+    //******************************//
+    //           Getterek           //
+    //******************************//
+    public ArrayList<Rail> getRails() {
+        ArrayList<Rail> rail_array = new ArrayList<>();
+
+        String keys[] = rails.keySet().toArray(new String[0]);
+
+        for (int i = 0; i < keys.length; i++ )
+            rail_array.add(rails.get(keys[i]));
+
+        return rail_array;
+    }
+
+    public ArrayList<Cross> getCrosses() {
+        ArrayList<Cross> cross_array = new ArrayList<>();
+
+        String keys[] = crosses.keySet().toArray(new String[0]);
+
+        for (int i = 0; i < keys.length; i++ )
+            cross_array.add(crosses.get(keys[i]));
+
+        return cross_array;
+    }
+
+    public ArrayList<Switch> getSwitches() {
+        ArrayList<Switch> switch_array = new ArrayList<>();
+
+        String keys[] = switches.keySet().toArray(new String[0]);
+
+        for (int i = 0; i < keys.length; i++ )
+            switch_array.add(switches.get(keys[i]));
+
+        return switch_array;
+    }
+
+    public ArrayList<Station> getStations() {
+        ArrayList<Station> station_array = new ArrayList<>();
+
+        String keys[] = stations.keySet().toArray(new String[0]);
+
+        for (int i = 0; i < keys.length; i++ )
+            station_array.add(stations.get(keys[i]));
+
+        return station_array;
+    }
+
+    public ArrayList<TunnelEntrance> getTunnelEntrances() {
+        ArrayList<TunnelEntrance> tunnelEntrance_array = new ArrayList<>();
+
+        String keys[] = tunnelEntrances.keySet().toArray(new String[0]);
+
+        for (int i = 0; i < keys.length; i++ )
+            tunnelEntrance_array.add(tunnelEntrances.get(keys[i]));
+
+        return tunnelEntrance_array;
+    }
+
+    public ArrayList<Engine> getEngines() {
+        ArrayList<Engine> engine_array = new ArrayList<>();
+
+        String keys[] = engines.keySet().toArray(new String[0]);
+
+        for (int i = 0; i < keys.length; i++ )
+            engine_array.add(engines.get(keys[i]));
+
+        return engine_array;
+    }
+
+    public ArrayList<Car> getCars() {
+        ArrayList<Car> car_array = new ArrayList<>();
+
+        String keys[] = cars.keySet().toArray(new String[0]);
+
+        for (int i = 0; i < keys.length; i++ )
+            car_array.add(cars.get(keys[i]));
+
+        return car_array;
+    }
+
+    public ArrayList<CoalCar> getCoalCars() {
+        ArrayList<CoalCar> coalCar_array = new ArrayList<>();
+
+        String keys[] = coalCars.keySet().toArray(new String[0]);
+
+        for (int i = 0; i < keys.length; i++ )
+            coalCar_array.add(coalCars.get(keys[i]));
+
+        return coalCar_array;
     }
 
 }
