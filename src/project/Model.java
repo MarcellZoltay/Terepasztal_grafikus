@@ -319,9 +319,21 @@ public class Model {
 
         Engine engine=new Engine(k.getX(),k.getY(),one.getX(),one.getY(),k);
         engine.setPrevNode(s1);
-        Car cc=new Car(k.getX()+5,k.getY()+5,xk-2,yk-2,k,Color.BLUE);
-        cc.setPrevNode(s1);
+        Car cc=new Car(s1.getX()+5,s1.getY()+5,xk-2,yk-2,s1,Color.BLUE);
+        cc.setPrevNode(one);
         engine.setNextCar(cc);
+
+        Engine engine2=new Engine(c7.getX(),c7.getY(),one.getX(),one.getY(),c7);
+        engine2.setPrevNode(c01);
+        Car cc2=new Car(c01.getX()+5,c01.getY()+5,xk-2,yk-2,c01,Color.RED);
+        cc2.setPrevNode(c3);
+        engine2.setNextCar(cc2);
+
+        Engine engine3=new Engine(v15.getX(),v15.getY(),one.getX(),one.getY(),v15);
+        engine3.setPrevNode(d415);
+        Car cc3=new Car(d415.getX()+5,d415.getY()+5,xk-2,yk-2,d415,Color.GREEN);
+        cc3.setPrevNode(v4);
+        engine3.setNextCar(cc3);
 
         v10.setPrev(n);
         v11.setPrev(o);
@@ -336,6 +348,10 @@ public class Model {
 
         engines.put("engine",engine);
         cars.put("cc",cc);
+        engines.put("engine2",engine2);
+        cars.put("cc2",cc2);
+        engines.put("engine3",engine3);
+        cars.put("cc3",cc3);
         stations.put("s1",s1);
         stations.put("s2",s2);
         stations.put("s3",s3);
