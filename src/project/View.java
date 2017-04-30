@@ -361,18 +361,18 @@ public class View extends JFrame {
 
                 // Aktív kimenet jelzése
                 g.setColor(Color.GREEN);
-                g.fillOval(s.getNext().getX(), s.getNext().getY(), 10, 10);
+                g.fillOval((s.getNext().getX()+s.getX())/2, (s.getNext().getY()+s.getY())/2, 10, 10);
                 g.setColor(Color.BLACK);
-                g.drawOval(s.getNext().getX(), s.getNext().getY(), 10, 10);
+                g.drawOval((s.getNext().getX()+s.getX())/2, (s.getNext().getY()+s.getY())/2, 10, 10);
             }
             if(s.getSecond()!=null) {
                 g.drawLine(s.getX(), s.getY(), s.getSecond().getX(), s.getSecond().getY());
 
                 // Passzív kimenet jelzése
                 g.setColor(Color.RED);
-                g.fillOval(s.getSecond().getX(), s.getSecond().getY(), 10, 10);
+                g.fillOval((s.getSecond().getX()+s.getX())/2, (s.getSecond().getY()+s.getY())/2, 10, 10);
                 g.setColor(Color.BLACK);
-                g.drawOval(s.getSecond().getX(), s.getSecond().getY(), 10, 10);
+                g.drawOval((s.getSecond().getX()+s.getX())/2, (s.getSecond().getY()+s.getY())/2, 10, 10);
             }
 
             //if(s.getPrev()!=null)
@@ -456,7 +456,7 @@ public class View extends JFrame {
         public void mouseReleased(MouseEvent e) {
             x2 = e.getX();
             y2 = e.getY();
-            state.mouseEventHandler(x1, y1+20, x2, y2);
+            state.mouseEventHandler(x1, y1+30, x2, y2);
         }
 
         @Override

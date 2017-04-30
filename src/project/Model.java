@@ -128,10 +128,10 @@ public class Model {
         c01.setPrev(c5);
         c01.setNext2(c3);
         c01.setPrev2(c7);
-        c02.setNext(c8);
+        c02.setNext(c6);
         c02.setPrev(c2);
-        c02.setNext2(c2);
-        c02.setPrev2(c6);
+        c02.setNext2(c4);
+        c02.setPrev2(c8);
         c1.setPrev2(c8);
         c1.setNext2(c2);
         c2.setNext2(c3);
@@ -224,53 +224,53 @@ public class Model {
 
         Rail a110=new Rail((v1.getX()+v10.getX())/2,(v1.getY()+v10.getY())/2, v1, v10);
         v1.setNext(a110);
-        v10.setPrev(a110);
+        v10.setNext(a110);
         Rail a117=new Rail((v1.getX()+v17.getX())/2,(v1.getY()+v17.getY())/2, v1, v17);
         v1.setSecond(a117);
-        v17.setPrev(a117);
+        v17.setNext(a117);
         Rail b217=new Rail((v2.getX()+v17.getX())/2,(v2.getY()+v17.getY())/2, v2, v17);
         v2.setNext(b217);
-        v17.setPrev(b217);
+        v17.setSecond(b217);
         Rail b216=new Rail((v2.getX()+v16.getX())/2,(v2.getY()+v16.getY())/2, v2, v16);
         v2.setSecond(b216);
-        v16.setPrev(b216);
+        v16.setNext(b216);
         Rail c316=new Rail((v3.getX()+v16.getX())/2,(v3.getY()+v16.getY())/2, v3, v16);
         v3.setNext(c316);
-        v16.setPrev(c316);
+        v16.setSecond(c316);
         Rail c315=new Rail((v3.getX()+v15.getX())/2,(v3.getY()+v15.getY())/2, v3, v15);
         v3.setSecond(c315);
-        v15.setPrev(c315);
+        v15.setNext(c315);
         Rail d415=new Rail((v4.getX()+v15.getX())/2,(v4.getY()+v15.getY())/2, v4, v15);
         v4.setNext(d415);
-        v15.setPrev(d415);
+        v15.setSecond(d415);
         Rail d414=new Rail((v4.getX()+v14.getX())/2,(v4.getY()+v14.getY())/2, v4, v14);
         v4.setSecond(d414);
-        v14.setPrev(d414);
+        v14.setNext(d414);
 //
         Rail e514=new Rail((v5.getX()+v14.getX())/2,(v5.getY()+v14.getY())/2, v5, v14);
         v5.setNext(e514);
-        v14.setPrev(e514);
+        v14.setSecond(e514);
         Rail e513=new Rail((v5.getX()+v13.getX())/2,(v5.getY()+v13.getY())/2, v5, v13);
         v5.setSecond(e513);
-        v13.setPrev(e513);
+        v13.setNext(e513);
         Rail f613=new Rail((v6.getX()+v13.getX())/2,(v6.getY()+v13.getY())/2, v6, v13);
         v6.setNext(f613);
-        v13.setPrev(f613);
+        v13.setSecond(f613);
         Rail f612=new Rail((v6.getX()+v12.getX())/2,(v6.getY()+v12.getY())/2, v6, v12);
         v6.setSecond(f612);
-        v12.setPrev(f612);
+        v12.setNext(f612);
         Rail g712=new Rail((v7.getX()+v12.getX())/2,(v7.getY()+v12.getY())/2, v7, v12);
         v7.setNext(g712);
-        v12.setPrev(g712);
+        v12.setSecond(g712);
         Rail g711=new Rail((v7.getX()+v11.getX())/2,(v7.getY()+v11.getY())/2, v7, v11);
         v7.setSecond(g711);
-        v11.setPrev(g711);
+        v11.setNext(g711);
         Rail h811=new Rail((v8.getX()+v11.getX())/2,(v8.getY()+v11.getY())/2, v8, v11);
         v8.setNext(h811);
-        v11.setPrev(h811);
+        v11.setSecond(h811);
         Rail h810=new Rail((v8.getX()+v10.getX())/2,(v8.getY()+v10.getY())/2, v8, v10);
         v8.setSecond(h810);
-        v10.setPrev(h810);
+        v10.setSecond(h810);
 
 
         Cross one=new Cross(xk-500,yk,null,null,null,null);
@@ -318,14 +318,24 @@ public class Model {
         q.setPrev(s4);
 
         Engine engine=new Engine(k.getX(),k.getY(),one.getX(),one.getY(),k);
-        engine.setPrevNode(v17);
-        CoalCar cc=new CoalCar(k.getX()+5,k.getY()+5,xk-2,yk-2,k);
-        cc.setPrevNode(v17);
+        engine.setPrevNode(s1);
+        Car cc=new Car(k.getX()+5,k.getY()+5,xk-2,yk-2,k,Color.BLUE);
+        cc.setPrevNode(s1);
         engine.setNextCar(cc);
+
+        v10.setPrev(n);
+        v11.setPrev(o);
+        v12.setPrev(p);
+        v13.setPrev(q);
+        v14.setPrev(m);
+        v15.setPrev(j);
+        v16.setPrev(l);
+        v17.setPrev(k);
+
 
 
         engines.put("engine",engine);
-        coalCars.put("cc",cc);
+        cars.put("cc",cc);
         stations.put("s1",s1);
         stations.put("s2",s2);
         stations.put("s3",s3);
@@ -862,7 +872,7 @@ public class Model {
 
         ArrayList<Switch> switches = getSwitches();
         for(Switch s: switches){
-            if( (x1>(s.getX()-10) && x1<(s.getX()+10)) && (y1>(s.getY()-10) && y1<(s.getY()+10)))
+            if( (x1>(s.getX()-20) && x1<(s.getX()+20)) && (y1>(s.getY()-20) && y1<(s.getY()+20)))
                 s.changeOutput();
         }
 
