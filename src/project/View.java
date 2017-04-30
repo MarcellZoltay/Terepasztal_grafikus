@@ -1,5 +1,6 @@
 package project;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Color;
@@ -7,6 +8,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -33,8 +37,8 @@ public class View extends JFrame {
      */
     public View() {
         super("Sheldon Terepasztal");
-        setMinimumSize(new Dimension(1024, 680));
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setMinimumSize(new Dimension(1499, 1013));
+        //setExtendedState(JFrame.MAXIMIZED_BOTH);
         //setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -78,9 +82,31 @@ public class View extends JFrame {
 
     }
     private void drawMenu(){
-
+        setMinimumSize(new Dimension(1024,680));
+        setMinimumSize(new Dimension(1024,680));
+        setPreferredSize(new Dimension(1024,680));
+       // setExtendedState(JFrame.WIDTH);
         Graphics g = getGraphics();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        JButton game=new JButton("New Game");
+        //game.setBounds(500,500,10,10);
+        game.setEnabled(true);
+        //add(game);
+        setLayout(new BorderLayout());
+        BufferedImage image;
+        try {
+            image = ImageIO.read(new File("kep.jpg"));
+            g.drawImage(image,0,0,null);
+//        JPanel pane = new JPanel() {
+//            @Override
+//            protected void paintComponent(Graphics g) {
+//                super.paintComponent(g);
+//                g.drawImage(image, 0, 0, null);
+//            }};
+        //setContentPane(panel);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         String[] items = { "New game", "Exit" };
         g.setColor(Color.BLACK);
         g.drawRect(((int)screenSize.getWidth()/2)-100, ((int)screenSize.getHeight()/2)-25, 200, 50);
@@ -335,18 +361,18 @@ public class View extends JFrame {
 
                 // Aktív kimenet jelzése
                 g.setColor(Color.GREEN);
-                g.fillOval(s.getNext().getX(), s.getNext().getY(), 10, 10);
+                g.fillOval((s.getNext().getX()+s.getX())/2, (s.getNext().getY()+s.getY())/2, 10, 10);
                 g.setColor(Color.BLACK);
-                g.drawOval(s.getNext().getX(), s.getNext().getY(), 10, 10);
+                g.drawOval((s.getNext().getX()+s.getX())/2, (s.getNext().getY()+s.getY())/2, 10, 10);
             }
             if(s.getSecond()!=null) {
                 g.drawLine(s.getX(), s.getY(), s.getSecond().getX(), s.getSecond().getY());
 
                 // Passzív kimenet jelzése
                 g.setColor(Color.RED);
-                g.fillOval(s.getSecond().getX(), s.getSecond().getY(), 10, 10);
+                g.fillOval((s.getSecond().getX()+s.getX())/2, (s.getSecond().getY()+s.getY())/2, 10, 10);
                 g.setColor(Color.BLACK);
-                g.drawOval(s.getSecond().getX(), s.getSecond().getY(), 10, 10);
+                g.drawOval((s.getSecond().getX()+s.getX())/2, (s.getSecond().getY()+s.getY())/2, 10, 10);
             }
 
             //if(s.getPrev()!=null)
@@ -361,13 +387,13 @@ public class View extends JFrame {
 
         }
 
-        //ArrayList<Cross> crosses = map.getCrosses();
-        //for(Cross c: crosses){
-        //    if(c.getNext()!=null)
-        //        g.getGraphics().drawLine(c.getX(), c.getY(), c.getNext().getX(), c.getNext().getY());
-        //    if(c.getNext2()!=null)
-        //        g.getGraphics().drawLine(c.getX(), c.getY(), c.getNext2().getX(), c.getNext2().getY());
-        //}
+        ArrayList<Cross> crosses = map.getCrosses();
+        for(Cross c: crosses){
+            if(c.getNext()!=null)
+                g.drawLine(c.getX(), c.getY(), c.getNext().getX(), c.getNext().getY());
+            if(c.getNext2()!=null)
+                g.drawLine(c.getX(), c.getY(), c.getNext2().getX(), c.getNext2().getY());
+        }
 //
         //for(TunnelEntranceGraphics te: tunnelEntranceGraphics){
         //    if(te.getTunnelEntrance().getSecond()!=null)
@@ -430,7 +456,7 @@ public class View extends JFrame {
         public void mouseReleased(MouseEvent e) {
             x2 = e.getX();
             y2 = e.getY();
-            state.mouseEventHandler(x1, y1+20, x2, y2);
+            state.mouseEventHandler(x1, y1+30, x2, y2);
         }
 
         @Override
