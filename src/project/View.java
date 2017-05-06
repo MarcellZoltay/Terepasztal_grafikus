@@ -1,6 +1,5 @@
 package project;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Color;
@@ -8,10 +7,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
+import static jdk.nashorn.internal.objects.NativeArray.map;
+import static project.Status.END;
+import static project.Status.GAME;
+import static project.Status.MENU;
+import static project.Status.PAUSE;
 
 /**
  *
@@ -19,16 +20,8 @@ import java.util.*;
  */
 public class View extends JFrame {
 
-    private Model map;
-    private State state;
-    private Status status;
-    private ArrayList<RailGraphics> railGraphics = new ArrayList<>();
-    private ArrayList<StationGraphics> stationGraphics = new ArrayList<>();
-    private ArrayList<TunnelEntranceGraphics> tunnelEntranceGraphics = new ArrayList<>();
-    private ArrayList<EngineGraphics> engineGraphics = new ArrayList<>();
-    private ArrayList<CarGraphics> carGraphics = new ArrayList<>();
-    private ArrayList<CoalCarGraphics> coalCarGraphics = new ArrayList<>();
-    private JPanel panel = new JPanel(new BorderLayout());
+    private ArrayList<Drawable> drawables;
+    private JPanel panel;
 
     private int x1, y1, x2, y2;
 
@@ -83,60 +76,14 @@ public class View extends JFrame {
     }
     private void drawMenu(){
         setMinimumSize(new Dimension(1024,680));
-        setMinimumSize(new Dimension(1024,680));
         setPreferredSize(new Dimension(1024,680));
-       // setExtendedState(JFrame.WIDTH);
-        Graphics g = getGraphics();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        JButton game=new JButton("New Game");
-        //game.setBounds(500,500,10,10);
-        game.setEnabled(true);
-        //add(game);
-        setLayout(new BorderLayout());
-        BufferedImage image;
-        try {
-            image = ImageIO.read(new File("kep.jpg"));
-            g.drawImage(image,0,0,null);
-//        JPanel pane = new JPanel() {
-//            @Override
-//            protected void paintComponent(Graphics g) {
-//                super.paintComponent(g);
-//                g.drawImage(image, 0, 0, null);
-//            }};
-        //setContentPane(panel);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String[] items = { "New game", "Exit" };
-        g.setColor(Color.BLACK);
-        g.drawRect(((int)screenSize.getWidth()/2)-100, ((int)screenSize.getHeight()/2)-25, 200, 50);
-        g.drawString(items[0], ((int)screenSize.getWidth()/2)-100+(items[0].length()/2), ((int)screenSize.getHeight()/2)-25);
-        g.drawRect(((int)screenSize.getWidth()/2)-100, ((int)screenSize.getHeight()/2)-25+100, 200, 50);
-        g.drawString(items[1], ((int)screenSize.getWidth()/2)-100+(items[1].length()/2), ((int)screenSize.getHeight()/2)-25+100);
 
     }
     private void drawEndGameMenu(Status output){
 
-        Graphics g = getGraphics();
-        String[] items = { "You won", "You lost" };
-        g.setColor(Color.BLACK);
-        if(output == Status.GAME_WON)
-            g.drawString(items[0], (700+100-(items[0].length()/2)), 325);
-        else if(output == Status.CRASHED)
-            g.drawString(items[1], (700+100-(items[1].length()/2)), 325);
-
-        drawMenu();
-
     }
     private void drawPause(){
 
-        Graphics g = getGraphics();
-        String[] items = { "Continue", "Exit" };
-        g.setColor(Color.BLACK);
-        g.drawRect(500, 500, 200, 50);
-        g.drawString(items[0], (500+100-(items[0].length()/2*10)), 525);
-        g.drawRect(500, 600, 200, 50);
-        g.drawString(items[1], (500+100-(items[1].length()/2*10)), 625);
 
     }
 

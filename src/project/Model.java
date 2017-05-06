@@ -1,6 +1,7 @@
 package project;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /** Attributes are stored as a map hash, in order to be able to reference them by the user
  *  The final product wont have it like that, its just the purpose of the prototype
@@ -98,11 +99,11 @@ public class Model {
                     if (s != Status.CRASHED) moved[i] = true;
                 }
         } while(!Arrays.equals(moved, movedLast));
-        
+
         toRemove.forEach((r) -> {
             removeTrain(r);
         });
-        
+
         for (boolean n : moved){
             if (n == false) return Status.CRASHED;
         }
