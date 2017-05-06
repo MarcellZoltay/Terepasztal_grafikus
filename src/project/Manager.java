@@ -10,10 +10,12 @@ import java.util.*;
 public class Manager {
 
     private Stack<State> states;
-    
+    private View view;
+
     public Manager() {
         states = new Stack<>();
-        Menu menu = new Menu();
+        view = new View();
+        Menu menu = new Menu(view);
         states.add(menu);
     }
 
@@ -21,37 +23,25 @@ public class Manager {
         while(true) {
             switch(states.peek().start()) {
                 case START_GAME: 
-                    states.push(new Game());
+                    states.push(new Game(view));
                     break;
                 case EXIT_GAME:
                     System.exit(0);
                 case CRASHED:
-                    states.push(new End(Status.CRASHED));
+                    states.push(new End(Status.CRASHED, view));
                     break;
                 case GAME_WON:
-                    states.push(new End(Status.GAME_WON));
+                    states.push(new End(Status.GAME_WON, view));
                 case CONTINUE:
                     states.pop();
+                    view.setStatus(Status.GAME);
+                    view.repaint();
                     break;
                 case PAUSE:
-                    states.push(new Pause());
+                    states.push(new Pause(view));
                     break;         
             }  
         }
-    }
-    
-    /**
-     * Don't really need it since util.Stack has its own function
-     */
-    private void addState(State s) {
-        
-    }
-
-    /**
-     * Don't really need it since util.Stack has its own function
-     */
-    private void removeState(State s) {
-        
     }
 
 }

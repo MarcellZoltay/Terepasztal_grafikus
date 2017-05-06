@@ -10,10 +10,17 @@ import java.util.*;
  */
 public class Game implements State {
 
-    public Game() {
+    private View view;
+
+    public Game(View view) {
         map = new Model();
         numberOfTrains = 5;
         waitingTime = 1;
+        this.view = view;
+        view.setState(this);
+        view.setStatus(Status.GAME);
+        view.setMap(map);
+        view.updateScreen();
     }
     
     private Model map;              // The model in which the elements are stored
@@ -60,12 +67,13 @@ public class Game implements State {
                     s = map.decideActions(command);
                     if (s == Status.CRASHED || s == Status.GAME_WON) return s;  
                 }
+                view.updateScreen();
             } 
             catch(Exception e) {
                 System.out.println("> " + e.getMessage());
                 e.printStackTrace();
             }
-        } 
+        }
     }
 
     /* Azért van itt külön függvény, mert a végleges programban, a start fog új vonatokat hozzáadni a Modellhez
@@ -74,6 +82,14 @@ public class Game implements State {
     @Override
     public Status start() {
         return read();
+    }
+
+    @Override
+    public void mouseEventHandler(int x1, int y1, int x2, int y2) {
+
+        map.decideActions(x1, y1, x2, y2);
+        view.updateScreen();
+
     }
 
 }

@@ -43,6 +43,8 @@ public class Engine extends Train {
         Node next = onNode.getNextNode(this);
         prevNode.removeTrain(this);
         next.addTrain(this);
+        x=next.getX();
+        y=next.getY();
         try {
             ((Station)next).setGetOff();
         }

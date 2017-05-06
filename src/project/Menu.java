@@ -9,7 +9,13 @@ import java.util.Scanner;
  */
 public class Menu implements State {
 
-    public Menu() {
+    private View view;
+
+    public Menu(View view) {
+        this.view = view;
+        view.setState(this);
+        view.setStatus(Status.MENU);
+        view.updateScreen();
     }
 
     @Override
@@ -25,6 +31,11 @@ public class Menu implements State {
         if (choice == 1) return Status.START_GAME;
         else if (choice == 2) return Status.EXIT_GAME;
         return null;
+    }
+
+    @Override
+    public void mouseEventHandler(int x1, int y1, int x2, int y2) {
+
     }
 
 }
