@@ -94,7 +94,7 @@ public class View extends JFrame {
         
         setPreferredSize(new Dimension(1500, 800));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocation(getWidth() / 2 + 750, getHeight() / 2 + 400);
+        //setLocation(getWidth() / 2 + 750, getHeight() / 2 + 400);
         setVisible(true);
         
         if (buttons != null) {
@@ -114,7 +114,6 @@ public class View extends JFrame {
             start.addMouseListener(new MyMouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    repaint();
                     state.setOutput(Status.START_GAME);
                 }
             });
@@ -129,7 +128,6 @@ public class View extends JFrame {
             end.addMouseListener(new MyMouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    repaint();
                     state.setOutput(Status.EXIT_GAME);
                 }
             });
@@ -197,9 +195,9 @@ public class View extends JFrame {
         }
 
         @Override
-        public void mousePressed(MouseEvent e) { repaint(); }
+        public void mousePressed(MouseEvent e) {}
 
         @Override
-        public void mouseReleased(MouseEvent e) { repaint(); }
+        public void mouseReleased(MouseEvent e) {}
     }
 }

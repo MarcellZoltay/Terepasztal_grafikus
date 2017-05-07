@@ -17,7 +17,10 @@ public class Pause implements State {
 
     @Override
     public Status start() {
-        return Status.CONTINUE;
+        String[] buttons = {"Continue Game", "Exit Game", "Game Paused"};
+        view.updatePanel(buttons, this);
+        while(output == null);
+        return output == Status.START_GAME ? Status.CONTINUE : output;
     }
 
     @Override

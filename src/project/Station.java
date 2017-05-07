@@ -84,8 +84,8 @@ public class Station extends Node {
      * Visszaadja az állomás színét
      * @return Az állomás színével
      */
-    public Color getColor() {
-        return color;
+    public String getColor() {
+        return color.getColor();
     }
 
     /**

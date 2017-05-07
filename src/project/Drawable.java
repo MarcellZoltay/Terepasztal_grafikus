@@ -13,7 +13,7 @@ public abstract class Drawable {
     public Drawable(String s) {
         BufferedImage img = null;
         try {
-            img = ImageIO.read(new File("res\\" + s + ".png"));       // Need to implement later
+            img = ImageIO.read(new File(System.getProperty("user.dir") + "\\res\\" + s + ".png"));       // Need to implement later
         } catch(IOException e) { }
         image = img;
     }

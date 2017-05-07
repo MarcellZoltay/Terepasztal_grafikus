@@ -2,6 +2,7 @@ package project;
 
 import java.awt.*;
 import java.awt.Color;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -20,8 +21,15 @@ public class RailGraphics extends Drawable {
     }
 
     public void draw(Graphics g){
-        g.setColor(Color.GRAY);
-        //g.drawLine(x1, y1, x2, y2);
+        AffineTransform at = new AffineTransform();
+        at.translate((double)rail.getX(), (double)rail.getY());
+        int vecX = rail.getPrev().getX() - rail.getNext().getX();
+        int vecY = rail.getPrev().getY() - rail.getNext().getY();
+        at.rotate(vecX, vecY);
+        at.translate(-image.getWidth()/2, -image.getWidth()/2);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(image, at, null);
+        
     }
 
     public Rail getRail() { return rail; }

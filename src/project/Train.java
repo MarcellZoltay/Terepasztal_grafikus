@@ -164,8 +164,8 @@ public abstract class Train extends MapItem {
      * Getter metódus.
      * @return Color A Train elem színének lekérdezése
      */
-    public Color getColor() {
-        return color;
+    public String getColor() {
+        return color.getColor();
     }
 
     /**
