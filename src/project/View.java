@@ -6,6 +6,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -23,6 +24,7 @@ public class View extends JFrame {
     private JPanel panel;
     private State state;
     private Model map;
+    private int x,y;
 
     /**
      * Default constructor
@@ -63,6 +65,20 @@ public class View extends JFrame {
     public void setMap(Model newMap) {
         panel.removeAll();
         map = newMap;
+        addMouseListener(new MouseAdapter() {
+            public void MousePressed(MouseEvent e) {
+                if (!drawables.isEmpty()) { 
+                    x = e.getX();
+                    y = e.getY();
+                }
+            }
+            
+            public void MouseReleased(MouseEvent e) {
+                if (!drawables.isEmpty()) {  
+                    map.decideActions(x, y, e.getX(), e.getY());
+                }
+            }
+        });
     }
     
     public void updateScreen(){
@@ -79,49 +95,53 @@ public class View extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
-        try {
-            setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File(System.getProperty("user.dir") + "\\res\\kep.jpg"))))); 
-        } catch (IOException e) { }
-        setLayout(new FlowLayout());
         
-        JButton start = new JButton(buttons[0]);
-        start.setFont(new Font("Verdana", Font.PLAIN, 42));
-        start.setOpaque(false);
-        start.setBorderPainted(false);
-        start.setFocusPainted(false);
-        start.setContentAreaFilled(false);
-        start.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        start.setForeground(java.awt.Color.CYAN);
-        start.addMouseListener(new MyMouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                state.setOutput(Status.START_GAME);
-            }
-        });
-        JButton end = new JButton(buttons[1]);
-        end.setFont(new Font("Verdana", Font.PLAIN, 42));
-        start.setOpaque(false);
-        end.setBorderPainted(false);
-        end.setFocusPainted(false);
-        end.setContentAreaFilled(false);
-        end.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        end.setForeground(java.awt.Color.CYAN);
-        end.addMouseListener(new MyMouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                state.setOutput(Status.EXIT_GAME);
-            }
-        });
-        JPanel options = new JPanel();
-        options.setLayout(new GridLayout(2,1));
-        options.add(start, BorderLayout.PAGE_END);
-        options.add(end, BorderLayout.PAGE_END);
-        options.setBackground(new java.awt.Color(0, 0, 0, 1));
-        panel.setLayout(new BorderLayout(100, 500));
-        //panel.setBackground(java.awt.Color.red);
-        panel.setBackground(new java.awt.Color(0, 0, 0, 1));
-        panel.add(options, BorderLayout.PAGE_START);
-        add(panel);
+        if (buttons != null) {
+            try {
+                setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File(System.getProperty("user.dir") + "\\res\\kep.jpg"))))); 
+            } catch (IOException e) { }
+            setLayout(new FlowLayout());
+
+            JButton start = new JButton(buttons[0]);
+            start.setFont(new Font("Verdana", Font.PLAIN, 42));
+            start.setOpaque(false);
+            start.setBorderPainted(false);
+            start.setFocusPainted(false);
+            start.setContentAreaFilled(false);
+            start.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            start.setForeground(java.awt.Color.CYAN);
+            start.addMouseListener(new MyMouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    state.setOutput(Status.START_GAME);
+                }
+            });
+            JButton end = new JButton(buttons[1]);
+            end.setFont(new Font("Verdana", Font.PLAIN, 42));
+            start.setOpaque(false);
+            end.setBorderPainted(false);
+            end.setFocusPainted(false);
+            end.setContentAreaFilled(false);
+            end.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            end.setForeground(java.awt.Color.CYAN);
+            end.addMouseListener(new MyMouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    state.setOutput(Status.EXIT_GAME);
+                }
+            });
+            JPanel options = new JPanel();
+            options.setLayout(new GridLayout(2,1));
+            options.add(start, BorderLayout.PAGE_END);
+            options.add(end, BorderLayout.PAGE_END);
+            options.setBackground(new java.awt.Color(0, 0, 0, 1));
+            panel.setLayout(new BorderLayout(100, 500));
+            //panel.setBackground(java.awt.Color.red);
+            panel.setBackground(new java.awt.Color(0, 0, 0, 1));
+            panel.add(options, BorderLayout.PAGE_START);
+            add(panel);
+        }
+        
         
         pack();
     }
