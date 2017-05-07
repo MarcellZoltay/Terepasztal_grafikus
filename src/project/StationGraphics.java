@@ -1,11 +1,7 @@
 package project;
 
 import java.awt.*;
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.awt.geom.AffineTransform;
 
 /**
  * Created by Zoltay Marcell on 2017. 04. 22..
@@ -21,11 +17,14 @@ public class StationGraphics extends Drawable{
 
     @Override
     public void draw(Graphics g){
-
-
-        g.fillRect(station.getX(), station.getY(), 20, 20);
-        g.setColor(Color.BLACK);
-        g.drawRect(station.getX(), station.getY(), 20, 20);
+        AffineTransform at = new AffineTransform();
+        at.translate((double)station.getX(), (double)station.getY());
+        int vecX = station.getPrev().getX() - station.getNext().getX();
+        int vecY = station.getPrev().getY() - station.getNext().getY();
+        at.rotate(vecX, vecY);
+        at.translate(-image.getWidth()/2, -image.getWidth()/2);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(image, at, null);
     }
 
     public Station getStation() { return station; }

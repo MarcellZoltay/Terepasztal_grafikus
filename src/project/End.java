@@ -8,25 +8,27 @@ import java.util.*;
  */
 public class End implements State {
 
-    private Status output;
+    private volatile Status output;
+    private Status ending;
     private View view;
 
     public End(Status e, View view) {
-        this.output = e;
+        this.ending = e;
         this.view = view;
     }
 
-    public Status getOutput() { return output; }
+    public Status getOutput() { return ending; }
 
     public End(Status e) {
-        this.output = e;
+        this.ending = e;
     }
 
     @Override
     public Status start() {
-        if (output == Status.GAME_WON) System.out.println("> Congrats! You won");
-        if (output == Status.CRASHED) System.out.println("> Trains crashed! You lost");
-        return Status.EXIT_GAME;
+        String[] buttons = {"New Game", "Exit Game", ending == Status.GAME_WON ? "Congrats! You won" : "You lost"};
+        view.updatePanel(buttons, this);
+        while(output == null);
+        return output;
     }
 
     @Override

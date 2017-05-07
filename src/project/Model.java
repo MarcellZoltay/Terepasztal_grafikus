@@ -109,8 +109,8 @@ public class Model {
     }
 
     private void Load(){
-        int xk=749;
-        int yk=507;
+        int xk=750;
+        int yk=400;
         //Crosskör és a közepe
         Cross c01=new Cross(xk,yk,          null,null,null,null);
         Cross c02=new Cross(xk,yk,          null,null,null,null);
