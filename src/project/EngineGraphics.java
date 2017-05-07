@@ -2,6 +2,7 @@ package project;
 
 import java.awt.*;
 import java.awt.Color;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,10 +22,14 @@ public class EngineGraphics extends Drawable{
 
     @Override
     public void draw(Graphics g){
-        g.setColor(Color.BLACK);
-        g.fillOval(engine.getX(), engine.getY(), 15, 15);
-        g.setColor(Color.BLACK);
-        g.drawOval(engine.getX(), engine.getY(), 15, 15);
+        AffineTransform at = new AffineTransform();
+        at.translate((double)engine.getX(), (double)engine.getY());
+        int vecX = engine.getOnNode().getX() - engine.getPrevNode().getX();
+        int vecY = engine.getOnNode().getY() - engine.getPrevNode().getY();
+        at.rotate(vecX, vecY);
+        at.translate(-image.getWidth()/2, -image.getWidth()/2);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(image, at, null);
     }
 
     public Engine getEngine() { return engine; }

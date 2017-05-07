@@ -2,6 +2,7 @@ package project;
 
 import java.awt.*;
 import java.awt.Color;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,10 +22,14 @@ public class CoalCarGraphics extends Drawable{
 
     @Override
     public void draw(Graphics g){
-        g.setColor(Color.GRAY);
-        g.fillOval(coalCar.getX(), coalCar.getY(), 15,15);
-        g.setColor(Color.BLACK);
-        g.drawOval(coalCar.getX(), coalCar.getY(), 15,15);
+        AffineTransform at = new AffineTransform();
+        at.translate((double)coalCar.getX(), (double)coalCar.getY());
+        int vecX = coalCar.getOnNode().getX() - coalCar.getPrevNode().getX();
+        int vecY = coalCar.getOnNode().getY() - coalCar.getPrevNode().getY();
+        at.rotate(vecX, vecY);
+        at.translate(-image.getWidth()/2, -image.getWidth()/2);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.drawImage(image, at, null);
     }
 
     public CoalCar getCoalCar() { return coalCar; }

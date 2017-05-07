@@ -22,9 +22,11 @@ public class StationGraphics extends Drawable{
         int vecX = station.getPrev().getX() - station.getNext().getX();
         int vecY = station.getPrev().getY() - station.getNext().getY();
         at.rotate(vecX, vecY);
+        at.scale(0.5, 0.5);
         at.translate(-image.getWidth()/2, -image.getWidth()/2);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(image, at, null);
+        
     }
 
     public Station getStation() { return station; }
