@@ -2,15 +2,20 @@ package project;
 
 import java.awt.*;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 /**
  * Created by Zoltay Marcell on 2017. 04. 22..
  */
-public class RailGraphics {
+public class RailGraphics extends Drawable {
 
     private Rail rail;
 
     public RailGraphics(Rail r){
+        super("sin");
         rail = r;
     }
 

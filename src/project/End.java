@@ -14,9 +14,6 @@ public class End implements State {
     public End(Status e, View view) {
         this.output = e;
         this.view = view;
-        view.setState(this);
-        view.setStatus(Status.END);
-        view.updateScreen();
     }
 
     public Status getOutput() { return output; }
@@ -33,8 +30,8 @@ public class End implements State {
     }
 
     @Override
-    public void mouseEventHandler(int x1, int y1, int x2, int y2) {
-
+    public void setOutput(Status s) {
+        output = s;
     }
 
 }

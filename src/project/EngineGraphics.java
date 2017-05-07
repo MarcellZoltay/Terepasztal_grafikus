@@ -2,18 +2,24 @@ package project;
 
 import java.awt.*;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 /**
  * Created by Zoltay Marcell on 2017. 04. 21..
  */
-public class EngineGraphics{
+public class EngineGraphics extends Drawable{
 
     private Engine engine;
 
-    public EngineGraphics(Engine e){
-        engine = e;
+    public EngineGraphics(Engine eng){
+        super("ENGINE");
+        engine = eng;
     }
 
+    @Override
     public void draw(Graphics g){
         g.setColor(Color.BLACK);
         g.fillOval(engine.getX(), engine.getY(), 15, 15);

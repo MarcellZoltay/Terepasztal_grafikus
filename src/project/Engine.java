@@ -14,7 +14,7 @@ public class Engine extends Train {
      * Default constructor
      */
     public Engine() {
-        super(0,0,0,0,null, Color.ENGINE);
+        super(0,0,0,0,null, "ENGINE");
     }
 
     /**
@@ -24,7 +24,7 @@ public class Engine extends Train {
      * @param yE 
      */
     public Engine(int x, int y, int xE, int yE, Node onNode) {
-        super(x, y, xE, yE, onNode, Color.ENGINE);
+        super(x, y, xE, yE, onNode, "ENGINE");
     }
 
 

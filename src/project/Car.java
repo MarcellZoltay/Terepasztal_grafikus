@@ -34,7 +34,7 @@ public class Car extends Train{
      *@param color A Train elem színe, Mozdony/ures -Gray, Szenes vagon -###
      *@param nextCar A Train elemet követő Train elem a szerelvényben, utolsó elem esetén null.
      */
-    public Car(int x, int y,int xEnd,int yEnd, Node onNode, Color color, Train nextCar) {
+    public Car(int x, int y,int xEnd,int yEnd, Node onNode, String color, Train nextCar) {
         super(x, y, xEnd, yEnd, onNode, color, nextCar);
     }
     /**
@@ -46,7 +46,7 @@ public class Car extends Train{
      *@param onNode Az aktuális csomópont amin tartózkodik a Train.
      *@param color A Train elem színe, Mozdony/ures -Gray, Szenes vagon -###
      */
-    public Car(int x, int y,int xEnd,int yEnd, Node onNode, Color color) {
+    public Car(int x, int y,int xEnd,int yEnd, Node onNode, String color) {
         super(x, y, xEnd, yEnd, onNode, color);
     }
 
@@ -61,14 +61,14 @@ public class Car extends Train{
     public boolean getOffPassengers() {
         Train t = this;
         do {
-            if (t.getColor().equals(Color.COAL_CAR))
+            if (t.getColor().equals("COALCAR"))
                 t = ((CoalCar)t).getPrevTrain();
             else t = ((Car)t).getPrevTrain();
             if (!t.getColor().isEmpty()) return false;
-        } while(!t.getColor().equals(Color.ENGINE));
+        } while(!t.getColor().equals("ENGINE"));
         
         
-        color=color.opposit();
+        color.opposit();
         return true;
     }
     /**
@@ -76,7 +76,7 @@ public class Car extends Train{
      * üres vagon színe-->Gray
      */
     public void getOnPassengers() {
-        color=color.opposit();
+        color.opposit();
     }
 
     @Override

@@ -38,7 +38,7 @@ public class CoalCar extends Train {
      *@param nextCar A Train elemet követő Train elem a szerelvényben, utolsó elem esetén null.
      */
     public CoalCar(int x, int y,int xEnd, int yEnd, Node onNode, Train nextCar) {
-        super(x, y, xEnd, yEnd, onNode, Color.COAL_CAR, nextCar);
+        super(x, y, xEnd, yEnd, onNode, "COALCAR", nextCar);
     }
 
     /**
@@ -50,7 +50,7 @@ public class CoalCar extends Train {
      *@param onNode Az aktuális csomópont amin tartózkodik a Train.
      */
     public CoalCar(int x, int y,int xEnd, int yEnd, Node onNode) {
-        super(x, y, xEnd, yEnd, onNode, Color.COAL_CAR);
+        super(x, y, xEnd, yEnd, onNode, "COALCAR");
     }
 
 
