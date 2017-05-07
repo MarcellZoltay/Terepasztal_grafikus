@@ -2,6 +2,8 @@ package project;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -9,8 +11,6 @@ import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
@@ -28,17 +28,7 @@ public class View extends JFrame {
      * Default constructor
      */
     public View() {
-        super("Sheldon Terepasztal");
-        setMinimumSize(new Dimension(800, 600));
-        //setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //setResizable(false);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
-        //getContentPane().add(panel, BorderLayout.CENTER);
-        //getContentPane().addKeyListener(new MyKeyListener());
-
-        setVisible(true);
-        
+        super("Sheldon Tepepasztala");
         drawables = new ArrayList<>();
         panel = new JPanel();
     }
@@ -84,12 +74,24 @@ public class View extends JFrame {
         drawables.clear();
         state = newState;
         panel.removeAll();
+        
+        setMaximumSize(new Dimension(800, 600));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        try {
+            setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File(System.getProperty("user.dir") + "\\res\\kep.jpg"))))); 
+        } catch (IOException e) { }
+        setLayout(new FlowLayout());
+        
         JButton start = new JButton(buttons[0]);
-        start.setFont(new Font("Verdana", Font.BOLD, 24));
+        start.setFont(new Font("Verdana", Font.PLAIN, 42));
+        start.setOpaque(false);
         start.setBorderPainted(false);
         start.setFocusPainted(false);
         start.setContentAreaFilled(false);
-        start.setForeground(java.awt.Color.DARK_GRAY);
+        start.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        start.setForeground(java.awt.Color.CYAN);
         start.addMouseListener(new MyMouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -97,28 +99,29 @@ public class View extends JFrame {
             }
         });
         JButton end = new JButton(buttons[1]);
-        end.setFont(new Font("Verdana", Font.BOLD, 24));
+        end.setFont(new Font("Verdana", Font.PLAIN, 42));
+        start.setOpaque(false);
         end.setBorderPainted(false);
         end.setFocusPainted(false);
         end.setContentAreaFilled(false);
-        end.setForeground(java.awt.Color.DARK_GRAY);
+        end.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        end.setForeground(java.awt.Color.CYAN);
         end.addMouseListener(new MyMouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 state.setOutput(Status.EXIT_GAME);
             }
         });
-        JLabel bg = null;
-        try {
-            System.out.println(System.getProperty("user.dir"));
-            bg = new JLabel(new ImageIcon(ImageIO.read(new File(System.getProperty("user.dir") + "\\res\\kep.jpg"))));
-        } catch (IOException ex) {
-            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //panel.add(bg);
-        panel.add(start);
-        panel.add(end);
-        add(panel, BorderLayout.CENTER);
+        JPanel options = new JPanel();
+        options.setLayout(new GridLayout(2,1));
+        options.add(start, BorderLayout.PAGE_END);
+        options.add(end, BorderLayout.PAGE_END);
+        options.setBackground(new java.awt.Color(0, 0, 0, 1));
+        panel.setLayout(new BorderLayout(100, 500));
+        //panel.setBackground(java.awt.Color.red);
+        panel.setBackground(new java.awt.Color(0, 0, 0, 1));
+        panel.add(options, BorderLayout.PAGE_START);
+        add(panel);
         
         pack();
     }
@@ -158,12 +161,12 @@ public class View extends JFrame {
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            e.getComponent().setForeground(java.awt.Color.LIGHT_GRAY);
+            e.getComponent().setFont(new Font("Verdana", Font.BOLD, 42));
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
-            e.getComponent().setForeground(java.awt.Color.DARK_GRAY);
+            e.getComponent().setFont(new Font("Verdana", Font.PLAIN, 42));
         }
 
         @Override
