@@ -63,8 +63,7 @@ public class View extends JFrame {
     }
     
     public void setMap(Model newMap) {
-        //panel.removeAll();
-        revalidate();
+        panel.removeAll();
         repaint();
         map = newMap;
         addMouseListener(new MouseAdapter() {
@@ -93,16 +92,16 @@ public class View extends JFrame {
         state = newState;
         panel.removeAll();
         
-        setPreferredSize(new Dimension(800, 600));
+        setPreferredSize(new Dimension(1500, 800));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocation(getWidth() / 2 + 750, getHeight() / 2 + 400);
         setVisible(true);
         
         if (buttons != null) {
-            try {
+            /*try {
                 setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File(System.getProperty("user.dir") + "\\res\\kep.jpg"))))); 
             } catch (IOException e) { }
-            setLayout(new FlowLayout());
+            setLayout(new FlowLayout());*/
 
             JButton start = new JButton(buttons[0]);
             start.setFont(new Font("Verdana", Font.PLAIN, 42));
@@ -115,7 +114,7 @@ public class View extends JFrame {
             start.addMouseListener(new MyMouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    
+                    repaint();
                     state.setOutput(Status.START_GAME);
                 }
             });
@@ -130,6 +129,7 @@ public class View extends JFrame {
             end.addMouseListener(new MyMouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    repaint();
                     state.setOutput(Status.EXIT_GAME);
                 }
             });
@@ -147,7 +147,6 @@ public class View extends JFrame {
             panel.add(options, BorderLayout.PAGE_START);
             add(panel);
         }
-        
         
         pack();
     }
@@ -198,9 +197,9 @@ public class View extends JFrame {
         }
 
         @Override
-        public void mousePressed(MouseEvent e) {}
+        public void mousePressed(MouseEvent e) { repaint(); }
 
         @Override
-        public void mouseReleased(MouseEvent e) {}
+        public void mouseReleased(MouseEvent e) { repaint(); }
     }
 }
