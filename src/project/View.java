@@ -63,7 +63,9 @@ public class View extends JFrame {
     }
     
     public void setMap(Model newMap) {
-        panel.removeAll();
+        //panel.removeAll();
+        revalidate();
+        repaint();
         map = newMap;
         addMouseListener(new MouseAdapter() {
             public void MousePressed(MouseEvent e) {
@@ -91,7 +93,7 @@ public class View extends JFrame {
         state = newState;
         panel.removeAll();
         
-        setMaximumSize(new Dimension(800, 600));
+        setPreferredSize(new Dimension(800, 600));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -109,10 +111,11 @@ public class View extends JFrame {
             start.setFocusPainted(false);
             start.setContentAreaFilled(false);
             start.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            start.setForeground(java.awt.Color.CYAN);
+            start.setForeground(java.awt.Color.orange);
             start.addMouseListener(new MyMouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
+                    
                     state.setOutput(Status.START_GAME);
                 }
             });
@@ -123,7 +126,7 @@ public class View extends JFrame {
             end.setFocusPainted(false);
             end.setContentAreaFilled(false);
             end.setCursor(new Cursor(Cursor.HAND_CURSOR));
-            end.setForeground(java.awt.Color.CYAN);
+            end.setForeground(java.awt.Color.orange);
             end.addMouseListener(new MyMouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
