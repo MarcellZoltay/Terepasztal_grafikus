@@ -1,7 +1,6 @@
 package project;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /** Attributes are stored as a map hash, in order to be able to reference them by the user
  *  The final product wont have it like that, its just the purpose of the prototype
@@ -14,42 +13,42 @@ public class Model {
     /**
      * A mozdonyokat tároló Map
      */
-    private Map<String, Engine> engines;
+    private List<Engine> engines;
 
     /**
      * A kocsikat tároló Map
      */
-    private Map<String, Car> cars;
+    private List<Car> cars;
 
     /**
      * A szeneskocsikat tároló Map
      */
-    private Map<String, CoalCar> coalCars;
+    private List<CoalCar> coalCars;
 
     /**
      * Az állomásokat tároló Map
      */
-    private Map<String, Station> stations;
+    private List<Station> stations;
 
     /**
      * A síneket tároló Map
      */
-    private Map<String, Rail> rails;
+    private List<Rail> rails;
 
     /**
      * A kereszteződéseket tároló Map
      */
-    private Map<String, Cross> crosses;
+    private List<Cross> crosses;
 
     /**
      * A váltókat tároló Map
      */
-    private Map<String, Switch> switches;
+    private List<Switch> switches;
 
     /**
      * Az alagút bejáratokat tároló Map
      */
-    private Map<String, TunnelEntrance> tunnelEntrances;
+    private List<TunnelEntrance> tunnelEntrances;
 
 
     //******************************//
@@ -60,14 +59,14 @@ public class Model {
      * Inicializálja a tagváltozókat
      */
     public Model() {
-        engines = new TreeMap<>();
-        cars = new TreeMap<>();
-        coalCars = new TreeMap<>();
-        stations = new TreeMap<>();
-        rails = new TreeMap<>();
-        crosses = new TreeMap<>();
-        switches = new TreeMap<>();
-        tunnelEntrances = new TreeMap<>();
+        engines = new ArrayList<>();
+        cars = new ArrayList<>();
+        coalCars = new ArrayList<>();
+        stations = new ArrayList<>();
+        rails = new ArrayList<>();
+        crosses = new ArrayList<>();
+        switches = new ArrayList<>();
+        tunnelEntrances = new ArrayList<>();
         Load();
     }
 
@@ -89,13 +88,12 @@ public class Model {
         Arrays.fill(moved, false);
         Boolean movedLast[];
         List<Train> toRemove = new ArrayList<>();
-        String keys[] = engines.keySet().toArray(new String[0]);
         do {
             movedLast = Arrays.copyOf(moved, moved.length);
-            for (int i = 0; i < keys.length; i++ )
+            for (int i = 0; i < engines.size(); i++ )
                 if(!movedLast[i]) {
-                    Status s = engines.get(keys[i]).move();
-                    if (s == Status.DELETE_TRAIN) toRemove.add(engines.get(keys[i]));
+                    Status s = engines.get(i).move();
+                    if (s == Status.DELETE_TRAIN) toRemove.add(engines.get(i));
                     if (s != Status.CRASHED) moved[i] = true;
                 }
         } while(!Arrays.equals(moved, movedLast));
@@ -283,11 +281,11 @@ public class Model {
         one.setNext2(m);
         one.setPrev(j);
         one.setPrev2(l);
-        rails.put("k",k);
-        rails.put("l",l);
-        rails.put("j",j);
-        rails.put("m",m);
-        crosses.put("one",one);
+        rails.add(k);
+        rails.add(l);
+        rails.add(j);
+        rails.add(m);
+        crosses.add(one);
 
 
         Cross two=new Cross(xk+500,yk,null,null,null,null);
@@ -299,16 +297,16 @@ public class Model {
         two.setNext2(q);
         two.setPrev(p);
         two.setPrev2(o);
-        rails.put("n",n);
-        rails.put("o",o);
-        rails.put("p",p);
-        rails.put("q",q);
-        crosses.put("two",two);
+        rails.add(n);
+        rails.add(o);
+        rails.add(p);
+        rails.add(q);
+        crosses.add(two);
 
-        Station s1=new Station(xk-500,yk-150,k,one,Color.BLUE);
-        Station s2=new Station(xk-500,yk+150,m,one,Color.RED);
-        Station s3=new Station(xk+500,yk-150,n,two,Color.GREEN);
-        Station s4=new Station(xk+500,yk+150,q,two,Color.PINK);
+        Station s1=new Station(xk-500,yk-150,k,one,"BLUE");
+        Station s2=new Station(xk-500,yk+150,m,one,"RED");
+        Station s3=new Station(xk+500,yk-150,n,two,"GREEN");
+        Station s4=new Station(xk+500,yk+150,q,two,"PINK");
         one.setNext(s1);
         one.setNext2(s2);
         two.setNext(s3);
@@ -320,19 +318,19 @@ public class Model {
 
         Engine engine=new Engine(k.getX(),k.getY(),one.getX(),one.getY(),k);
         engine.setPrevNode(s1);
-        Car cc=new Car(s1.getX()+5,s1.getY()+5,xk-2,yk-2,s1,Color.BLUE);
+        Car cc=new Car(s1.getX()+5,s1.getY()+5,xk-2,yk-2,s1,"BLUE");
         cc.setPrevNode(one);
         engine.setNextCar(cc);
 
         Engine engine2=new Engine(c7.getX(),c7.getY(),one.getX(),one.getY(),c7);
         engine2.setPrevNode(c01);
-        Car cc2=new Car(c01.getX()+5,c01.getY()+5,xk-2,yk-2,c01,Color.RED);
+        Car cc2=new Car(c01.getX()+5,c01.getY()+5,xk-2,yk-2,c01,"RED");
         cc2.setPrevNode(c3);
         engine2.setNextCar(cc2);
 
         Engine engine3=new Engine(v15.getX(),v15.getY(),one.getX(),one.getY(),v15);
         engine3.setPrevNode(d415);
-        Car cc3=new Car(d415.getX()+5,d415.getY()+5,xk-2,yk-2,d415,Color.GREEN);
+        Car cc3=new Car(d415.getX()+5,d415.getY()+5,xk-2,yk-2,d415,"GREEN");
         cc3.setPrevNode(v4);
         engine3.setNextCar(cc3);
 
@@ -347,569 +345,127 @@ public class Model {
 
 
 
-        engines.put("engine",engine);
-        cars.put("cc",cc);
-        engines.put("engine2",engine2);
-        cars.put("cc2",cc2);
-        engines.put("engine3",engine3);
-        cars.put("cc3",cc3);
-        stations.put("s1",s1);
-        stations.put("s2",s2);
-        stations.put("s3",s3);
-        stations.put("s4",s4);
-        rails.put("a",a);
-        rails.put("b",b);
-        rails.put("c",c);
-        rails.put("d",d);
-        rails.put("e",e);
-        rails.put("f",f);
-        rails.put("g",g);
-        rails.put("h",h);
-        rails.put("a117",a117);
-        rails.put("a110",a110);
-        rails.put("b217",b217);
-        rails.put("b216",b216);
-        rails.put("c315",c315);
-        rails.put("c316",c316);
-        rails.put("d415",d415);
-        rails.put("d414",d414);
-        rails.put("e514",e514);
-        rails.put("e513",e513);
-        rails.put("f613",f613);
-        rails.put("f612",f612);
-        rails.put("g712",g712);
-        rails.put("g711",g711);
-        rails.put("h811",h811);
-        rails.put("h810",h810);
+        engines.add(engine);
+        cars.add(cc);
+        engines.add(engine2);
+        cars.add(cc2);
+        engines.add(engine3);
+        cars.add(cc3);
+        stations.add(s1);
+        stations.add(s2);
+        stations.add(s3);
+        stations.add(s4);
+        rails.add(a);
+        rails.add(b);
+        rails.add(c);
+        rails.add(d);
+        rails.add(e);
+        rails.add(f);
+        rails.add(g);
+        rails.add(h);
+        rails.add(a117);
+        rails.add(a110);
+        rails.add(b217);
+        rails.add(b216);
+        rails.add(c315);
+        rails.add(c316);
+        rails.add(d415);
+        rails.add(d414);
+        rails.add(e514);
+        rails.add(e513);
+        rails.add(f613);
+        rails.add(f612);
+        rails.add(g712);
+        rails.add(g711);
+        rails.add(h811);
+        rails.add(h810);
 
-        crosses.put("c01",c01);
-        crosses.put("c02",c02);
-        crosses.put("c1",c1);
-        crosses.put("c2",c2);
-        crosses.put("c3",c3);
-        crosses.put("c4",c4);
-        crosses.put("c5",c5);
-        crosses.put("c6",c6);
-        crosses.put("c7",c7);
-        crosses.put("c8",c8);
-        switches.put("v1",v1);
-        switches.put("v2",v2);
-        switches.put("v3",v3);
-        switches.put("v4",v4);
-        switches.put("v5",v5);
-        switches.put("v6",v6);
-        switches.put("v7",v7);
-        switches.put("v8",v8);
-        //rails.put("",rail);
-        //rails.put("",rail1);
-        //rails.put("",rail2);
-        switches.put("v10",v10);
-        switches.put("v11",v11);
-        switches.put("v12",v12);
-        switches.put("v13",v13);
-        switches.put("v14",v14);
-        switches.put("v15",v15);
-        switches.put("v16",v16);
-        switches.put("v17",v17);
+        crosses.add(c01);
+        crosses.add(c02);
+        crosses.add(c1);
+        crosses.add(c2);
+        crosses.add(c3);
+        crosses.add(c4);
+        crosses.add(c5);
+        crosses.add(c6);
+        crosses.add(c7);
+        crosses.add(c8);
+        switches.add(v1);
+        switches.add(v2);
+        switches.add(v3);
+        switches.add(v4);
+        switches.add(v5);
+        switches.add(v6);
+        switches.add(v7);
+        switches.add(v8);
+        //rails.add("",rail);
+        //rails.add("",rail1);
+        //rails.add("",rail2);
+        switches.add(v10);
+        switches.add(v11);
+        switches.add(v12);
+        switches.add(v13);
+        switches.add(v14);
+        switches.add(v15);
+        switches.add(v16);
+        switches.add(v17);
     }
-
-    /**
-     * 
-     */
-    public void addTrainToMap() {
-        // TODO implement here
+  
+    private int getDistance(int x, int y, int lx1, int ly1, int lx2, int ly2) {
+        if (((x < lx1 && x > lx2) || (x > lx1 && x < lx2)) && ((y < ly1 && y > ly2) || (y > ly1 && y < ly2))) {
+            int normX = lx1 - lx2, normY = ly1 - ly2;
+            int C = normX * x + normY * y;
+            int lineC = lx1 * normX * -1 + ly1 * normY;
+            int intersectY = (lineC + C) / (normY * 2);
+            int intersectX = (normY * intersectY + C) / normX;
+            return (int)Math.sqrt(Math.pow(intersectX - x, 2) + Math.pow(intersectY - y, 2));
+        }
+        return -1;
     }
     
-    /**
-     * Checks if there exists a node with a specific name
-     * @param name the node's name to find
-     * @return if found returns the node, else returns null
-     */
-    private Node getNode(String name) {
-        Node toReturn;
-        toReturn = rails.get(name);
-        if (toReturn != null) return toReturn;
-        toReturn = stations.get(name);
-        if (toReturn != null) return toReturn;
-        toReturn = switches.get(name);
-        if (toReturn != null) return toReturn;
-        toReturn = crosses.get(name);
-        if (toReturn != null) return toReturn;
-        toReturn = tunnelEntrances.get(name);
-        if (toReturn != null) return toReturn;
-        return null;
-    }
-    
-    /**
-     * Called when a node was referred by another one, to set up the connection between them
-     * To link them together from both sides
-     * @param name the node's name to find
-     * @param toSet the node to set up the connection with
-     * @return returns true if it could set up the connection, false otherwise
-     */
-    private boolean setNext(String name, Node toSet) {
-        Node n = getNode(name);
-        boolean override = false;
-        if (tunnelEntrances.get(getNodeName(toSet)) != null) override = true;
-        if (crosses.get(name) != null) {
-            if (n.getNext() == null) n.setNext(toSet);
-            else if (((Cross)n).getNext2() == null) ((Cross)n).setNext2(toSet);
-            else if (override) n.setNext(toSet);
-            else if (n.getNext() != toSet && ((Cross)n).getNext2() != toSet) return false;
-        }
-        else if (switches.get(name) != null) {
-            if (n.getNext() == null) n.setNext(toSet);
-            else if (((Switch)n).getSecond() == null) ((Switch)n).setSecond(toSet);
-            else if (override) n.setNext(toSet);
-            else if (n.getNext() != toSet && ((Switch)n).getSecond() != toSet) return false;
-        }
-        else if (tunnelEntrances.get(name) != null) {
-            if (n.getNext() == null) n.setNext(toSet);
-            else if (((TunnelEntrance)n).getSecond() == null) ((TunnelEntrance)n).setSecond(toSet);
-            else if (n.getNext() != toSet && ((TunnelEntrance)n).getSecond() != toSet) return false;
-        }
-        else if (n.getNext() == null || override) n.setNext(toSet);
-        else if (n.getNext() != toSet) return false;
-        return true;
-    }
-   
-    /**
-     * Basically the same as the setNext one, except its from the other way around
-     */
-    private boolean setPrev(String name, Node toSet) {
-        Node n = getNode(name);
-        boolean override = false;
-        if (tunnelEntrances.get(getNodeName(toSet)) != null) override = true;
-        if (tunnelEntrances.get(name) != null && override) ((TunnelEntrance)n).setSecond(toSet);
-        else if (crosses.get(name) != null) {
-            if (n.getPrev() == null) n.setPrev(toSet);
-            else if (((Cross)n).getPrev2() == null) ((Cross)n).setPrev2(toSet);
-            else if (override) n.setPrev(toSet);
-            else if (n.getPrev() != toSet && ((Cross)n).getPrev2() != toSet) return false;
-        }
-        else if (n.getPrev() == null || override) n.setPrev(toSet);
-        else if (n.getPrev() != toSet) return false;
-        return true;
-    }
-    
-    /**
-     * The same as the getNode one, except its for Trains
-     */
-    private Train getTrain(String name) {
-        Train toReturn;
-        toReturn = engines.get(name);
-        if (toReturn != null) return toReturn;
-        toReturn = coalCars.get(name);
-        if (toReturn != null) return toReturn;
-        toReturn = cars.get(name);
-        if (toReturn != null) return toReturn;
-        return null;
-    }
-      
-    /**
-     * The same as the setNext one, except its for Trains
-     */
-    private boolean setNextTrain(String name, Train toSet) {
-        Train t = getTrain(name);
-            if (t.getNextCar() == null) t.setNextCar(toSet);
-            else if (t.getNextCar() != toSet) return false;
-        return true;
-    }
-   
-    /**
-     * The same as the setPrev one, except its for Trains
-     */
-    private boolean setPrevTrain(String name, Train toSet) {
-        Train t = getTrain(name);
-            if (((Car)t).getPrevTrain() == null) ((Car)t).setPrevTrain(toSet);
-            else if (((Car)t).getPrevTrain() != toSet) return false;
-        return true;
-    }
-    
-    /**
-     * Finds the key, the Train was set to
-     * @param train the value which leads to a unique key
-     * @return returns the key, if there is one, else returns null
-     */
-    public String getName(Train train) {
-        if (train == null) return null;
-        Set<String> set;
-        set = engines.keySet();
-        for (String s : set)
-            if ((Train)engines.get(s) == train) return s;
-        set = coalCars.keySet();
-        for (String s : set)
-            if ((Train)coalCars.get(s) == train) return s;
-        set = cars.keySet();
-        for (String s : set)
-            if ((Train)cars.get(s) == train) return s;        
-        return "Error";
-    }
-    
-    /**
-     * Finds the key, the Node was set to
-     * @param node the value which leads to a unique key
-     * @return returns the key, if there is one, else returns null
-     */
-    public String getNodeName(Node node) {
-        if (node == null) return null;
-        Set<String> set;
-        set = rails.keySet();
-        for (String s : set)
-            if ((Node)rails.get(s) == node) return s;
-        set = stations.keySet();
-        for (String s : set)
-            if ((Node)stations.get(s) == node) return s;
-        set = switches.keySet();
-        for (String s : set)
-            if ((Node)switches.get(s) == node) return s;
-        set = crosses.keySet();
-        for (String s : set)
-            if ((Node)crosses.get(s) == node) return s;
-        set = tunnelEntrances.keySet();
-        for (String s : set)
-            if ((Node)tunnelEntrances.get(s) == node) return s;
-        return null;
-    }
-    
-    /**
-     * Finds a specific option and its parameter in the command 
-     * @param params the command seperated by '-'
-     * @param keyShort the option's short name
-     * @param keyLong the option's long name
-     * @return returns the parameter(s)
-     */
-    private String checkParam(String params[], String keyShort, String keyLong) {
-        for (String param : params) {
-            if (param.contentEquals(keyShort)) return null;
-            if (param.contentEquals(keyLong))  return null;
-            if (param.startsWith(keyShort + " "))
-                return param.substring(keyShort.length() + 1);
-            if (param.startsWith(keyLong + " "))
-                return param.substring(keyLong.length() + 1);
-        }
-        return "";
-    }
-    
-    /**
-     * Gets one command at a time, acts accordingly
-     * @param code the command itself
-     * @return returns the outcome it caused. 
-     * If the command was to move the trains, and the trains crashed, then it returns that the game should be over.
-     * @throws java.lang.Exception
-     */
-    public Status decideActions(String code) throws Exception {
-        String parameters[] = code.split(" -");
-        String type = "", name = "", remove = "", coords = "", setnext = "", setprev = "", seton = "", setcolor = "", change = "", all = "", steps = "";
-        if (parameters.length > 1 ) {                               // Checks for all the parameters every command could have, if it has any
-            type = checkParam(parameters, "t", "-type");
-            name = checkParam(parameters, "c", "-create");
-            remove = checkParam(parameters, "r", "-remove");
-            coords = checkParam(parameters, "C", "-coords");
-            setnext = checkParam(parameters, "sN", "-setnext");
-            setprev = checkParam(parameters, "sP", "-setprev");
-            seton = checkParam(parameters, "sO", "-seton");
-            setcolor = checkParam(parameters, "sC", "-setcolor");
-            change = checkParam(parameters, "o", "-change");
-            all = checkParam(parameters, "a", "-all");
-            steps = checkParam(parameters, "s", "-steps");
-            /*for(int i = 0; i < parameters.length; i++) {
-                System.out.println(parameters[i]);
-            }*/
-        }
-        
-        switch(parameters[0]) {                                     // Decides which command was called
-            case "node":
-                if (name == null || remove == null) throw new Exception("missing node name");   // Command cannot function without a node name
-                if (!name.isEmpty() && !remove.isEmpty()) throw new Exception("can't create and remove an object at the same time"); // Cannot create and remove objects at the same time
-                if (!name.isEmpty()) {                // If the command says to create or modify
-                    Node node = getNode(name);          // Checks if the node was created earlier
-                    if (node == null) {
-                        if (type == null || type.isEmpty()) throw new Exception("missing node type");     // Command cannot function without a node type// If not creates it accordingly, and puts it an appropriate map
-                        switch(type) {
-                            case "Rail": 
-                                node = new Rail();
-                                rails.put(name, (Rail)node);
-                                break;
-                            case "Station": 
-                                node = new Station();
-                                if (!setcolor.isEmpty()) ((Station)node).setColor(Color.getColorEnum(setcolor));            // Stations must have colors
-                                else throw new Exception("stations must have color");
-                                stations.put(name, (Station)node);
-                                break;
-                            case "Switch": 
-                                node = new Switch();
-                                switches.put(name, (Switch)node);
-                                break;
-                            case "Cross": 
-                                node = new Cross();
-                                crosses.put(name, (Cross)node);
-                                break;
-                            case "TunnelEntrance": 
-                                node = new TunnelEntrance();
-                                tunnelEntrances.put(name, (TunnelEntrance)node);
-                                break;
-                            default: throw new Exception("not valid node type"); // Command must have a valid type
-                        }
-                    }
-                    if (switches.get(name) != null && change == null) {
-                        changeSwitch((Switch)node);
-                    }
-                    if (!coords.isEmpty()) {                    // Checks if user wants to change node's coordinates
-                        String coord[] = coords.split(" ");
-                        if (coord.length != 2) throw new Exception("a node has two coordinates");
-                        node.setX(Integer.parseInt(coord[0]));
-                        node.setY(Integer.parseInt(coord[1]));
-                    }
-                    if (!setnext.isEmpty()) {                   // Checks if user wants to change node's nextNode. If yes, sets up the connection from the other way too
-                        String nexts[] = setnext.split(" ");
-                        Node next[] = new Node[2];
-                        if (nexts.length < 1 || nexts.length > 2) throw new Exception("not the correct number of parameters");
-                        for (int i = 0; i < nexts.length; i++) {
-                            next[i] = getNode(nexts[i]);
-                            if (next[i] == null) throw new Exception("there is no node with the name " + nexts[i] + " to set previous");
-                            //if (!setPrev(nexts[i], node)) throw new Exception("previous node cannot be set for " + nexts[i]);
-                            if (!setNext(name, next[i])) throw new Exception("next node cannot be set for " + name);
-                        }
-                    }
-                    if (!setprev.isEmpty()) {                   // Checks if user wants to change node's prevNode. If yes, sets up the connection from the other way too
-                        String prevs[] = setprev.split(" ");
-                        Node prev[] = new Node[2];
-                        if (prevs.length < 1 || prevs.length > 2) throw new Exception("not the correct number of parameters");
-                        for (int i = 0; i < prevs.length; i++) {
-                            prev[i] = getNode(prevs[i]);
-                            if (prev[i] == null) throw new Exception("there is no train with the name " + prevs[i] + " to set previous");
-                            //if (!setNext(prevs[i], node)) throw new Exception("next node cannot be set for " + prevs[i]);
-                            if (!setPrev(name, prev[i])) throw new Exception("previous node cannot be set for " + name);
-                        }
-                    }
-                    if (tunnelEntrances.size() == 2) {
-                        //tunnelEntrances.forEach((String key, TunnelEntrance te) -> {
-                        //    te.changeOutput();
-                        //});
-                        //ArrayList<TunnelEntrance> tunnelEntrance_array = new ArrayList<>();
-//
-                        //String keys[] = tunnelEntrances.keySet().toArray(new String[0]);
-//
-                        //for (int i = 0; i < keys.length; i++ )
-                        //    tunnelEntrance_array.add(tunnelEntrances.get(keys[i]));
-//
-                        //tunnelEntrance_array.get(0).changeOutput();
-                    }
-                }
-                if (!remove.isEmpty()) {                        //Checks if user wants to remove a TunnelEntrance
-                    //if (tunnelEntrances.get(remove) == null) throw new Exception("there is no tunnel entrance with the name " + remove + " to remove");
-                    //tunnelEntrances.remove(remove);
-                    removeTunnelEntrance(tunnelEntrances.get(remove));
-                }
-                break;
-            case "train":
-                if (name == null || name.isEmpty()) throw new Exception("missing train name");    // Command cannot function without a train name
-                if (type == null || type.isEmpty()) throw new Exception("missing train type");    // Command cannot function without a train type
-                Train train = getTrain(name);           // Cheks if the train was created earlier
-                if (train == null) {                    // If not creates it accordingly, and puts it an appropriate map
-                    switch(type) {
-                        case "Engine":
-                            train = new Engine();
-                            engines.put(name, (Engine)train);
-                            break;
-                        case "Car":
-                            train = new Car();
-                            if (!setcolor.isEmpty()) ((Car)train).setColor(Color.getColorEnum(setcolor));            // Stations must have colors
-                            else throw new Exception("cars must have color");
-                            cars.put(name, (Car)train);
-                            break;
-                        case "CoalCar":
-                            train = new CoalCar();
-                            coalCars.put(name, (CoalCar)train);
-                            break;
-                        default: throw new Exception("not valid train type");    // Command must have a valid type
-                    }
-                }
-                if (!coords.isEmpty()) {                    // Checks if user wants to change train's coordinates
-                    String coord[] = coords.split(" ");
-                    if (coord.length != 4) throw new Exception("a train has four coordinates");
-                    train.setX(Integer.parseInt(coord[0]));
-                    train.setY(Integer.parseInt(coord[1]));
-                    train.setEndX(Integer.parseInt(coord[2]));
-                    train.setEndY(Integer.parseInt(coord[3]));
-                }
-                if (!setnext.isEmpty()) {                   // Checks if user wants to change train's next Train. If yes then sets up the connection from the other way too
-                    String nexts[] = setnext.split(" ");
-                    Train next;
-                    if (nexts.length < 1 || nexts.length > 2) throw new Exception("not the correct number of parameters");
-                    next = getTrain(nexts[0]);
-                    if (next == null) throw new Exception("there is no train with the name " + nexts[0] + " to set previous");
-                    if (!setPrevTrain(nexts[0], train)) throw new Exception("previous train cannot be set for " + nexts[0]);
-                    if (!setNextTrain(name, next)) throw new Exception("next train cannot be set for " + name);
-                }
-                if (!setprev.isEmpty()) {                   // Checks if user wants to change thain's prev Train. If yes then sets up the connection from the other way too
-                    String prevs[] = setprev.split(" ");
-                    Train prev;
-                    if (prevs.length < 1 || prevs.length > 2) throw new Exception("not the correct number of parameters");
-                    prev = getTrain(prevs[0]);
-                    if (prev == null) throw new Exception("there is no train with the name " + prevs[0] + " to set previous");
-                    if (!setNextTrain(prevs[0], train)) throw new Exception("next train cannot be set for " + prevs[0]);
-                    if (!setPrevTrain(name, prev)) throw new Exception("previous train cannot be set for " + name);
-                }
-                if (!seton.isEmpty()) {                     // Checks if user wants to change the Node the Train is on
-                    Node on = getNode(seton);
-                    if (on == null) throw new Exception("there is no node with the name " + seton + " to set as train's on node");
-                    train.setOnNode(on);
-                    on.addTrain(train);
-                }
-                break;
-            case "move":
-                if (steps == null) throw new Exception("missing steps parameter");      // Checks if command has steps option, but without parameter
-                if (steps.isEmpty()) {
-                    Status s = moveEngines();
-                    if (s == Status.CRASHED) return s;
-                    else if (s == Status.GAME_WON) return s;
-                }                                                           // If there are no options, then it calls the train mover function once
-                else                                                                                        // Calls it the number of times the parameter had
-                    for (int i = 0; i < Integer.parseInt(steps); i++) {
-                        Status s = moveEngines();
-                        if (s == Status.CRASHED) return s;                                                  // Checks if the trains had crashed on the map
-                        else if (s == Status.GAME_WON) return s;
-                    }
-                break;
-            case "ls":
-                if (type == null) throw new Exception("missing type parameter");
-                if (all == null || type.contains("Rail")) {
-                    rails.forEach((String nodeName, Rail node) -> {
-                    System.out.println(nodeName);
-                    System.out.println("\tcoordinates: " + node.getX() + ", " + node.getY());
-                    System.out.println("\tnextNode: " + getNodeName(node.getNext()));
-                    System.out.println("\tprevNode: " + getNodeName(node.getPrev()));
-                    System.out.print("\ttrains:");
-                    for (Train t : node.getTrains()) {
-                        System.out.print(" " + getName(t));
-                    }
-                    System.out.println();
-                    });
-                }
-                if (all == null || type.contains("Switch")) {
-                    switches.forEach((String nodeName, Switch node) -> {
-                    System.out.println(nodeName);
-                    System.out.println("\tcoordinates: " + node.getX() + ", " + node.getY());
-                    System.out.println("\tnextNode: " + getNodeName(node.getNext()));
-                    System.out.println("\tnext2Node: " + getNodeName(node.getSecond()));
-                    System.out.println("\tprevNode: " + getNodeName(node.getPrev()));
-                    System.out.print("\ttrains:");
-                    for (Train t : node.getTrains()) {
-                        System.out.print(" " + getName(t));
-                    }
-                    System.out.println();
-                    });
-                }
-                if (all == null || type.contains("Station")) {
-                    stations.forEach((String nodeName, Station node) -> {
-                    System.out.println(nodeName);
-                    System.out.println("\tcoordinates: " + node.getX() + ", " + node.getY());
-                    System.out.println("\tnextNode: " + getNodeName(node.getNext()));
-                    System.out.println("\tprevNode: " + getNodeName(node.getPrev()));
-                    System.out.println("\tcolor: " + node.getColor().toString());
-                    System.out.print("\ttrains:");
-                    for (Train t : node.getTrains()) {
-                        System.out.print(" " + getName(t));
-                    }
-                    System.out.println();
-                    });
-                }
-                if (all == null || type.contains("Cross")) {
-                    crosses.forEach((String nodeName, Cross node) -> {
-                    System.out.println(nodeName);
-                    System.out.println("\tcoordinates: " + node.getX() + ", " + node.getY());
-                    System.out.println("\tnextNode: " + getNodeName(node.getNext()));
-                    System.out.println("\tnext2Node: " + getNodeName(node.getNext2()));
-                    System.out.println("\tprevNode: " + getNodeName(node.getPrev()));
-                    System.out.println("\tprev2Node: " + getNodeName(node.getPrev2()));
-                    System.out.print("\ttrains:");
-                    for (Train t : node.getTrains()) {
-                        System.out.print(" " + getName(t));
-                    }
-                    System.out.println();
-                    });
-                }
-                if (all == null || type.contains("TunnelEntrance")) {
-                    tunnelEntrances.forEach((String nodeName, TunnelEntrance node) -> {
-                    System.out.println(nodeName);
-                    System.out.println("\tcoordinates: " + node.getX() + ", " + node.getY());
-                    System.out.println("\tnextNode: " + getNodeName(node.getNext()));
-                    System.out.println("\tnext2Node: " + getNodeName(node.getSecond()));
-                    System.out.println("\tprevNode: " + getNodeName(node.getPrev()));
-                    System.out.print("\ttrains:");
-                    for (Train t : node.getTrains()) {
-                        System.out.print(" " + getName(t));
-                    }
-                    System.out.println();
-                    });
-                }
-                if (all == null || type.contains("Engine") || type.contains("Train")) {
-                    engines.forEach(((String trainName, Engine trainObject) -> {
-                        System.out.println(trainName);
-                        System.out.println("\tcoordinates: " + trainObject.getX() + ", " + trainObject.getY() + ", " + trainObject.getEndX() + ", " + trainObject.getEndY());
-                        System.out.println("\tonNode: " + getNodeName(trainObject.getOnNode()));
-                        System.out.println("\tprevNode: " + getNodeName(trainObject.getPrevNode()));
-                        System.out.println("\tnextCar: " + getName(trainObject.getNextCar()));
-                    }));
-                }
-                if (all == null || type.contains("Car") || type.contains("Train")) {
-                    cars.forEach(((String trainName, Car trainObject) -> {
-                        System.out.println(trainName);
-                        System.out.println("\tcoordinates: " + trainObject.getX() + ", " + trainObject.getY() + ", " + trainObject.getEndX() + ", " + trainObject.getEndY());
-                        System.out.println("\tcolor: " + trainObject.getColor().toString());
-                        System.out.println("\tonNode: " + getNodeName(trainObject.getOnNode()));
-                        System.out.println("\tprevNode: " + getNodeName(trainObject.getPrevNode()));
-                        System.out.println("\tnextTrain: " + getName(trainObject.getNextCar()));
-                        System.out.println("\tprevTrain: " + getName(trainObject.getPrevTrain()));
-                    }));
-                    
-                }
-                if (all == null || type.contains("CoalCar") || type.contains("Train")) {
-                    coalCars.forEach(((String trainName, CoalCar trainObject) -> {
-                        System.out.println(trainName);
-                        System.out.println("\tcoordinates: " + trainObject.getX() + ", " + trainObject.getY() + ", " + trainObject.getEndX() + ", " + trainObject.getEndY());
-                        System.out.println("\tonNode: " + getNodeName(trainObject.getOnNode()));
-                        System.out.println("\tprevNode: " + getNodeName(trainObject.getPrevNode()));
-                        System.out.println("\tnextTrain: " + getName(trainObject.getNextCar()));
-                        System.out.println("\tprevTrain: " + getName(trainObject.getPrevTrain()));
-                    }));
-                    
-                }
-                break;
-            default: throw new Exception("no command like that");
-        }
-        return Status.CONTINUE;
-    }
-
     public void decideActions(int x1, int y1, int x2, int y2) {
+        boolean options = false;
 
-        boolean torles = false;
-
-        ArrayList<Switch> switches = getSwitches();
         for(Switch s: switches){
-            if( (x1>(s.getX()-20) && x1<(s.getX()+20)) && (y1>(s.getY()-20) && y1<(s.getY()+20)))
+            if( (x1>(s.getX()-20) && x1<(s.getX()+20)) && (y1>(s.getY()-20) && y1<(s.getY()+20))) {
                 s.changeOutput();
+                options = true;
+            }
         }
-
-        ArrayList<TunnelEntrance> tunnelEntrances = getTunnelEntrances();
-        TunnelEntrance torlendo = null;
-        // Törlés
-        for(TunnelEntrance t: tunnelEntrances){
-            if( (x1>(t.getX()-10) && x1<(t.getX()+10)) && (y1>(t.getY()-10) && y1<(t.getY()+10)))
-                torlendo = t;
+        if (!options) {
+            for(TunnelEntrance t: tunnelEntrances){
+                if( (x1>(t.getX()-10) && x1<(t.getX()+10)) && (y1>(t.getY()-10) && y1<(t.getY()+10))) {
+                    removeTunnelEntrance(t);
+                    options = true;
+                }
+            }
         }
-        if(torlendo!=null) {
-            removeTunnelEntrance(torlendo);
-            torles = true;
+        if (!options) {
+            rails.forEach( (Rail r) -> {
+                int d = getDistance(x1, y1, r.getX(), r.getY(), r.getNext().getX(), r.getNext().getY());
+                if (d != -1 && d < 5) {
+                    addTunnelEntrance(r, r.getNext(), x1, y1, x2, y2);
+                }
+            });
+            
+            stations.forEach( (Station r) -> {
+                int d = getDistance(x1, y1, r.getX(), r.getY(), r.getNext().getX(), r.getNext().getY());
+                if (d != -1 && d < 5) {
+                    addTunnelEntrance(r, r.getNext(), x1, y1, x2, y2);
+                }
+            });
+            
+            crosses.forEach( (Cross r) -> {
+                int d = getDistance(x1, y1, r.getX(), r.getY(), r.getNext().getX(), r.getNext().getY());
+                if (d != -1 && d < 5) {
+                    addTunnelEntrance(r, r.getNext(), x1, y1, x2, y2);
+                }
+                d = getDistance(x1, y1, r.getX(), r.getY(), r.getNext2().getX(), r.getNext2().getY());
+                if (d != -1 && d < 5) {
+                    addTunnelEntrance(r, r.getNext2(), x1, y1, x2, y2);
+                }
+            }); 
         }
-
-        // Hozzáadás
-        if(!torles && tunnelEntrances.size()<2) {
-
-        }
-
     }
 
     /**
@@ -918,8 +474,26 @@ public class Model {
      * @param x2 
      * @param y2
      */
-    private void addTunnelEntrance(int x1, int y1, int x2, int y2) {
-        //TunnelEntrance tE = new TunnelEntrance();
+    private void addTunnelEntrance(Node p, Node n, int x1, int y1, int x2, int y2) {
+        if (tunnelEntrances.size() == 2) return;
+        int d1 =(int)Math.sqrt(Math.pow(p.getX() - x1, 2) + Math.pow(p.getY() - y1, 2));
+        int d2 =(int)Math.sqrt(Math.pow(p.getX() - x2, 2) + Math.pow(p.getY() - y2, 2));
+        TunnelEntrance t;
+        if (d2 < d1) t = new TunnelEntrance(x1, y1, n, null, p);
+        else t = new TunnelEntrance(x1, y1, p, null, n);
+        
+        if (p.getNext() == n) p.setNext(t);
+        else ((Cross)p).setNext2(t);
+        if (n.getNext() == p) n.setPrev(t);
+        else ((Cross)n).setPrev2(t);
+        
+        if (tunnelEntrances.size() == 1) {
+                tunnelEntrances.get(0).setSecond(t);
+                tunnelEntrances.get(0).changeOutput();
+                t.setSecond(tunnelEntrances.get(0));
+                t.changeOutput();
+        }
+        tunnelEntrances.add(t);
     }
 
     /**
@@ -945,7 +519,7 @@ public class Model {
             tE.getNext().setPrev(tE.getPrev());
         }
             
-        tunnelEntrances.remove(getNodeName(tE));
+        tunnelEntrances.remove(tE);
     }
 
     /**
@@ -966,12 +540,12 @@ public class Model {
             return;
 
         Train next = trainPart.getNextCar();
-        if(trainPart.getColor()==Color.ENGINE)
-            engines.remove(getName(trainPart));
-        else if(trainPart.getColor()==Color.COAL_CAR)
-            coalCars.remove(getName(trainPart));
+        if(trainPart.getColor().equals("ENGINE"))
+            engines.remove((Engine)trainPart);
+        else if(trainPart.getColor().equals("COALCAR"))
+            coalCars.remove((CoalCar)trainPart);
         else
-            cars.remove(getName(trainPart));
+            cars.remove((Car)trainPart);
 
         removeTrain(next);
 
@@ -991,92 +565,36 @@ public class Model {
     //******************************//
     //           Getterek           //
     //******************************//
-    public ArrayList<Rail> getRails() {
-        ArrayList<Rail> rail_array = new ArrayList<>();
-
-        String keys[] = rails.keySet().toArray(new String[0]);
-
-        for (int i = 0; i < keys.length; i++ )
-            rail_array.add(rails.get(keys[i]));
-
-        return rail_array;
+    public List<Rail> getRails() {
+        return rails;
     }
 
-    public ArrayList<Cross> getCrosses() {
-        ArrayList<Cross> cross_array = new ArrayList<>();
-
-        String keys[] = crosses.keySet().toArray(new String[0]);
-
-        for (int i = 0; i < keys.length; i++ )
-            cross_array.add(crosses.get(keys[i]));
-
-        return cross_array;
+    public List<Cross> getCrosses() {
+        return crosses;
     }
 
-    public ArrayList<Switch> getSwitches() {
-        ArrayList<Switch> switch_array = new ArrayList<>();
-
-        String keys[] = switches.keySet().toArray(new String[0]);
-
-        for (int i = 0; i < keys.length; i++ )
-            switch_array.add(switches.get(keys[i]));
-
-        return switch_array;
+    public List<Switch> getSwitches() {
+        return switches;
     }
 
-    public ArrayList<Station> getStations() {
-        ArrayList<Station> station_array = new ArrayList<>();
-
-        String keys[] = stations.keySet().toArray(new String[0]);
-
-        for (int i = 0; i < keys.length; i++ )
-            station_array.add(stations.get(keys[i]));
-
-        return station_array;
+    public List<Station> getStations() {
+        return stations;
     }
 
-    public ArrayList<TunnelEntrance> getTunnelEntrances() {
-        ArrayList<TunnelEntrance> tunnelEntrance_array = new ArrayList<>();
-
-        String keys[] = tunnelEntrances.keySet().toArray(new String[0]);
-
-        for (int i = 0; i < keys.length; i++ )
-            tunnelEntrance_array.add(tunnelEntrances.get(keys[i]));
-
-        return tunnelEntrance_array;
+    public List<TunnelEntrance> getTunnelEntrances() {
+        return tunnelEntrances;
     }
 
-    public ArrayList<Engine> getEngines() {
-        ArrayList<Engine> engine_array = new ArrayList<>();
-
-        String keys[] = engines.keySet().toArray(new String[0]);
-
-        for (int i = 0; i < keys.length; i++ )
-            engine_array.add(engines.get(keys[i]));
-
-        return engine_array;
+    public List<Engine> getEngines() {
+        return engines;
     }
 
-    public ArrayList<Car> getCars() {
-        ArrayList<Car> car_array = new ArrayList<>();
-
-        String keys[] = cars.keySet().toArray(new String[0]);
-
-        for (int i = 0; i < keys.length; i++ )
-            car_array.add(cars.get(keys[i]));
-
-        return car_array;
+    public List<Car> getCars() {
+        return cars;
     }
 
-    public ArrayList<CoalCar> getCoalCars() {
-        ArrayList<CoalCar> coalCar_array = new ArrayList<>();
-
-        String keys[] = coalCars.keySet().toArray(new String[0]);
-
-        for (int i = 0; i < keys.length; i++ )
-            coalCar_array.add(coalCars.get(keys[i]));
-
-        return coalCar_array;
+    public List<CoalCar> getCoalCars() {
+        return coalCars;
     }
 
 }

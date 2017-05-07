@@ -2,18 +2,24 @@ package project;
 
 import java.awt.*;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 /**
  * Created by Zoltay Marcell on 2017. 04. 22..
  */
-public class StationGraphics{
+public class StationGraphics extends Drawable{
 
     private Station station;
 
     public StationGraphics(Station s){
+        super("STATION_" + s.getColor());
         station = s;
     }
 
+    @Override
     public void draw(Graphics g){
 
         if(station.getColor()==project.Color.RED)

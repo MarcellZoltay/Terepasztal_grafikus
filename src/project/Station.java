@@ -20,11 +20,6 @@ public class Station extends Node {
     private boolean canGetOff;
 
     /**
-     * Az első nem üres kocsi, amiről le kell szállítani az utasokat
-     */
-    private Car firstEmptyCar;
-
-    /**
      * Az azonos színű üres kocsi, amibe utasok szállnak fel
      */
     private Car getOnCar;
@@ -41,7 +36,6 @@ public class Station extends Node {
         super(0, 0, null, null);
         this.color = null;
         this.canGetOff = false;
-        this.firstEmptyCar = null;
     }
 
     /**
@@ -51,11 +45,10 @@ public class Station extends Node {
      * @param p Az előző csomópont
      * @param c Az állomás színe
      */
-    public Station(int x, int y, Node n, Node p, Color c) {
+    public Station(int x, int y, Node n, Node p, String c) {
         super(x, y, n, p);
-        this.color = c;
+        this.color.setColor(c);
         this.canGetOff = false;
-        this.firstEmptyCar = null;
     }
 
 
@@ -77,7 +70,7 @@ public class Station extends Node {
                 canGetOff = false;
         
         // Felszállás
-        if (t.getColor().isEmpty() && !t.getColor().equals(Color.ENGINE) && !t.getColor().equals(Color.COAL_CAR)) {
+        if (t.getColor().isEmpty() && !t.getColor().equals("ENGINE") && !t.getColor().equals("COALCAR")) {
             int r = new Random().nextInt(10);
             if ( r < 2 ) ((Car)t).getOnPassengers();
         }

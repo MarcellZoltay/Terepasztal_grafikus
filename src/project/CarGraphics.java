@@ -2,18 +2,24 @@ package project;
 
 import java.awt.*;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 /**
  * Created by Zoltay Marcell on 2017. 04. 22..
  */
-public class CarGraphics {
+public class CarGraphics extends Drawable{
 
     private Car car;
 
     public CarGraphics(Car c){
+        super("CAR_" + c.getColor());
         car = c;
     }
 
+    @Override
     public void draw(Graphics g){
 
         if(car.getColor()==project.Color.RED)

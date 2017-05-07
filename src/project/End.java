@@ -14,9 +14,6 @@ public class End implements State {
     public End(Status e, View view) {
         this.output = e;
         this.view = view;
-        view.setState(this);
-        view.setStatus(Status.END);
-        view.updateScreen();
     }
 
     public Status getOutput() { return output; }

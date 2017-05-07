@@ -14,13 +14,8 @@ public class EngineGraphics extends Drawable{
 
     private Engine engine;
 
-    public EngineGraphics(Engine eng){BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File(""));       // Need to implement later
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-        this.image = img;
+    public EngineGraphics(Engine eng){
+        super("ENGINE");
         engine = eng;
     }
 
