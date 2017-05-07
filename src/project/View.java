@@ -121,7 +121,7 @@ public class View extends JFrame {
             });
             JButton end = new JButton(buttons[1]);
             end.setFont(new Font("Verdana", Font.PLAIN, 42));
-            start.setOpaque(false);
+            end.setOpaque(false);
             end.setBorderPainted(false);
             end.setFocusPainted(false);
             end.setContentAreaFilled(false);
@@ -133,13 +133,16 @@ public class View extends JFrame {
                     state.setOutput(Status.EXIT_GAME);
                 }
             });
+            JLabel text = new JLabel(buttons[2]);
+            text.setFont(new Font("Verdana", Font.PLAIN, 84));
+            text.setOpaque(false);
+            text.setForeground(java.awt.Color.orange);
             JPanel options = new JPanel();
-            options.setLayout(new GridLayout(2,1));
+            options.setLayout(new GridLayout(3,1));
+            options.add(text, BorderLayout.PAGE_END);
             options.add(start, BorderLayout.PAGE_END);
             options.add(end, BorderLayout.PAGE_END);
             options.setBackground(new java.awt.Color(0, 0, 0, 1));
-            panel.setLayout(new BorderLayout(100, 500));
-            //panel.setBackground(java.awt.Color.red);
             panel.setBackground(new java.awt.Color(0, 0, 0, 1));
             panel.add(options, BorderLayout.PAGE_START);
             add(panel);
@@ -185,11 +188,13 @@ public class View extends JFrame {
         @Override
         public void mouseEntered(MouseEvent e) {
             e.getComponent().setFont(new Font("Verdana", Font.BOLD, 42));
+            repaint();
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
             e.getComponent().setFont(new Font("Verdana", Font.PLAIN, 42));
+            repaint();
         }
 
         @Override
