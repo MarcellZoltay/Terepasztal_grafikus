@@ -1,0 +1,125 @@
+_____________________
+|		     |
+|      ENGINE        |
+|____________________|
+@Override
+    public Status move(int dx, int dy){
+
+        if(onNode.getNextNode(this)==null){
+            return Status.NOT_EMPTY_CAR;
+        }
+        List<Train> on = onNode.getNextNode(this).getTrains();
+        if(!on.isEmpty()) return Status.CRASHED;
+
+
+        Node next = onNode.getNextNode(this);
+	int tempx = x;  int tempy = y;
+        int a = Math.abs(next.getX() - this.x);
+        int b = Math.abs(next.getY() - this.y);
+        int c = a*a +b*b;
+        double sinalfa = a/c;
+        double cosalfa = b/c;
+        double sinbeta = b/c;
+        double cosbeta = a/c;
+
+        double deltax = sinalfa*cosalfa*5;
+        double deltay = sinbeta*cosbeta*5;
+
+        if(next.getX() - this.x >0 && next.getY() - this.y >0){
+            x += deltax;
+            y += deltay;
+        }
+        if(next.getX() - this.x <0 && next.getY() - this.y >0){
+            x -= deltax;
+            y += deltay;
+        }
+        if(next.getX() - this.x <0 && next.getY() - this.y <0){
+            x += deltax;
+            y -= deltay;
+        }
+        if(next.getX() - this.x <0 && next.getY() - this.y <0){
+            x -= deltax;
+            y -= deltay;
+        }
+
+
+        if(next.getX() == this.x && next.getY() == this.y){
+            prevNode.removeTrain(this);
+            next.addTrain(this);
+            x=next.getX();
+            y=next.getY();
+        }
+
+
+        //Node next = onNode.getNextNode(this);
+        //prevNode.removeTrain(this);
+        //next.addTrain(this);
+        //x=next.getX();
+        //y=next.getY();
+        try {
+            ((Station)next).setGetOff();
+        }
+        catch (Exception e) {}
+        
+        return nextCar.move(tempx,tempy);
+    }
+
+____________________
+|		    |
+|       CAR         |
+|___________________|
+@Override
+    public Status move(int dx, int dy){
+        Node next = onNode.getNextNode(this);
+	int tempx = x;  int tempy = y;
+        x = dx;
+        y = dy;
+
+        if(next.getX() == this.x && next.getY() == this.y){
+            prevNode.removeTrain(this);
+            next.addTrain(this);
+            x=next.getX();
+            y=next.getY();
+        }
+        //Node next = onNode.getNextNode(this);
+        //prevNode.removeTrain(this);
+        //next.addTrain(this);
+
+        //x=next.getX();
+        //y=next.getY();
+
+        if (nextCar != null && nextCar.move(tempx,tempy).equals(Status.DELETE_TRAIN)) {
+            if (color.isEmpty()) return Status.DELETE_TRAIN;
+        }
+        return Status.NOT_EMPTY_CAR;
+    }
+
+____________________
+|		    |
+|      COALCAR      |
+|___________________|
+@Override
+    public Status move(int dx, int dy){
+        Node next = onNode.getNextNode(this);
+	int tempx = x;  int tempy = y;
+        x = dx;
+        y = dy;
+
+        if(next.getX() == this.x && next.getY() == this.y){
+            prevNode.removeTrain(this);
+            next.addTrain(this);
+            x=next.getX();
+            y=next.getY();
+        }
+        
+        //prevNode.removeTrain(this);
+        //next.addTrain(this);
+
+        //x=next.getX();
+        //y=next.getY();
+
+        if(nextCar != null)
+            return nextCar.move(tempx,tempy);
+
+        return Status.DELETE_TRAIN;
+    }
