@@ -30,8 +30,8 @@ public class End implements State {
     }
 
     @Override
-    public void mouseEventHandler(int x1, int y1, int x2, int y2) {
-
+    public void setOutput(Status s) {
+        output = s;
     }
 
 }

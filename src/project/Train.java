@@ -62,7 +62,7 @@ public abstract class Train extends MapItem {
         this.xEnd = xEnd;
         this.yEnd = yEnd;
         this.onNode = onNode;
-        this.color.setColor(color);
+        this.color = new Color(color);
     }
     /**
      * Train Absztract osztály konstruktor.

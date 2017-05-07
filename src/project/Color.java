@@ -6,6 +6,10 @@ package project;
 public class Color {
     private String color;
 
+    public Color() {
+        color = null;
+    }
+    
     public Color(String s) {
         color = s;
     }

@@ -14,9 +14,7 @@ public abstract class Drawable {
         BufferedImage img = null;
         try {
             img = ImageIO.read(new File("res\\" + s + ".png"));       // Need to implement later
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
+        } catch(IOException e) { }
         image = img;
     }
     

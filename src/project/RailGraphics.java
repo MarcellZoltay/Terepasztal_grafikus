@@ -15,13 +15,7 @@ public class RailGraphics extends Drawable {
     private Rail rail;
 
     public RailGraphics(Rail r){
-        BufferedImage img = null;
-        try {
-            img = ImageIO.read(new File(""));       // Need to implement later
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-        this.image = img;
+        super("sin");
         rail = r;
     }
 

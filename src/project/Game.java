@@ -37,47 +37,21 @@ public class Game implements State {
     @Override
     public Status start() {
         Status st;
-        ArrayList<Drawable> drawables = new ArrayList<>();
-        map.getRails().forEach((Rail n) -> {
-            drawables.add(new RailGraphics(n));
-        });
-        map.getCrosses().forEach((Cross n) -> {
-            drawables.add(new CrossGraphics(n));
-        });
-        map.getStations().forEach((Station n) -> {
-            drawables.add(new StationGraphics(n));
-        });
-        map.getSwitches().forEach((Switch n) -> {
-            drawables.add(new SwitchGraphics(n));
-        });
-        map.getTunnelEntrances().forEach((TunnelEntrance n) -> {
-            drawables.add(new TunnelEntranceGraphics(n));
-        });
-        map.getCars().forEach((Car n) -> {
-            drawables.add(new CarGraphics(n));
-        });
-        map.getEngines().forEach((Engine n) -> {
-            drawables.add(new EngineGraphics(n));
-        });
-        map.getCoalCars().forEach((CoalCar n) -> {
-            drawables.add(new CoalCarGraphics(n));
-        });
+        view.setMap(map);
         while (true) {
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {}
             st = map.moveEngines();
-            view.updateScreen(drawables);
+            view.updateScreen();
             if (st != Status.CONTINUE) return st;
             
         }
     }
 
     @Override
-    public void mouseEventHandler(int x1, int y1, int x2, int y2) {
-
-        map.decideActions(x1, y1, x2, y2);
-
+    public void setOutput(Status s){
+        
     }
 
 }

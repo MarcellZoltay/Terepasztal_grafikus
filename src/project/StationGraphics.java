@@ -22,16 +22,6 @@ public class StationGraphics extends Drawable{
     @Override
     public void draw(Graphics g){
 
-        if(station.getColor()==project.Color.RED)
-            g.setColor(Color.RED);
-        else if(station.getColor()==project.Color.GREEN)
-            g.setColor(Color.GREEN);
-        else if(station.getColor()==project.Color.BLUE)
-            g.setColor(Color.BLUE);
-        else if(station.getColor()==project.Color.YELLOW)
-            g.setColor(Color.YELLOW);
-        else if(station.getColor()==project.Color.PINK)
-            g.setColor(Color.PINK);
 
         g.fillRect(station.getX(), station.getY(), 20, 20);
         g.setColor(Color.BLACK);

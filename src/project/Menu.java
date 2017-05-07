@@ -1,6 +1,9 @@
 package project;
 
-import java.util.Scanner;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  * Loads the game starting menu
@@ -10,20 +13,23 @@ import java.util.Scanner;
 public class Menu implements State {
 
     private View view;
+    private volatile Status output;
 
     public Menu(View view) {
         this.view = view;
+        output = null;
     }
 
     @Override
     public Status start() {
-        
-        return null;
+        String[] buttons = {"Start Game", "Exit Game"};
+        view.updatePanel(buttons, this);
+        while(output == null);
+        return output;
     }
-
+    
     @Override
-    public void mouseEventHandler(int x1, int y1, int x2, int y2) {
-
+    public void setOutput(Status s) {
+        output = s;
     }
-
 }

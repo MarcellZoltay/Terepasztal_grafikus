@@ -9,6 +9,7 @@ import java.util.*;
 public class Pause implements State {
 
     private View view;
+    private Status output;
 
     public Pause(View view) {
         this.view = view;
@@ -20,8 +21,8 @@ public class Pause implements State {
     }
 
     @Override
-    public void mouseEventHandler(int x1, int y1, int x2, int y2) {
-
+    public void setOutput(Status s) {
+        output = s;
     }
 
 }

@@ -34,7 +34,7 @@ public class Station extends Node {
      */
     public Station(){
         super(0, 0, null, null);
-        this.color = null;
+        this.color = new Color();
         this.canGetOff = false;
     }
 
@@ -47,7 +47,7 @@ public class Station extends Node {
      */
     public Station(int x, int y, Node n, Node p, String c) {
         super(x, y, n, p);
-        this.color.setColor(c);
+        color = new Color(c);
         this.canGetOff = false;
     }
 
