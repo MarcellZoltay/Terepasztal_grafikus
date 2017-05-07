@@ -22,7 +22,7 @@ public class Menu implements State {
 
     @Override
     public Status start() {
-        String[] buttons = {"Start Game", "Exit Game"};
+        String[] buttons = {"Start Game", "Exit Game", "Sheldon's Board"};
         view.updatePanel(buttons, this);
         while(output == null);
         return output;
