@@ -2,15 +2,16 @@ package project;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
@@ -23,22 +24,13 @@ public class View extends JFrame {
     private JPanel panel;
     private State state;
     private Model map;
+    private int x,y;
 
     /**
      * Default constructor
      */
     public View() {
-        super("Sheldon Terepasztal");
-        setMinimumSize(new Dimension(800, 600));
-        //setExtendedState(JFrame.MAXIMIZED_BOTH);
-        //setResizable(false);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
-        //getContentPane().add(panel, BorderLayout.CENTER);
-        //getContentPane().addKeyListener(new MyKeyListener());
-
-        setVisible(true);
-        
+        super("Sheldon Tepepasztala");
         drawables = new ArrayList<>();
         panel = new JPanel();
     }
@@ -73,6 +65,20 @@ public class View extends JFrame {
     public void setMap(Model newMap) {
         panel.removeAll();
         map = newMap;
+        addMouseListener(new MouseAdapter() {
+            public void MousePressed(MouseEvent e) {
+                if (!drawables.isEmpty()) { 
+                    x = e.getX();
+                    y = e.getY();
+                }
+            }
+            
+            public void MouseReleased(MouseEvent e) {
+                if (!drawables.isEmpty()) {  
+                    map.decideActions(x, y, e.getX(), e.getY());
+                }
+            }
+        });
     }
     
     public void updateScreen(){
@@ -84,41 +90,58 @@ public class View extends JFrame {
         drawables.clear();
         state = newState;
         panel.removeAll();
-        JButton start = new JButton(buttons[0]);
-        start.setFont(new Font("Verdana", Font.BOLD, 24));
-        start.setBorderPainted(false);
-        start.setFocusPainted(false);
-        start.setContentAreaFilled(false);
-        start.setForeground(java.awt.Color.DARK_GRAY);
-        start.addMouseListener(new MyMouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                state.setOutput(Status.START_GAME);
-            }
-        });
-        JButton end = new JButton(buttons[1]);
-        end.setFont(new Font("Verdana", Font.BOLD, 24));
-        end.setBorderPainted(false);
-        end.setFocusPainted(false);
-        end.setContentAreaFilled(false);
-        end.setForeground(java.awt.Color.DARK_GRAY);
-        end.addMouseListener(new MyMouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                state.setOutput(Status.EXIT_GAME);
-            }
-        });
-        JLabel bg = null;
-        try {
-            System.out.println(System.getProperty("user.dir"));
-            bg = new JLabel(new ImageIcon(ImageIO.read(new File(System.getProperty("user.dir") + "\\res\\kep.jpg"))));
-        } catch (IOException ex) {
-            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+        
+        setMaximumSize(new Dimension(800, 600));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setVisible(true);
+        
+        if (buttons != null) {
+            try {
+                setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File(System.getProperty("user.dir") + "\\res\\kep.jpg"))))); 
+            } catch (IOException e) { }
+            setLayout(new FlowLayout());
+
+            JButton start = new JButton(buttons[0]);
+            start.setFont(new Font("Verdana", Font.PLAIN, 42));
+            start.setOpaque(false);
+            start.setBorderPainted(false);
+            start.setFocusPainted(false);
+            start.setContentAreaFilled(false);
+            start.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            start.setForeground(java.awt.Color.CYAN);
+            start.addMouseListener(new MyMouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    state.setOutput(Status.START_GAME);
+                }
+            });
+            JButton end = new JButton(buttons[1]);
+            end.setFont(new Font("Verdana", Font.PLAIN, 42));
+            start.setOpaque(false);
+            end.setBorderPainted(false);
+            end.setFocusPainted(false);
+            end.setContentAreaFilled(false);
+            end.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            end.setForeground(java.awt.Color.CYAN);
+            end.addMouseListener(new MyMouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    state.setOutput(Status.EXIT_GAME);
+                }
+            });
+            JPanel options = new JPanel();
+            options.setLayout(new GridLayout(2,1));
+            options.add(start, BorderLayout.PAGE_END);
+            options.add(end, BorderLayout.PAGE_END);
+            options.setBackground(new java.awt.Color(0, 0, 0, 1));
+            panel.setLayout(new BorderLayout(100, 500));
+            //panel.setBackground(java.awt.Color.red);
+            panel.setBackground(new java.awt.Color(0, 0, 0, 1));
+            panel.add(options, BorderLayout.PAGE_START);
+            add(panel);
         }
-        //panel.add(bg);
-        panel.add(start);
-        panel.add(end);
-        add(panel, BorderLayout.CENTER);
+        
         
         pack();
     }
@@ -158,12 +181,12 @@ public class View extends JFrame {
 
         @Override
         public void mouseEntered(MouseEvent e) {
-            e.getComponent().setForeground(java.awt.Color.LIGHT_GRAY);
+            e.getComponent().setFont(new Font("Verdana", Font.BOLD, 42));
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
-            e.getComponent().setForeground(java.awt.Color.DARK_GRAY);
+            e.getComponent().setFont(new Font("Verdana", Font.PLAIN, 42));
         }
 
         @Override
