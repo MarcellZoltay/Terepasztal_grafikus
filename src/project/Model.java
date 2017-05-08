@@ -109,7 +109,7 @@ public class Model {
         return Status.CONTINUE;
     }
 
-    private void Load(){
+    public void Load(){
         int xk=749;
         int yk=507;
         //Crosskör és a közepe
