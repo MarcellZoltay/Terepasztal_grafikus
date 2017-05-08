@@ -2,13 +2,15 @@ package project;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -95,10 +97,10 @@ public class View extends JFrame {
         setVisible(true);
         
         if (buttons != null) {
-            /*try {
-                setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File(System.getProperty("user.dir") + "\\res\\kep.jpg"))))); 
+            try {
+                setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File(System.getProperty("user.dir") + "\\res\\fu.jpg"))))); 
             } catch (IOException e) { }
-            setLayout(new FlowLayout());*/
+            setLayout(new FlowLayout());
 
             JButton start = new JButton(buttons[0]);
             start.setFont(new Font("Verdana", Font.PLAIN, 42));
