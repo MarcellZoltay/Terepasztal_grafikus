@@ -108,24 +108,24 @@ public class Model {
         return Status.CONTINUE;
     }
 
-    private void Load() {
+    /*private void Load() {
         int xk = 750;
         int yk = 400;
         Rail r1 = new Rail(xk - 150, yk - 100, null, null);
         Rail r2 = new Rail(xk + 150, yk - 100, null, r1);
-        r1.setPrev(r2);
-        Rail r3 = new Rail(xk + 150, yk + 100, null, r2);
+        r1.setNext(r2);
+        Rail r3 = new Rail(xk + 250, yk + 200, null, r2);
         r2.setNext(r3);
         Rail r4 = new Rail(xk - 150, yk + 100, r1, r3);
-        r1.setNext(r4);
+        r1.setPrev(r4);
         r3.setNext(r4);
         
         rails.add(r1);
         rails.add(r2);
         rails.add(r3);
         rails.add(r4);
-    }
-    /*private void Load() {
+    }*/
+   /* private void Load() {
         int xk = 750;
         int yk = 400;
         Cross c1 = new Cross(xk, yk, null, null, null, null);
@@ -165,7 +165,7 @@ public class Model {
         
         
     }*/
-    /*private void Load(){
+    private void Load(){
         int xk=750;
         int yk=400;
         //Crosskör és a közepe
@@ -466,7 +466,7 @@ public class Model {
         switches.add(v15);
         switches.add(v16);
         switches.add(v17);
-    }*/
+    }
   
     private int getDistance(int x, int y, int lx1, int ly1, int lx2, int ly2) {
         if (((x < lx1 && x > lx2) || (x > lx1 && x < lx2)) && ((y < ly1 && y > ly2) || (y > ly1 && y < ly2))) {

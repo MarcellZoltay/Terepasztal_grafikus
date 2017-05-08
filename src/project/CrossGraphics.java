@@ -7,6 +7,9 @@ package project;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
+import java.awt.Rectangle;
+import java.awt.TexturePaint;
 import java.awt.geom.AffineTransform;
 
 /**
@@ -22,14 +25,22 @@ public class CrossGraphics extends Drawable{
     }
     @Override
     public void draw(Graphics g) {
-        AffineTransform at = new AffineTransform();
-        at.translate((double)c.getX(), (double)c.getY());
-        int vecX = c.getPrev().getX() - c.getNext().getX();
-        int vecY = c.getPrev().getY() - c.getNext().getY();
-        at.rotate(vecX, vecY);
-        at.translate(-image.getWidth()/2, -image.getWidth()/2);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(image, at, null);
+        Polygon p = new Polygon();
+        p.addPoint(c.getX()+15, c.getY()+15);
+        p.addPoint(c.getX()-15, c.getY()-15);
+        p.addPoint(c.getNext().getX()-15, c.getNext().getY()-15);
+        p.addPoint(c.getNext().getX()+15, c.getNext().getY()+15);
+        TexturePaint tp = new TexturePaint(image, new Rectangle(c.getX(), c.getY(), 10, 20));
+        g2d.setPaint(tp);
+        g2d.fillPolygon(p);
+        
+        Polygon p2 = new Polygon();
+        p2.addPoint(c.getX()+15, c.getY()+15);
+        p2.addPoint(c.getX()-15, c.getY()-15);
+        p2.addPoint(c.getNext2().getX()-15, c.getNext2().getY()-15);
+        p2.addPoint(c.getNext2().getX()+15, c.getNext2().getY()+15);
+        g2d.fillPolygon(p2);  
         
     }
     
