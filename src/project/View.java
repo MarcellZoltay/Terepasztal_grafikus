@@ -2,17 +2,13 @@ package project;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -66,7 +62,7 @@ public class View extends JFrame {
         panel.removeAll();
         repaint();
         map = newMap;
-        addMouseListener(new MouseAdapter() {
+        getContentPane().addMouseListener(new MouseAdapter() {
             public void MousePressed(MouseEvent e) {
                 if (!drawables.isEmpty()) { 
                     x = e.getX();
@@ -75,11 +71,12 @@ public class View extends JFrame {
             }
             
             public void MouseReleased(MouseEvent e) {
-                if (!drawables.isEmpty()) {  
+                if (!drawables.isEmpty()) {
                     map.decideActions(x, y, e.getX(), e.getY());
                 }
             }
         });
+        getContentPane().addKeyListener(new MyKeyListener());
     }
     
     public void updateScreen(){
@@ -163,7 +160,10 @@ public class View extends JFrame {
 
         @Override
         public void keyTyped(KeyEvent e) {
-
+            if (!drawables.isEmpty() && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                state.setOutput(Status.PAUSE);
+                System.out.println("asdf");
+            }
         }
 
         @Override

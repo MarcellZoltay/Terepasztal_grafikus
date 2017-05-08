@@ -108,7 +108,64 @@ public class Model {
         return Status.CONTINUE;
     }
 
-    private void Load(){
+    private void Load() {
+        int xk = 750;
+        int yk = 400;
+        Rail r1 = new Rail(xk - 150, yk - 100, null, null);
+        Rail r2 = new Rail(xk + 150, yk - 100, null, r1);
+        r1.setPrev(r2);
+        Rail r3 = new Rail(xk + 150, yk + 100, null, r2);
+        r2.setNext(r3);
+        Rail r4 = new Rail(xk - 150, yk + 100, r1, r3);
+        r1.setNext(r4);
+        r3.setNext(r4);
+        
+        rails.add(r1);
+        rails.add(r2);
+        rails.add(r3);
+        rails.add(r4);
+    }
+    /*private void Load() {
+        int xk = 750;
+        int yk = 400;
+        Cross c1 = new Cross(xk, yk, null, null, null, null);
+        Switch r1 = new Switch(xk - 200, yk, c1, null, null);
+        c1.setPrev(r1);
+        Rail r2 = new Rail(xk, yk - 200, c1, null);
+        c1.setNext(r2);
+        Switch r3 = new Switch(xk + 200, yk, c1, null, null);
+        c1.setNext2(r3);
+        Rail r4 = new Rail(xk, yk + 200, c1, null);
+        c1.setPrev2(r4);
+        
+        Rail r12 = new Rail(xk - 200, yk - 200, r1, r2);
+        r1.setPrev(r12);
+        r2.setPrev(r12);
+        
+        Rail r23 = new Rail(xk + 200, yk - 200, r2, r3);
+        r3.setPrev(r23);
+        
+        Rail r34 = new Rail(xk + 200, yk + 200, r3, r4);
+        r3.setSecond(r34);
+        
+        
+        Rail r14 = new Rail(xk + 200, yk + 200, r1, r4);
+        r1.setSecond(r14);
+        r4.setPrev(r14);
+        
+        crosses.add(c1);
+        switches.add(r1);
+        switches.add(r3);
+        rails.add(r2);
+        rails.add(r4);
+        rails.add(r12);
+        rails.add(r23);
+        rails.add(r34);
+        rails.add(r14);
+        
+        
+    }*/
+    /*private void Load(){
         int xk=750;
         int yk=400;
         //Crosskör és a közepe
@@ -409,7 +466,7 @@ public class Model {
         switches.add(v15);
         switches.add(v16);
         switches.add(v17);
-    }
+    }*/
   
     private int getDistance(int x, int y, int lx1, int ly1, int lx2, int ly2) {
         if (((x < lx1 && x > lx2) || (x > lx1 && x < lx2)) && ((y < ly1 && y > ly2) || (y > ly1 && y < ly2))) {

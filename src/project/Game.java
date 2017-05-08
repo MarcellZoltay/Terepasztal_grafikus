@@ -11,12 +11,14 @@ import java.util.*;
 public class Game implements State {
 
     private View view;
+    private volatile Status output;
 
     public Game(View view) {
         map = new Model();
         numberOfTrains = 5;
         waitingTime = 1;
         this.view = view;
+        output = null;
     }
     
     private Model map;              // The model in which the elements are stored
@@ -40,8 +42,9 @@ public class Game implements State {
         view.setMap(map);
         while (true) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {}
+            if (output == Status.PAUSE) return output;
             st = map.moveEngines();
             view.updateScreen();
             if (st != Status.CONTINUE) return st;
@@ -51,7 +54,7 @@ public class Game implements State {
 
     @Override
     public void setOutput(Status s){
-        
+        output = s;
     }
 
 }
