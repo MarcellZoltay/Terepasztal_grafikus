@@ -98,7 +98,7 @@ public class View extends JFrame {
         
         if (buttons != null) {
             try {
-                setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File(System.getProperty("user.dir") + "\\res\\fu.jpg"))))); 
+                setContentPane(new JLabel(new ImageIcon(ImageIO.read(new File(System.getProperty("user.dir") + "\\res\\GRASS.png"))))); 
             } catch (IOException e) { }
             setLayout(new FlowLayout());
 
