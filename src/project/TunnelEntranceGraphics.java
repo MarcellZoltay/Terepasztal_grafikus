@@ -25,6 +25,30 @@ public class TunnelEntranceGraphics extends Drawable{
         at.translate(-image.getWidth()/2, -image.getWidth()/2);
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(image, at, null);
+        
+        Polygon p = new Polygon();
+        p.addPoint(tunnelEntrance.getX()+15, tunnelEntrance.getY()+15);
+        p.addPoint(tunnelEntrance.getX()-15, tunnelEntrance.getY()-15);
+        p.addPoint(tunnelEntrance.getNext().getX()-15, tunnelEntrance.getNext().getY()-15);
+        p.addPoint(tunnelEntrance.getNext().getX()+15, tunnelEntrance.getNext().getY()+15);
+        TexturePaint tp = new TexturePaint(image, new Rectangle(tunnelEntrance.getX(), tunnelEntrance.getY(), 10, 20));
+        g2d.setPaint(tp);
+        g2d.fillPolygon(p);
+
+        Polygon p2 = new Polygon();
+        p2.addPoint(tunnelEntrance.getX()+15, tunnelEntrance.getY()+15);
+        p2.addPoint(tunnelEntrance.getX()-15, tunnelEntrance.getY()-15);
+        p2.addPoint(tunnelEntrance.getSecond().getX()-15, tunnelEntrance.getNext().getY()-15);
+        p2.addPoint(tunnelEntrance.getSecond().getX()+15, tunnelEntrance.getNext().getY()+15);
+        g2d.fillPolygon(p2);
+        
+        Polygon p3 = new Polygon();
+        p3.addPoint(tunnelEntrance.getX()+15, tunnelEntrance.getY()+15);
+        p3.addPoint(tunnelEntrance.getX()-15, tunnelEntrance.getY()-15);
+        p3.addPoint(tunnelEntrance.getPrev().getX()-15, tunnelEntrance.getNext().getY()-15);
+        p3.addPoint(tunnelEntrance.getPrev().getX()+15, tunnelEntrance.getNext().getY()+15);
+        g2d.fillPolygon(p3);
+        
     }
 
     public TunnelEntrance getTunnelEntrance() { return tunnelEntrance; }

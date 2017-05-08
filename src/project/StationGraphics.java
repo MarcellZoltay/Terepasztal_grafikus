@@ -27,6 +27,15 @@ public class StationGraphics extends Drawable{
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(image, at, null);
         
+        Polygon p = new Polygon();
+        p.addPoint(station.getX()+15, station.getY()+15);
+        p.addPoint(station.getX()-15, station.getY()-15);
+        p.addPoint(station.getNext().getX()-15, station.getNext().getY()-15);
+        p.addPoint(station.getNext().getX()+15, station.getNext().getY()+15);
+        TexturePaint tp = new TexturePaint(image, new Rectangle(station.getX(), station.getY(), 10, 20));
+        g2d.setPaint(tp);
+        g2d.fillPolygon(p);  
+        
     }
 
     public Station getStation() { return station; }

@@ -7,6 +7,9 @@ package project;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
+import java.awt.Rectangle;
+import java.awt.TexturePaint;
 import java.awt.geom.AffineTransform;
 
 /**
@@ -23,14 +26,22 @@ public class SwitchGraphics extends Drawable{
 
     @Override
     public void draw(Graphics g) {
-        AffineTransform at = new AffineTransform();
-        at.translate((double)s.getX(), (double)s.getY());
-        int vecX = s.getPrev().getX() - s.getNext().getX();
-        int vecY = s.getPrev().getY() - s.getNext().getY();
-        at.rotate(vecX, vecY);
-        at.translate(-image.getWidth()/2, -image.getWidth()/2);
         Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(image, at, null);
+        Polygon p = new Polygon();
+        p.addPoint(s.getX()+15, s.getY()+15);
+        p.addPoint(s.getX()-15, s.getY()-15);
+        p.addPoint(s.getNext().getX()-15, s.getNext().getY()-15);
+        p.addPoint(s.getNext().getX()+15, s.getNext().getY()+15);
+        TexturePaint tp = new TexturePaint(image, new Rectangle(s.getX(), s.getY(), 10, 20));
+        g2d.setPaint(tp);
+        g2d.fillPolygon(p);
+
+        Polygon p2 = new Polygon();
+        p2.addPoint(s.getX()+15, s.getY()+15);
+        p2.addPoint(s.getX()-15, s.getY()-15);
+        p2.addPoint(s.getSecond().getX()-15, s.getNext().getY()-15);
+        p2.addPoint(s.getSecond().getX()+15, s.getNext().getY()+15);
+        g2d.fillPolygon(p2);  
         
     }
     
