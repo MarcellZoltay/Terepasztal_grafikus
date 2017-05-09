@@ -588,6 +588,60 @@ public class Model {
         return engines.isEmpty();
     }
 
+    public void addTrainToMap(){
+        Random r = new Random();
+        int min = 1;
+        int max = 3;
+        int kocsiszam = r.nextInt(max-min) + min;
+
+        Engine e = new Engine(); //konstruktor hova rakom és merre meg
+        engines.add(e);
+
+        Color color= null;  //nullra inicializal
+        Random r1 = new Random();
+
+        int szin = r1.nextInt(5);
+
+        switch (szin){
+            case 0:
+                color = Color.BLUE;
+                break;
+            case 1:
+                color = Color.GREEN;
+                break;
+            case 2:
+                color = Color.YELLOW;
+                break;
+            case 3:
+                color = Color.RED;
+                break;
+            case 4:
+                color = Color.PINK;
+                break;
+
+        }
+
+        ArrayList<Car> carsTmp = new ArrayList<>();
+        for(int i = 0 ; i < kocsiszam ; i++){
+            Node onnode;
+            Car c = new Car();  //konstruktor kitoltese
+            c.color = color;
+            carsTmp.add(c);
+        }
+
+        for(int i =0; i<kocsiszam;i++){
+            if(i == 0){
+                e.setNextCar(carsTmp.get(i));
+                carsTmp.get(i).setPrevTrain(e);
+            }
+            else {
+                carsTmp.get(i-1).setNextCar(carsTmp.get(i));
+                carsTmp.get(i).setPrevTrain(carsTmp.get(i-1));
+            }
+
+            //onnode = onnode.nextNode; // WTF???
+        }
+    }
 
     //******************************//
     //           Getterek           //

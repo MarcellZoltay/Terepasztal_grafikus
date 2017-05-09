@@ -12,11 +12,25 @@ public class Game implements State {
 
     private View view;
     private volatile Status output;
+    public Timer timer;
 
     public Game(View view) {
         map = new Model();
         numberOfTrains = 5;
-        waitingTime = 1;
+        waitingTime = 4000;
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(numberOfTrains>0) {
+                    map.addTrainToMap();
+                    numberOfTrains--;
+                }
+                else if(numberOfTrains==0){
+                    timer.cancel();
+                }
+            }
+        },0,waitingTime);
         this.view = view;
         view.setState(this);
         view.setStatus(Status.GAME);
@@ -26,7 +40,7 @@ public class Game implements State {
     
     private Model map;              // The model in which the elements are stored
     private int numberOfTrains;     // The limit of how many trains can be added to the map
-    private double waitingTime;     // The waiting time between adding trains
+    private long waitingTime;     // The waiting time between adding trains
 
     /**
      * The 'load' command got implemented here, because it just loads more of the commands it would already use
