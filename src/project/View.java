@@ -517,12 +517,12 @@ public class View extends JFrame {
         @Override
         public void keyPressed(KeyEvent e) {
             if (status == GAME && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                //status = Status.PAUSE;
+                status = Status.PAUSE;
                 state.setOutput(PAUSE);
                 //repaint();
             }
             else if (status == PAUSE && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                //status = Status.GAME;
+                status = Status.GAME;
                 state.setOutput(START_GAME);
                 //repaint();
             }

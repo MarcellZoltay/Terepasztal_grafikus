@@ -34,6 +34,7 @@ public class Manager {
                 case CONTINUE:
                     states.pop();
                     view.setStatus(Status.GAME);
+                    view.setState(states.peek());
                     view.updateScreen();
                     break;
                 case PAUSE:
