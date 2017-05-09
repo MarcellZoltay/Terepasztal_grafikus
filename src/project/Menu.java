@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Menu implements State {
 
     private View view;
-    private Status output;
+    private volatile Status output;
 
     public Menu(View view) {
         this.view = view;
@@ -21,10 +21,7 @@ public class Menu implements State {
 
     @Override
     public Status start() {
-        while(output == null)
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {}
+        while(output == null);
         return output;
     }
 

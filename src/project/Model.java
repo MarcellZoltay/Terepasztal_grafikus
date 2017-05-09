@@ -568,9 +568,9 @@ public class Model {
             return;
 
         Train next = trainPart.getNextCar();
-        if(trainPart.getColor().equals("ENGINE"))
+        if(trainPart.getColor().equals(Color.ENGINE))
             engines.remove((Engine)trainPart);
-        else if(trainPart.getColor().equals("COALCAR"))
+        else if(trainPart.getColor().equals(Color.COAL_CAR))
             coalCars.remove((CoalCar)trainPart);
         else
             cars.remove((Car)trainPart);

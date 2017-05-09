@@ -6,9 +6,7 @@ import java.awt.Color;
 import java.awt.event.*;
 import java.util.*;
 
-import static project.Status.CONTINUE;
-import static project.Status.GAME;
-import static project.Status.PAUSE;
+import static project.Status.*;
 
 /**
  *
@@ -519,14 +517,14 @@ public class View extends JFrame {
         @Override
         public void keyPressed(KeyEvent e) {
             if (status == GAME && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                status = Status.PAUSE;
+                //status = Status.PAUSE;
                 state.setOutput(PAUSE);
-                repaint();
+                //repaint();
             }
             else if (status == PAUSE && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                status = Status.GAME;
-                state.setOutput(CONTINUE);
-                repaint();
+                //status = Status.GAME;
+                state.setOutput(START_GAME);
+                //repaint();
             }
         }
 

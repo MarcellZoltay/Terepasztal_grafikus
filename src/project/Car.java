@@ -88,9 +88,13 @@ public class Car extends Train{
         x=next.getX();
         y=next.getY();
 
-        if (nextCar != null && nextCar.move().equals(Status.DELETE_TRAIN)) {
+        if(nextCar == null && color.isEmpty())
+            return Status.DELETE_TRAIN;
+
+        else if (nextCar != null && nextCar.move().equals(Status.DELETE_TRAIN)) {
             if (color.isEmpty()) return Status.DELETE_TRAIN;
         }
+
         return Status.NOT_EMPTY_CAR;
     }
 

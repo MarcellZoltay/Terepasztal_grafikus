@@ -9,7 +9,7 @@ import java.util.*;
 public class Pause implements State {
 
     private View view;
-    private Status output;
+    private volatile Status output;
 
     public Pause(View view) {
         this.view = view;
@@ -20,10 +20,7 @@ public class Pause implements State {
 
     @Override
     public Status start() {
-        while(output == null)
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {}
+        while(output == null);
         return output == Status.START_GAME ? Status.CONTINUE : output;
     }
 

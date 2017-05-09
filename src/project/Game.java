@@ -11,7 +11,7 @@ import java.util.*;
 public class Game implements State {
 
     private View view;
-    private Status output;
+    private volatile Status output;
 
     public Game(View view) {
         map = new Model();
@@ -41,22 +41,28 @@ public class Game implements State {
      */
     @Override
     public Status start() {
-        Status st;
+        Status st = Status.CONTINUE;
         view.setMap(map);
         while (true) {
             try {
-                Thread.sleep(700);
+                Thread.sleep(500);
             } catch (InterruptedException e) {}
-            st = map.moveEngines();
-            view.updateScreen();
-            if (st != Status.CONTINUE)
+            if(output != Status.PAUSE) {
+                st = map.moveEngines();
+                view.updateScreen();
+            }
+            if(output == Status.PAUSE) {
+                output = Status.CONTINUE;
+                return Status.PAUSE;
+            }
+            else if (st != Status.CONTINUE)
                 return st;
         }
     }
 
     @Override
     public void setOutput(Status s) {
-
+        output = s;
     }
 
 }
