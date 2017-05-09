@@ -27,4 +27,6 @@ public class Rail extends Node {
         super(x, y, n, p);
     }
 
+    public void setNode(Node n, Rail r){}
+
 }

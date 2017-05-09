@@ -112,4 +112,20 @@ public class Cross extends Rail {
     }
 
 
+    @Override
+    public void setNode(Node n, Rail r){
+        if(nextNode == n){
+            nextNode = r;
+        }
+        if(prevNode == n){
+            prevNode = r;
+        }
+        if(next2Node == n){
+            nextNode = r;
+        }
+        if(prev2Node == n){
+            nextNode = r;
+        }
+    }
+
 }
