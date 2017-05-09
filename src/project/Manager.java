@@ -31,6 +31,7 @@ public class Manager {
                     break;
                 case GAME_WON:
                     states.push(new End(Status.GAME_WON, view));
+                    break;
                 case CONTINUE:
                     states.pop();
                     view.setStatus(Status.GAME);

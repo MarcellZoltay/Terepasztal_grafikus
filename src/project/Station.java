@@ -79,7 +79,7 @@ public class Station extends Node {
         // Felszállás
         if (t.getColor().isEmpty() && !t.getColor().equals(Color.ENGINE) && !t.getColor().equals(Color.COAL_CAR)) {
             int r = new Random().nextInt(10);
-            if ( r < 2 ) ((Car)t).getOnPassengers();
+            if ( r < 0 ) ((Car)t).getOnPassengers();
         }
     }
 
