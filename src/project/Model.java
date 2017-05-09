@@ -438,42 +438,6 @@ public class Model {
         //makeParts(o,v11,15);
         Math.sqrt(((k.getX()-v17.getX())*(k.getX()-v17.getX()))+((k.getY()-v17.getY())*(k.getY()-v17.getY())));
     }
-    
-    /*private void Load() {
-        int xk = 750;
-        int yk = 400;
-        Cross c1 = new Cross(xk, yk, null, null, null, null);
-        Rail r1 = new Rail(xk - 200, yk, c1, null);
-        c1.setPrev(r1);
-        Rail r2 = new Rail(xk, yk - 200, c1, null);
-        c1.setNext(r2);
-        Switch r3 = new Switch(xk + 200, yk, c1, null, null);
-        c1.setNext2(r3);
-        Rail r4 = new Rail(xk, yk + 200, c1, null);
-        c1.setPrev2(r4);
-        
-        Rail r12 = new Rail(xk - 200, yk - 200, r1, r2);
-        r1.setPrev(r12);
-        r2.setPrev(r12);
-        
-        Rail r23 = new Rail(xk + 200, yk - 200, r2, r3);
-        r3.setPrev(r23);
-        
-        Rail r34 = new Rail(xk + 200, yk + 200, r3, r4);
-        r3.setSecond(r34);
-        
-        crosses.add(c1);
-        rails.add(r1);
-        switches.add(r3);
-        rails.add(r2);
-        rails.add(r4);
-        rails.add(r12);
-        rails.add(r23);
-        rails.add(r34);
-        
-        Engine e = new Engine(r1.getX(), r1.getY(),)
-        
-    }*/
 
     private int getDistance(int x, int y, int lx1, int ly1, int lx2, int ly2) {
         if (((x < lx1 && x > lx2) || (x > lx1 && x < lx2)) && ((y < ly1 && y > ly2) || (y > ly1 && y < ly2))) {

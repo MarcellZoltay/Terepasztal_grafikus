@@ -480,6 +480,10 @@ public class View extends JFrame {
                 g.drawLine(c.getX(), c.getY(), c.getNext().getX(), c.getNext().getY());
             if(c.getNext2()!=null)
                 g.drawLine(c.getX(), c.getY(), c.getNext2().getX(), c.getNext2().getY());
+            if(c.getPrev()!=null)
+                g.drawLine(c.getX(), c.getY(), c.getPrev().getX(), c.getPrev().getY());
+            if(c.getPrev2()!=null)
+                g.drawLine(c.getX(), c.getY(), c.getPrev2().getX(), c.getPrev2().getY());
         }
 //
         //for(TunnelEntranceGraphics te: tunnelEntranceGraphics){
