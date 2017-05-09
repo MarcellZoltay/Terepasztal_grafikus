@@ -436,7 +436,55 @@ public class Model {
         switches.add(v17);
 
         //makeParts(o,v11,15);
-        Math.sqrt(((k.getX()-v17.getX())*(k.getX()-v17.getX()))+((k.getY()-v17.getY())*(k.getY()-v17.getY())));
+        //Math.sqrt(((k.getX()-v17.getX())*(k.getX()-v17.getX()))+((k.getY()-v17.getY())*(k.getY()-v17.getY())));
+
+        List<Rail> ujak = new ArrayList<>();
+        // Crosses
+        for(int i = 0; i<crosses.size(); i++){
+            ujak.addAll(makeParts(crosses.get(i), crosses.get(i).getPrev(), 15));
+            ujak.addAll(makeParts(crosses.get(i), crosses.get(i).getNext(), 15));
+            ujak.addAll(makeParts(crosses.get(i), crosses.get(i).getPrev2(), 15));
+            ujak.addAll(makeParts(crosses.get(i), crosses.get(i).getNext2(), 15));
+        }
+
+        // Switch
+        for(int i = 0; i<switches.size(); i++){
+            ujak.addAll(makeParts(switches.get(i), switches.get(i).getPrev(), 15));
+            ujak.addAll(makeParts(switches.get(i), switches.get(i).getNext(), 15));
+            ujak.addAll(makeParts(switches.get(i), switches.get(i).getSecond(), 15));
+        }
+
+        // Station
+        for(int i = 0; i<stations.size(); i++){
+            ujak.addAll(makeParts(stations.get(i), stations.get(i).getPrev(), 15));
+            ujak.addAll(makeParts(stations.get(i), stations.get(i).getNext(), 15));
+        }
+
+        rails.addAll(ujak);
+
+    }
+
+    private ArrayList<Rail> makeParts(Node n1, Node n2, int a){
+        int db = ((int) Math.sqrt(((n1.getX() - n2.getX()) * (n1.getX() - n2.getX())) + ((n1.getY() - n2.getY()) * (n1.getY() - n2.getY()))))/a;
+        ArrayList<Rail> ujak = new ArrayList<>();
+        Rail current, prev = null;
+        for(int i = 0; i<db; i++){
+            current = new Rail((((db-i)*n1.getX())+((i)*n2.getX()))/db,(((db-i)*n1.getY())+((i)*n2.getY()))/db, null, null);;
+            if( i!=0){
+                current.setPrev(prev);
+                prev.setNext(current);
+            }
+            ujak.add(current);
+            prev = current;
+        }
+
+        ujak.get(0).setPrev(n1);
+        ujak.get(ujak.size()-1).setNext(n2);
+
+        n1.setNode(n2, ujak.get(0));
+        n2.setNode(n1, ujak.get(ujak.size()-1));
+
+        return ujak;
     }
 
     private int getDistance(int x, int y, int lx1, int ly1, int lx2, int ly2) {
