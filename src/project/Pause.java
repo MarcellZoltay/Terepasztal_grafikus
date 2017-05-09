@@ -21,7 +21,7 @@ public class Pause implements State {
     @Override
     public Status start() {
         while(output == null);
-        return output == Status.START_GAME ? Status.CONTINUE : output;
+        return output;
     }
 
     @Override
