@@ -11,7 +11,7 @@ import java.util.*;
 public class Game implements State {
 
     private View view;
-    private Status output;
+    private volatile Status output;
 
     public Game(View view) {
         map = new Model();
@@ -49,6 +49,7 @@ public class Game implements State {
             } catch (InterruptedException e) {}
             st = map.moveEngines();
             view.updateScreen();
+            if (output == Status.PAUSE) return output;
             if (st != Status.CONTINUE)
                 return st;
         }
@@ -56,7 +57,7 @@ public class Game implements State {
 
     @Override
     public void setOutput(Status s) {
-
+        output = s;
     }
 
 }
