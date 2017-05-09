@@ -342,11 +342,13 @@ public class Model {
         engine.setPrevNode(s1);
         Car cc=new Car(s1.getX()+5,s1.getY()+5,xk-2,yk-2,s1,Color.BLUE);
         cc.setPrevNode(one);
+        cc.setPrevTrain(engine);
         engine.setNextCar(cc);
 
         Engine engine2=new Engine(c7.getX(),c7.getY(),one.getX(),one.getY(),c7);
         engine2.setPrevNode(c03);
         Car cc2=new Car(c03.getX()+5,c03.getY()+5,xk-2,yk-2,c03,Color.RED);
+        cc2.setPrevTrain(engine2);
         cc2.setPrevNode(c3);
         engine2.setNextCar(cc2);
 
@@ -354,6 +356,7 @@ public class Model {
         engine3.setPrevNode(d415);
         Car cc3=new Car(d415.getX()+5,d415.getY()+5,xk-2,yk-2,d415,Color.GREEN);
         cc3.setPrevNode(v4);
+        cc3.setPrevTrain(engine3);
         engine3.setNextCar(cc3);
 
         v10.setPrev(n);
