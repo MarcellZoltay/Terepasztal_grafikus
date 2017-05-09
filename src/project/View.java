@@ -461,9 +461,8 @@ public class View extends JFrame {
                 g.setColor(Color.BLACK);
                 g.drawOval((s.getSecond().getX()+s.getX())/2, (s.getSecond().getY()+s.getY())/2, 10, 10);
             }
-
-            //if(s.getPrev()!=null)
-            //    g.getGraphics().drawLine(s.getX(),s.getY(), s.getPrev().getX(), s.getPrev().getY());
+            if(s.getPrev()!=null)
+                g.drawLine(s.getX(),s.getY(), s.getPrev().getX(), s.getPrev().getY());
         }
 
         for(StationGraphics s: stationGraphics){
