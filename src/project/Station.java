@@ -113,13 +113,10 @@ public class Station extends Node {
 
     @Override
     public void setNode(Node n, Rail r){
-        if(nextNode ==n){
+        if(nextNode == n)
             nextNode = r;
-        }
-        if(prevNode ==n){
+        else if(prevNode == n)
             prevNode = r;
-        }
-
     }
 
 }

@@ -75,15 +75,12 @@ public class Switch extends Node {
 
     @Override
     public void setNode(Node n, Rail r) {
-        if(nextNode == n){
+        if(nextNode == n)
             nextNode = r;
-        }
-        if(prevNode ==n){
+        else if(prevNode ==n)
             prevNode =r;
-        }
-        if(next2Node ==n){
+        else if(next2Node ==n)
             next2Node = r;
-        }
     }
 
     //******************************//

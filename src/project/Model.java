@@ -2,6 +2,9 @@ package project;
 
 import java.util.*;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.sqrt;
+
 /** Attributes are stored as a map hash, in order to be able to reference them by the user
  *  The final product wont have it like that, its just the purpose of the prototype
  */
@@ -338,8 +341,8 @@ public class Model {
         n.setPrev(s3);
         q.setPrev(s4);
 
-        Engine engine=new Engine(k.getX(),k.getY(),one.getX(),one.getY(),k);
-        engine.setPrevNode(s1);
+        Engine engine=new Engine(k.getX(),k.getY(),one.getX(),one.getY(),c315);
+        /*engine.setPrevNode(s1);
         Car cc=new Car(s1.getX()+5,s1.getY()+5,xk-2,yk-2,s1,Color.BLUE);
         cc.setPrevNode(one);
         cc.setPrevTrain(engine);
@@ -357,7 +360,7 @@ public class Model {
         Car cc3=new Car(d415.getX()+5,d415.getY()+5,xk-2,yk-2,d415,Color.GREEN);
         cc3.setPrevNode(v4);
         cc3.setPrevTrain(engine3);
-        engine3.setNextCar(cc3);
+        engine3.setNextCar(cc3);*/
 
         v10.setPrev(n);
         v11.setPrev(o);
@@ -371,11 +374,11 @@ public class Model {
 
 
         engines.add(engine);
-        cars.add(cc);
-        engines.add(engine2);
-        cars.add(cc2);
-        engines.add(engine3);
-        cars.add(cc3);
+        //cars.add(cc);
+        //engines.add(engine2);
+        //cars.add(cc2);
+        //engines.add(engine3);
+        //cars.add(cc3);
         stations.add(s1);
         stations.add(s2);
         stations.add(s3);
@@ -441,36 +444,37 @@ public class Model {
         List<Rail> ujak = new ArrayList<>();
         // Crosses
         for(int i = 0; i<crosses.size(); i++){
-            ujak.addAll(makeParts(crosses.get(i), crosses.get(i).getPrev(), 15));
-            ujak.addAll(makeParts(crosses.get(i), crosses.get(i).getNext(), 15));
-            ujak.addAll(makeParts(crosses.get(i), crosses.get(i).getPrev2(), 15));
-            ujak.addAll(makeParts(crosses.get(i), crosses.get(i).getNext2(), 15));
+            ujak.addAll(makeParts(crosses.get(i), crosses.get(i).getPrev(), 20));
+            ujak.addAll(makeParts(crosses.get(i), crosses.get(i).getNext(), 20));
+            ujak.addAll(makeParts(crosses.get(i), crosses.get(i).getPrev2(), 20));
+            ujak.addAll(makeParts(crosses.get(i), crosses.get(i).getNext2(), 20));
         }
 
         // Switch
         for(int i = 0; i<switches.size(); i++){
-            ujak.addAll(makeParts(switches.get(i), switches.get(i).getPrev(), 15));
-            ujak.addAll(makeParts(switches.get(i), switches.get(i).getNext(), 15));
-            ujak.addAll(makeParts(switches.get(i), switches.get(i).getSecond(), 15));
+            ujak.addAll(makeParts(switches.get(i), switches.get(i).getPrev(), 20));
+            ujak.addAll(makeParts(switches.get(i), switches.get(i).getNext(), 20));
+            ujak.addAll(makeParts(switches.get(i), switches.get(i).getSecond(), 20));
         }
 
         // Station
         for(int i = 0; i<stations.size(); i++){
-            ujak.addAll(makeParts(stations.get(i), stations.get(i).getPrev(), 15));
-            ujak.addAll(makeParts(stations.get(i), stations.get(i).getNext(), 15));
+            ujak.addAll(makeParts(stations.get(i), stations.get(i).getPrev(), 20));
+            ujak.addAll(makeParts(stations.get(i), stations.get(i).getNext(), 20));
         }
 
         rails.addAll(ujak);
-
+        engine.setOnNode(j);
+        engine.setPrevNode(j.prevNode);
     }
 
     private ArrayList<Rail> makeParts(Node n1, Node n2, int a){
-        int db = ((int) Math.sqrt(((n1.getX() - n2.getX()) * (n1.getX() - n2.getX())) + ((n1.getY() - n2.getY()) * (n1.getY() - n2.getY()))))/a;
+        int db = ((int) sqrt(((n1.getX() - n2.getX()) * (n1.getX() - n2.getX())) + ((n1.getY() - n2.getY()) * (n1.getY() - n2.getY()))))/a;
         ArrayList<Rail> ujak = new ArrayList<>();
         Rail current, prev = null;
-        for(int i = 0; i<db; i++){
+        for(int i = 1; i<db; i++){
             current = new Rail((((db-i)*n1.getX())+((i)*n2.getX()))/db,(((db-i)*n1.getY())+((i)*n2.getY()))/db, null, null);;
-            if( i!=0){
+            if( i!=1 ){
                 current.setPrev(prev);
                 prev.setNext(current);
             }
@@ -478,12 +482,13 @@ public class Model {
             prev = current;
         }
 
-        ujak.get(0).setPrev(n1);
-        ujak.get(ujak.size()-1).setNext(n2);
+        if (!ujak.isEmpty()) {
+            ujak.get(0).setPrev(n1);
+            ujak.get(ujak.size() - 1).setNext(n2);
 
-        n1.setNode(n2, ujak.get(0));
-        n2.setNode(n1, ujak.get(ujak.size()-1));
-
+            n1.setNode(n2, ujak.get(0));
+            n2.setNode(n1, ujak.get(ujak.size() - 1));
+        }
         return ujak;
     }
 
@@ -494,9 +499,12 @@ public class Model {
             int lineC = lx1 * normX * -1 + ly1 * normY;
             int intersectY = (lineC + C) / (normY * 2);
             int intersectX = (normY * intersectY + C) / normX;
-            return (int)Math.sqrt(Math.pow(intersectX - x, 2) + Math.pow(intersectY - y, 2));
+            return (int) sqrt(Math.pow(intersectX - x, 2) + Math.pow(intersectY - y, 2));
         }
         return -1;
+    }
+    private int getDistance(int x, int y, int rx, int ry) {
+        return (int) sqrt(abs((x-rx)*(x-rx))+abs((y-ry)*(y-ry)));
     }
 
     public void decideActions(int x1, int y1, int x2, int y2) {
@@ -517,13 +525,20 @@ public class Model {
             }
         }
         if (!options) {
-            rails.forEach( (Rail r) -> {
-                int d = getDistance(x1, y1, r.getX(), r.getY(), r.getNext().getX(), r.getNext().getY());
-                if (d != -1 && d < 5) {
-                    addTunnelEntrance(r, r.getNext(), x1, y1, x2, y2);
+            Rail rclose=null;
+            int mind=10000;
+            for (int i=0;i<rails.size();i++){
+                int d = getDistance(x1, y1, rails.get(i).getX(), rails.get(i).getY());
+                if (d<mind) {
+                    mind=d;
+                    rclose=rails.get(i);
                 }
-            });
+               }
+            if (rclose!=null)
+            addTunnelEntrance(rclose.getPrev(), rclose.getNext(), x1, y1, x2, y2);
 
+        }
+/*
             stations.forEach( (Station r) -> {
                 int d = getDistance(x1, y1, r.getX(), r.getY(), r.getNext().getX(), r.getNext().getY());
                 if (d != -1 && d < 5) {
@@ -541,8 +556,10 @@ public class Model {
                     addTunnelEntrance(r, r.getNext2(), x1, y1, x2, y2);
                 }
             });
+
+ */
         }
-    }
+
 
     /**
      * @param x1
@@ -552,8 +569,8 @@ public class Model {
      */
     private void addTunnelEntrance(Node p, Node n, int x1, int y1, int x2, int y2) {
         if (tunnelEntrances.size() == 2) return;
-        int d1 =(int)Math.sqrt(Math.pow(p.getX() - x1, 2) + Math.pow(p.getY() - y1, 2));
-        int d2 =(int)Math.sqrt(Math.pow(p.getX() - x2, 2) + Math.pow(p.getY() - y2, 2));
+        int d1 =(int) sqrt(Math.pow(p.getX() - x1, 2) + Math.pow(p.getY() - y1, 2));
+        int d2 =(int) sqrt(Math.pow(p.getX() - x2, 2) + Math.pow(p.getY() - y2, 2));
         TunnelEntrance t;
         if (d2 < d1) t = new TunnelEntrance(x1, y1, n, null, p);
         else t = new TunnelEntrance(x1, y1, p, null, n);
@@ -686,8 +703,6 @@ public class Model {
                 carsTmp.get(i-1).setNextCar(carsTmp.get(i));
                 carsTmp.get(i).setPrevTrain(carsTmp.get(i-1));
             }
-
-            //onnode = onnode.nextNode; // WTF???
         }
     }
 

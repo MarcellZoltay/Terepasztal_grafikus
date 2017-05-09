@@ -23,7 +23,7 @@ public class Game implements State {
             @Override
             public void run() {
                 if(numberOfTrains>0) {
-                    map.addTrainToMap();
+                    //map.addTrainToMap();
                     numberOfTrains--;
                 }
                 else if(numberOfTrains==0){
@@ -59,7 +59,7 @@ public class Game implements State {
         view.setMap(map);
         while (true) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(150);
             } catch (InterruptedException e) {}
             if(output != Status.PAUSE) {
                 st = map.moveEngines();

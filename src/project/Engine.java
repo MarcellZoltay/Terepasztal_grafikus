@@ -49,8 +49,11 @@ public class Engine extends Train {
             ((Station)next).setGetOff();
         }
         catch (Exception e) {}
-        
-        return nextCar.move();
+
+        if(nextCar!=null)
+            return nextCar.move();
+
+        return Status.CONTINUE;
     }
 
 }
