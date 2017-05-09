@@ -191,8 +191,10 @@ public class View extends JFrame {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                state.setOutput(Status.START_GAME);
-                status = Status.GAME;
+                if (status == Status.PAUSE) {
+                    state.setOutput(CONTINUE);
+                    status = Status.GAME; 
+                }
             }
         });
         JButton end = new JButton("Exit");
@@ -202,16 +204,10 @@ public class View extends JFrame {
         end.setFocusPainted(false);
         end.setContentAreaFilled(false);
         end.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        //end.setForeground(java.awt.Color.orange);
-        //end.addMouseListener(new MyMouseListener() {
-        //    @Override
-        //    public void mouseClicked(MouseEvent e) {
-        //        state.setOutput(Status.EXIT_GAME);
-        //    }
-        //});
-        start.addActionListener(new ActionListener() {
+        end.setForeground(java.awt.Color.orange);
+        end.addMouseListener(new MyMouseListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mouseClicked(MouseEvent e) {
                 state.setOutput(Status.EXIT_GAME);
             }
         });
@@ -526,7 +522,7 @@ public class View extends JFrame {
             }
             else if (status == PAUSE && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 status = Status.GAME;
-                state.setOutput(START_GAME);
+                state.setOutput(CONTINUE);
                 //repaint();
             }
         }
