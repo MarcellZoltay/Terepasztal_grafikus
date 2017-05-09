@@ -111,4 +111,15 @@ public class Station extends Node {
         return canGetOff;
     }
 
+    @Override
+    public void setNode(Node n, Rail r){
+        if(nextNode ==n){
+            nextNode = r;
+        }
+        if(prevNode ==n){
+            prevNode = r;
+        }
+
+    }
+
 }

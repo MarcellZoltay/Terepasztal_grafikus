@@ -77,6 +77,8 @@ public abstract class Node extends MapItem {
         return null;
     }
 
+    public void setNode(Node n, Rail r){}
+
 
     //******************************//
     //       Getterek/Setterek      //
