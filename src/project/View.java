@@ -1,17 +1,14 @@
 package project;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.*;
 import java.util.*;
+
+import static project.Status.CONTINUE;
+import static project.Status.GAME;
+import static project.Status.PAUSE;
 
 /**
  *
@@ -30,22 +27,23 @@ public class View extends JFrame {
     private ArrayList<CoalCarGraphics> coalCarGraphics = new ArrayList<>();
     private JPanel panel = new JPanel(new BorderLayout());
 
-    private int x1, y1, x2, y2;
+    private int x, y;
 
     /**
      * Default constructor
      */
     public View() {
         super("Sheldon Terepasztal");
-        setMinimumSize(new Dimension(1499, 1013));
-        //setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setMinimumSize(new Dimension(1024, 680));
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         //setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         //getContentPane().add(panel, BorderLayout.CENTER);
 
         getContentPane().addMouseListener(new MyMouseListener());
-        //getContentPane().addKeyListener(new MyKeyListener());
+        getContentPane().addKeyListener(new MyKeyListener());
+        getContentPane().setFocusable(true);
 
         setVisible(true);
     }
@@ -53,6 +51,7 @@ public class View extends JFrame {
     public void updateScreen(){ repaint(); }
 
     private void updateMap(){
+        getContentPane().removeAll();
 
         refreshEngines();
         refreshCars();
@@ -82,38 +81,73 @@ public class View extends JFrame {
 
     }
     private void drawMenu(){
-        setMinimumSize(new Dimension(1024,680));
-        setMinimumSize(new Dimension(1024,680));
-        setPreferredSize(new Dimension(1024,680));
-       // setExtendedState(JFrame.WIDTH);
-        Graphics g = getGraphics();
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        JButton game=new JButton("New Game");
-        //game.setBounds(500,500,10,10);
-        game.setEnabled(true);
-        //add(game);
-        setLayout(new BorderLayout());
-        BufferedImage image;
-        try {
-            image = ImageIO.read(new File("kep.jpg"));
-            g.drawImage(image,0,0,null);
-//        JPanel pane = new JPanel() {
-//            @Override
-//            protected void paintComponent(Graphics g) {
-//                super.paintComponent(g);
-//                g.drawImage(image, 0, 0, null);
-//            }};
-        //setContentPane(panel);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String[] items = { "New game", "Exit" };
-        g.setColor(Color.BLACK);
-        g.drawRect(((int)screenSize.getWidth()/2)-100, ((int)screenSize.getHeight()/2)-25, 200, 50);
-        g.drawString(items[0], ((int)screenSize.getWidth()/2)-100+(items[0].length()/2), ((int)screenSize.getHeight()/2)-25);
-        g.drawRect(((int)screenSize.getWidth()/2)-100, ((int)screenSize.getHeight()/2)-25+100, 200, 50);
-        g.drawString(items[1], ((int)screenSize.getWidth()/2)-100+(items[1].length()/2), ((int)screenSize.getHeight()/2)-25+100);
 
+        //Graphics g = getGraphics();
+        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        //String[] items = { "New game", "Exit" };
+        //g.setColor(Color.BLACK);
+        //g.drawRect(((int)screenSize.getWidth()/2)-100, ((int)screenSize.getHeight()/2)-25, 200, 50);
+        //g.drawString(items[0], ((int)screenSize.getWidth()/2)-100+(items[0].length()/2), ((int)screenSize.getHeight()/2)-25);
+        //g.drawRect(((int)screenSize.getWidth()/2)-100, ((int)screenSize.getHeight()/2)-25+100, 200, 50);
+        //g.drawString(items[1], ((int)screenSize.getWidth()/2)-100+(items[1].length()/2), ((int)screenSize.getHeight()/2)-25+100);
+
+        panel.removeAll();
+        getContentPane().removeAll();
+
+        JButton start = new JButton("New Game");
+        start.setFont(new Font("Verdana", Font.PLAIN, 42));
+        //start.setOpaque(false);
+        start.setBorderPainted(false);
+        start.setFocusPainted(false);
+        start.setContentAreaFilled(false);
+        start.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        //start.setForeground(java.awt.Color.orange);
+        //start.addMouseListener(new MyMouseListener() {
+        //    @Override
+        //    public void mouseClicked(MouseEvent e) {
+        //        state.setOutput(Status.START_GAME);
+        //    }
+        //});
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                state.setOutput(Status.START_GAME);
+            }
+        });
+        JButton end = new JButton("Exit");
+        end.setFont(new Font("Verdana", Font.PLAIN, 42));
+        //end.setOpaque(false);
+        end.setBorderPainted(false);
+        end.setFocusPainted(false);
+        end.setContentAreaFilled(false);
+        end.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        //end.setForeground(java.awt.Color.orange);
+        //end.addMouseListener(new MyMouseListener() {
+        //    @Override
+        //    public void mouseClicked(MouseEvent e) {
+        //        state.setOutput(Status.EXIT_GAME);
+        //    }
+        //});
+        end.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                state.setOutput(Status.EXIT_GAME);
+            }
+        });
+        JLabel text = new JLabel("Sheldon's board");
+        text.setFont(new Font("Verdana", Font.PLAIN, 84));
+        //text.setOpaque(false);
+        //text.setForeground(java.awt.Color.orange);
+        JPanel options = new JPanel();
+        options.setLayout(new GridLayout(3,1));
+        options.add(text);
+        options.add(start);
+        options.add(end);
+        //options.setBackground(new java.awt.Color(0, 0, 0, 1));
+        //panel.setBackground(new java.awt.Color(0, 0, 0, 1));
+        panel.add(options, BorderLayout.CENTER);
+        getContentPane().add(panel);
+        setVisible(true);
     }
     private void drawEndGameMenu(Status output){
 
@@ -125,19 +159,78 @@ public class View extends JFrame {
         else if(output == Status.CRASHED)
             g.drawString(items[1], (700+100-(items[1].length()/2)), 325);
 
-        drawMenu();
+        //drawMenu();
 
     }
     private void drawPause(){
 
-        Graphics g = getGraphics();
-        String[] items = { "Continue", "Exit" };
-        g.setColor(Color.BLACK);
-        g.drawRect(500, 500, 200, 50);
-        g.drawString(items[0], (500+100-(items[0].length()/2*10)), 525);
-        g.drawRect(500, 600, 200, 50);
-        g.drawString(items[1], (500+100-(items[1].length()/2*10)), 625);
+        //Graphics g = getGraphics();
+        //String[] items = { "Continue", "Exit" };
+        //g.setColor(Color.BLACK);
+        //g.drawRect(500, 500, 200, 50);
+        //g.drawString(items[0], (500+100-(items[0].length()/2*10)), 525);
+        //g.drawRect(500, 600, 200, 50);
+        //g.drawString(items[1], (500+100-(items[1].length()/2*10)), 625);
 
+        panel.removeAll();
+        getContentPane().removeAll();
+
+        JButton start = new JButton("Continue");
+        start.setFont(new Font("Verdana", Font.PLAIN, 42));
+        //start.setOpaque(false);
+        start.setBorderPainted(false);
+        start.setFocusPainted(false);
+        start.setContentAreaFilled(false);
+        start.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        //start.setForeground(java.awt.Color.orange);
+        //start.addMouseListener(new MyMouseListener() {
+        //    @Override
+        //    public void mouseClicked(MouseEvent e) {
+        //        state.setOutput(Status.START_GAME);
+        //        status = Status.GAME;
+        //    }
+        //});
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                state.setOutput(Status.START_GAME);
+                status = Status.GAME;
+            }
+        });
+        JButton end = new JButton("Exit");
+        end.setFont(new Font("Verdana", Font.PLAIN, 42));
+        //end.setOpaque(false);
+        end.setBorderPainted(false);
+        end.setFocusPainted(false);
+        end.setContentAreaFilled(false);
+        end.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        //end.setForeground(java.awt.Color.orange);
+        //end.addMouseListener(new MyMouseListener() {
+        //    @Override
+        //    public void mouseClicked(MouseEvent e) {
+        //        state.setOutput(Status.EXIT_GAME);
+        //    }
+        //});
+        start.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                state.setOutput(Status.EXIT_GAME);
+            }
+        });
+        JLabel text = new JLabel("Pause");
+        text.setFont(new Font("Verdana", Font.PLAIN, 84));
+        //text.setOpaque(false);
+        //text.setForeground(java.awt.Color.orange);
+        JPanel options = new JPanel();
+        options.setLayout(new GridLayout(3,1));
+        options.add(text);
+        options.add(start);
+        options.add(end);
+        //options.setBackground(new java.awt.Color(0, 0, 0, 1));
+        //panel.setBackground(new java.awt.Color(0, 0, 0, 1));
+        panel.add(options, BorderLayout.CENTER);
+        getContentPane().add(panel);
+        setVisible(true);
     }
 
     public void setState(State s) { state = s; }
@@ -169,9 +262,9 @@ public class View extends JFrame {
                 ujak.add(new StationGraphics(t));
             uj=true;
         }
-        for(StationGraphics u: ujak) {
-            stationGraphics.add(u);
-        }
+
+        stationGraphics.addAll(ujak);
+
     }
     private void refreshEngines(){
         // Model lekérdezése
@@ -192,9 +285,8 @@ public class View extends JFrame {
                     torol.add(e);
                 nincs = true;
             }
-            for (EngineGraphics t : torol) {
-                engineGraphics.remove(t);
-            }
+
+            engineGraphics.removeAll(torol);
         }
 
         // Újak hozzáadása
@@ -211,9 +303,9 @@ public class View extends JFrame {
                 ujak.add(new EngineGraphics(t));
             uj=true;
         }
-        for(EngineGraphics u: ujak) {
-            engineGraphics.add(u);
-        }
+
+        engineGraphics.addAll(ujak);
+
     }
     private void refreshCars(){
         // Model lekérdezése
@@ -234,9 +326,8 @@ public class View extends JFrame {
                     torol.add(c);
                 nincs = true;
             }
-            for (CarGraphics t : torol) {
-                carGraphics.remove(t);
-            }
+
+            carGraphics.removeAll(torol);
         }
 
         // Újak hozzáadása
@@ -253,9 +344,9 @@ public class View extends JFrame {
                 ujak.add(new CarGraphics(t));
             uj=true;
         }
-        for(CarGraphics u: ujak) {
-            carGraphics.add(u);
-        }
+
+        carGraphics.addAll(ujak);
+
     }
     private void refreshCoalCars(){
         // Model lekérdezése
@@ -276,9 +367,8 @@ public class View extends JFrame {
                     torol.add(c);
                 nincs = true;
             }
-            for (CoalCarGraphics t : torol) {
-                coalCarGraphics.remove(t);
-            }
+
+            coalCarGraphics.removeAll(torol);
         }
 
         // Újak hozzáadása
@@ -295,9 +385,8 @@ public class View extends JFrame {
                 ujak.add(new CoalCarGraphics(t));
             uj=true;
         }
-        for(CoalCarGraphics u: ujak) {
-            coalCarGraphics.add(u);
-        }
+
+        coalCarGraphics.addAll(ujak);
     }
     private void refreshTunnelEntrances(){
         // Model lekérdezése
@@ -318,9 +407,8 @@ public class View extends JFrame {
                     torol.add(te);
                 nincs = true;
             }
-            for (TunnelEntranceGraphics t : torol) {
-                tunnelEntranceGraphics.remove(t);
-            }
+
+            tunnelEntranceGraphics.removeAll(torol);
         }
 
         // Újak hozzáadása
@@ -337,14 +425,15 @@ public class View extends JFrame {
                 ujak.add(new TunnelEntranceGraphics(t));
             uj=true;
         }
-        for(TunnelEntranceGraphics u: ujak) {
-            tunnelEntranceGraphics.add(u);
-        }
+
+        tunnelEntranceGraphics.addAll(ujak);
     }
 
     private void drawRails(){
 
         Graphics g = getGraphics();
+
+
 
         ArrayList<Rail> rails = map.getRails();
         for(Rail r: rails){
@@ -429,7 +518,16 @@ public class View extends JFrame {
 
         @Override
         public void keyPressed(KeyEvent e) {
-
+            if (status == GAME && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                status = Status.PAUSE;
+                state.setOutput(PAUSE);
+                repaint();
+            }
+            else if (status == PAUSE && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                status = Status.GAME;
+                state.setOutput(CONTINUE);
+                repaint();
+            }
         }
 
         @Override
@@ -448,25 +546,29 @@ public class View extends JFrame {
 
         @Override
         public void mousePressed(MouseEvent e) {
-            x1 = e.getX();
-            y1 = e.getY();
+            if(status == GAME) {
+                x = e.getX();
+                y = e.getY();
+            }
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            x2 = e.getX();
-            y2 = e.getY();
-            state.mouseEventHandler(x1, y1+30, x2, y2);
+            if(status == GAME) {
+                map.decideActions(x, y + 30, e.getX(), e.getY());
+            }
         }
 
         @Override
         public void mouseEntered(MouseEvent e) {
-
+            //e.getComponent().setFont(new Font("Verdana", Font.BOLD, 42));
+            //repaint();
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
-
+            //e.getComponent().setFont(new Font("Verdana", Font.PLAIN, 42));
+            //repaint();
         }
 
     }

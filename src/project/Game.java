@@ -11,10 +11,11 @@ import java.util.*;
 public class Game implements State {
 
     private View view;
+    private Status output;
 
     public Game(View view) {
         map = new Model();
-        numberOfTrains = 0;
+        numberOfTrains = 5;
         waitingTime = 1;
         this.view = view;
         view.setState(this);
@@ -31,49 +32,8 @@ public class Game implements State {
      * The 'load' command got implemented here, because it just loads more of the commands it would already use
      * @return 
      */
-    private Status read() {
-        Scanner sc = new Scanner(System.in);
-        List<String> loadedFile = new ArrayList<>();
-        Status s = null;
-        while (true) {
-            String command = sc.nextLine();
-            if (command.contentEquals("pause")) return Status.PAUSE;
-            if (command.contains("load ")) {
-                if (!command.contains(" -l ")) System.out.println("> load command does not contain parameters");
-                else {
-                    String load[];
-                    load = command.split(" ", 2);
-                    load = load[1].split("-l ");
-                    try { 
-                        File f = new File(System.getProperty("user.dir") + "\\maps\\" + load[1]);
-                        Scanner sf = new Scanner(f);
-                        while (sf.hasNextLine()) {
-                            loadedFile.add(sf.nextLine());
-                        }
-                    } catch (FileNotFoundException e) {
-                        System.out.println("> file does not exist");
-                    }
-                }
-            }
-            try {
-                if(loadedFile.size() > 0) {
-                    for(int i = 0; i < loadedFile.size(); i++) {
-                        s = map.decideActions(loadedFile.get(i));
-                        if (s == Status.CRASHED || s == Status.GAME_WON) return s;
-                    }
-                    loadedFile = new ArrayList<>();
-                }
-                else {
-                    s = map.decideActions(command);
-                    if (s == Status.CRASHED || s == Status.GAME_WON) return s;  
-                }
-                view.updateScreen();
-            } 
-            catch(Exception e) {
-                System.out.println("> " + e.getMessage());
-                e.printStackTrace();
-            }
-        }
+    private void read() {
+
     }
 
     /* Azért van itt külön függvény, mert a végleges programban, a start fog új vonatokat hozzáadni a Modellhez
@@ -81,14 +41,21 @@ public class Game implements State {
      */
     @Override
     public Status start() {
-        return read();
+        Status st;
+        view.setMap(map);
+        while (true) {
+            try {
+                Thread.sleep(700);
+            } catch (InterruptedException e) {}
+            st = map.moveEngines();
+            view.updateScreen();
+            if (st != Status.CONTINUE)
+                return st;
+        }
     }
 
     @Override
-    public void mouseEventHandler(int x1, int y1, int x2, int y2) {
-
-        map.decideActions(x1, y1, x2, y2);
-        view.updateScreen();
+    public void setOutput(Status s) {
 
     }
 

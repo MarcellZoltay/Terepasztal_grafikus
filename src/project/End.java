@@ -9,32 +9,28 @@ import java.util.*;
 public class End implements State {
 
     private Status output;
+    private Status ending;
     private View view;
 
     public End(Status e, View view) {
-        this.output = e;
+        this.ending = e;
         this.view = view;
         view.setState(this);
         view.setStatus(Status.END);
         view.updateScreen();
     }
 
-    public Status getOutput() { return output; }
-
-    public End(Status e) {
-        this.output = e;
-    }
+    public Status getOutput() { return ending; }
 
     @Override
     public Status start() {
-        if (output == Status.GAME_WON) System.out.println("> Congrats! You won");
-        if (output == Status.CRASHED) System.out.println("> Trains crashed! You lost");
-        return Status.EXIT_GAME;
+        while(output == null);
+        return output;
     }
 
     @Override
-    public void mouseEventHandler(int x1, int y1, int x2, int y2) {
-
+    public void setOutput(Status s) {
+        output = s;
     }
 
 }

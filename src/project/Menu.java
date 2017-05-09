@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class Menu implements State {
 
     private View view;
+    private Status output;
 
     public Menu(View view) {
         this.view = view;
@@ -20,22 +21,16 @@ public class Menu implements State {
 
     @Override
     public Status start() {
-        Scanner sc = new Scanner(System.in);
-        int choice;
-        do {
-            System.out.print("1. Start Game\n");
-            System.out.print("2. Exit\n");
-            choice = sc.nextInt();
-            sc.nextLine();
-        } while(choice < 1 || choice > 2);
-        if (choice == 1) return Status.START_GAME;
-        else if (choice == 2) return Status.EXIT_GAME;
-        return null;
+        while(output == null)
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {}
+        return output;
     }
 
     @Override
-    public void mouseEventHandler(int x1, int y1, int x2, int y2) {
-
+    public void setOutput(Status s) {
+        output = s;
     }
 
 }

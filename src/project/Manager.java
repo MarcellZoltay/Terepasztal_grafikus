@@ -10,16 +10,15 @@ import java.util.*;
 public class Manager {
 
     private Stack<State> states;
-    private View view;
 
     public Manager() {
         states = new Stack<>();
-        view = new View();
-        Menu menu = new Menu(view);
-        states.add(menu);
     }
 
     public void run() {
+        View view = new View();
+        Menu menu = new Menu(view);
+        states.add(menu);
         while(true) {
             switch(states.peek().start()) {
                 case START_GAME: 
@@ -35,7 +34,7 @@ public class Manager {
                 case CONTINUE:
                     states.pop();
                     view.setStatus(Status.GAME);
-                    view.repaint();
+                    view.updateScreen();
                     break;
                 case PAUSE:
                     states.push(new Pause(view));
