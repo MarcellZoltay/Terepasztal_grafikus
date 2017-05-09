@@ -17,6 +17,7 @@ public class End implements State {
         this.view = view;
         view.setState(this);
         view.setStatus(Status.END);
+        view.updatePanel(new String[]{ending == Status.END ? "New Game" : "Next Level", "Exit Game", ending == Status.END ? "You Lost" : "You Won"});
         view.updateScreen();
     }
 

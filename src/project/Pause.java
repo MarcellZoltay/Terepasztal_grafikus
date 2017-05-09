@@ -15,13 +15,14 @@ public class Pause implements State {
         this.view = view;
         view.setState(this);
         view.setStatus(Status.PAUSE);
+        view.updatePanel(new String[]{"Continue", "Exit Game", "Taking a break"});
         view.updateScreen();
     }
 
     @Override
     public Status start() {
         while(output == null);
-        return output;
+        return output == Status.START_GAME ? Status.CONTINUE : output;
     }
 
     @Override

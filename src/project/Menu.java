@@ -16,6 +16,7 @@ public class Menu implements State {
         this.view = view;
         view.setState(this);
         view.setStatus(Status.MENU);
+        view.updatePanel(new String[]{"Start Game", "Exit Game", "Sheldon's Board"});
         view.updateScreen();
     }
 
