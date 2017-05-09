@@ -595,7 +595,7 @@ public class Model {
         int kocsiszam = r.nextInt(max-min) + min;
 
         Engine e = new Engine(); //konstruktor hova rakom és merre meg
-        engines.add(e);
+        //engines.add(e);        // TODO
 
         Color color= null;  //nullra inicializal
         Random r1 = new Random();
