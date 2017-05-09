@@ -24,6 +24,7 @@ public class View extends JFrame {
     private ArrayList<CarGraphics> carGraphics = new ArrayList<>();
     private ArrayList<CoalCarGraphics> coalCarGraphics = new ArrayList<>();
     private JPanel panel = new JPanel(new BorderLayout());
+    private String[] buttons;
 
     private int x, y;
 
@@ -161,45 +162,38 @@ public class View extends JFrame {
 
     }
     private void drawPause(){
-
-        //Graphics g = getGraphics();
-        //String[] items = { "Continue", "Exit" };
-        //g.setColor(Color.BLACK);
-        //g.drawRect(500, 500, 200, 50);
-        //g.drawString(items[0], (500+100-(items[0].length()/2*10)), 525);
-        //g.drawRect(500, 600, 200, 50);
-        //g.drawString(items[1], (500+100-(items[1].length()/2*10)), 625);
-
         panel.removeAll();
         getContentPane().removeAll();
-
-        JButton start = new JButton("Continue");
+        setLayout(new FlowLayout());
+        JButton start = new JButton(buttons[0]);
         start.setFont(new Font("Verdana", Font.PLAIN, 42));
-        //start.setOpaque(false);
+        start.setOpaque(false);
         start.setBorderPainted(false);
         start.setFocusPainted(false);
         start.setContentAreaFilled(false);
         start.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        //start.setForeground(java.awt.Color.orange);
-        //start.addMouseListener(new MyMouseListener() {
-        //    @Override
-        //    public void mouseClicked(MouseEvent e) {
-        //        state.setOutput(Status.START_GAME);
-        //        status = Status.GAME;
-        //    }
-        //});
-        start.addActionListener(new ActionListener() {
+        start.setForeground(java.awt.Color.orange);
+        start.addMouseListener(new MyMouseListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                if (status == Status.PAUSE) {
+            public void mouseClicked(MouseEvent e) {
                     state.setOutput(CONTINUE);
                     status = Status.GAME; 
-                }
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                e.getComponent().setFont(new Font("Verdana", Font.BOLD, 42));
+                //repaint();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                e.getComponent().setFont(new Font("Verdana", Font.PLAIN, 42));
+                //repaint();
             }
         });
-        JButton end = new JButton("Exit");
+        JButton end = new JButton(buttons[1]);
         end.setFont(new Font("Verdana", Font.PLAIN, 42));
-        //end.setOpaque(false);
+        end.setOpaque(false);
         end.setBorderPainted(false);
         end.setFocusPainted(false);
         end.setContentAreaFilled(false);
@@ -210,21 +204,33 @@ public class View extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 state.setOutput(Status.EXIT_GAME);
             }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                e.getComponent().setFont(new Font("Verdana", Font.BOLD, 42));
+                //repaint();
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                e.getComponent().setFont(new Font("Verdana", Font.PLAIN, 42));
+                //repaint();
+            }
         });
-        JLabel text = new JLabel("Pause");
+        JLabel text = new JLabel(buttons[2]);
         text.setFont(new Font("Verdana", Font.PLAIN, 84));
-        //text.setOpaque(false);
-        //text.setForeground(java.awt.Color.orange);
+        text.setOpaque(false);
+        text.setForeground(java.awt.Color.orange);
         JPanel options = new JPanel();
         options.setLayout(new GridLayout(3,1));
-        options.add(text);
-        options.add(start);
-        options.add(end);
-        //options.setBackground(new java.awt.Color(0, 0, 0, 1));
-        //panel.setBackground(new java.awt.Color(0, 0, 0, 1));
-        panel.add(options, BorderLayout.CENTER);
+        options.add(text, BorderLayout.PAGE_START);
+        options.add(start, BorderLayout.PAGE_END);
+        options.add(end, BorderLayout.PAGE_END);
+        panel.add(options, BorderLayout.PAGE_START);
         getContentPane().add(panel);
         setVisible(true);
+    }
+     public void updatePanel(String[] buttons) {
+         this.buttons = buttons;
     }
 
     public void setState(State s) { state = s; }

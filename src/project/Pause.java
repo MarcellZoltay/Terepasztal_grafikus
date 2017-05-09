@@ -15,6 +15,7 @@ public class Pause implements State {
         this.view = view;
         view.setState(this);
         view.setStatus(Status.PAUSE);
+        view.updatePanel(new String[]{"Continue", "Exit Game", "Pause"});
         view.updateScreen();
     }
 
