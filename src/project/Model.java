@@ -564,18 +564,16 @@ public class Model {
      */
     private void removeTrain(Train trainPart) {
 
-        if(trainPart.getNextCar()==null)
-            return;
+        if(trainPart.getNextCar() != null)
+            removeTrain(trainPart.getNextCar());
 
-        Train next = trainPart.getNextCar();
+        trainPart.getOnNode().removeTrain(trainPart);
         if(trainPart.getColor().equals(Color.ENGINE))
             engines.remove((Engine)trainPart);
         else if(trainPart.getColor().equals(Color.COAL_CAR))
             coalCars.remove((CoalCar)trainPart);
         else
             cars.remove((Car)trainPart);
-
-        removeTrain(next);
 
     }
 
