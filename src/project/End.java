@@ -17,6 +17,11 @@ public class End implements State {
     private Status ending;
     private View view;
 
+    /**
+     * Beállítja a view attribútumait, hogy megfelelő menüt rajzoljon ki.
+     * @param e Az ending értékét szabja meg, mely alapján lehet meghatározni, hogy mi írodjon ki a képernyőre
+     * @param view Paraméterül kapott view
+     */
     public End(Status e, View view) {
         this.ending = e;
         this.view = view;
@@ -26,13 +31,22 @@ public class End implements State {
         view.updateScreen();
     }
 
+    /**
+     * ending getter
+     * @return 
+     */
     public Status getOutput() { return ending; }
 
+    /**
+     * Várakozik míg meg nem változik az output értéke. majd visszatér vele
+     * @return 
+     */
     @Override
     public Status start() {
         while(output == null);
         return output;
     }
+
 
     @Override
     public void setOutput(Status s) {

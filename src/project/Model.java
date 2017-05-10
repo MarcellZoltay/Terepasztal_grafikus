@@ -256,7 +256,6 @@ public class Model {
         Rail d414=new Rail((v4.getX()+v14.getX())/2,(v4.getY()+v14.getY())/2, v4, v14);
         v4.setSecond(d414);
         v14.setNext(d414);
-//
         Rail e514=new Rail((v5.getX()+v14.getX())/2,(v5.getY()+v14.getY())/2, v5, v14);
         v5.setNext(e514);
         v14.setSecond(e514);
@@ -344,6 +343,7 @@ public class Model {
         k.setPrev(s1);
         m.setPrev(s2);
         n.setPrev(s3);
+        q.setPrev(s4);
 
         v10.setPrev(n);
         v11.setPrev(o);
