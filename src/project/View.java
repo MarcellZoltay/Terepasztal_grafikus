@@ -250,15 +250,15 @@ public class View extends JFrame {
         // Újak hozzáadása
         ArrayList<CarGraphics> ujak = new ArrayList<>();
         boolean uj = true;
-        for(Car t: tmp){
-            for(CarGraphics c: carGraphics){
-                if(c.getCar().equals(t)){
+        for(int i=0; i<tmp.size(); i++){
+            for(int j=0; j<carGraphics.size(); j++){
+                if(carGraphics.get(j).getCar().equals(tmp.get(i))){
                     uj=false;
                     break;
                 }
             }
             if(uj)
-                ujak.add(new CarGraphics(t));
+                ujak.add(new CarGraphics(tmp.get(i)));
             uj=true;
         }
 
@@ -431,12 +431,10 @@ public class View extends JFrame {
             if (status == GAME && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 status = Status.PAUSE;
                 state.setOutput(PAUSE);
-                //repaint();
             }
             else if (status == PAUSE && e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 status = Status.GAME;
                 state.setOutput(CONTINUE);
-                //repaint();
             }
         }
 

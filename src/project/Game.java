@@ -23,7 +23,7 @@ public class Game implements State {
             @Override
             public void run() {
                 if(numberOfTrains>0) {
-                    //map.addTrainToMap();
+                    map.addTrainToMap();
                     numberOfTrains--;
                 }
                 else if(numberOfTrains==0){

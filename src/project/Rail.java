@@ -27,11 +27,11 @@ public class Rail extends Node {
         super(x, y, n, p);
     }
 
-    public void setNode(Node n, Rail r){
+    public void setNode(Node n, Node n2){
         if(nextNode == n)
-            nextNode = r;
+            nextNode = n2;
         else if(prevNode == n)
-            prevNode = r;
+            prevNode = n2;
     }
 
 }

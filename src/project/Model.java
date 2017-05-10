@@ -298,7 +298,27 @@ public class Model {
 
 
         Cross one=new Cross(xk-500,yk,null,null,null,null);
-        Rail k=new Rail(xk-300,yk-200,v17,one);
+        //Rail k=new Rail(xk-300,yk-200,v17,one);
+        Cross k=new Cross(xk-300,yk-200,v17,null,null,null);//késöbb p:s1 p2:
+        Rail start=new Rail(xk-300,yk-250,k,null);
+        Rail start2=new Rail(xk-310, yk-250,start,null);
+        Rail start3=new Rail(xk-350, yk-250,start2,null);
+        Rail start4=new Rail(xk-380, yk-250,start3,null);
+        Rail start5=new Rail(xk-410, yk-250,start4,null);
+        k.setNext2(start);
+        start.setPrev(start2);
+        start2.setPrev(start3);
+        start3.setPrev(start4);
+        start4.setPrev(start5);
+        start5.setPrev(null);
+        rails.add(start);
+        rails.add(start2);
+        rails.add(start3);
+        rails.add(start4);
+        rails.add(start5);
+
+
+
         Rail l=new Rail(xk-300,yk-50,v16,one);
         Rail m=new Rail(xk-300,yk+200,v14,one);
         Rail j=new Rail(xk-300,yk+50,v15,one);
@@ -306,7 +326,7 @@ public class Model {
         one.setNext2(m);
         one.setPrev(j);
         one.setPrev2(l);
-        rails.add(k);
+        crosses.add(k);
         rails.add(l);
         rails.add(j);
         rails.add(m);
@@ -341,26 +361,27 @@ public class Model {
         n.setPrev(s3);
         q.setPrev(s4);
 
-        Engine engine=new Engine(k.getX(),k.getY(),one.getX(),one.getY(),c315);
-        /*engine.setPrevNode(s1);
-        Car cc=new Car(s1.getX()+5,s1.getY()+5,xk-2,yk-2,s1,Color.BLUE);
-        cc.setPrevNode(one);
-        cc.setPrevTrain(engine);
-        engine.setNextCar(cc);
+        //Engine engine=new Engine(k.getX(),k.getY(),one.getX(),one.getY(),start);
+        //engine.setPrevNode(start2);
+        //Car cc=new Car(start2.getX()+5,start2.getY()+5,xk-2,yk-2,start2,Color.BLUE);
+        //cc.setPrevNode(start3);
+        //cc.setPrevTrain(engine);
+        //engine.setNextCar(cc);
+//
+        //Engine engine2=new Engine(start3.getX(),start3.getY(),one.getX(),one.getY(),start3);
+        //engine2.setPrevNode(start4);
+        //Car cc2=new Car(start4.getX()+5,start4.getY()+5,xk-2,yk-2,start4,Color.RED);
+        //cc2.setPrevTrain(engine2);
+        //cc2.setPrevNode(start5);
+        //engine2.setNextCar(cc2);
+//
+        //Engine engine3=new Engine(v15.getX(),v15.getY(),one.getX(),one.getY(),v15);
+        //engine3.setPrevNode(d415);
+        //Car cc3=new Car(d415.getX()+5,d415.getY()+5,xk-2,yk-2,d415,Color.GREEN);
+        //cc3.setPrevNode(v4);
+        //cc3.setPrevTrain(engine3);
+        //engine3.setNextCar(cc3);
 
-        Engine engine2=new Engine(c7.getX(),c7.getY(),one.getX(),one.getY(),c7);
-        engine2.setPrevNode(c03);
-        Car cc2=new Car(c03.getX()+5,c03.getY()+5,xk-2,yk-2,c03,Color.RED);
-        cc2.setPrevTrain(engine2);
-        cc2.setPrevNode(c3);
-        engine2.setNextCar(cc2);
-
-        Engine engine3=new Engine(v15.getX(),v15.getY(),one.getX(),one.getY(),v15);
-        engine3.setPrevNode(d415);
-        Car cc3=new Car(d415.getX()+5,d415.getY()+5,xk-2,yk-2,d415,Color.GREEN);
-        cc3.setPrevNode(v4);
-        cc3.setPrevTrain(engine3);
-        engine3.setNextCar(cc3);*/
 
         v10.setPrev(n);
         v11.setPrev(o);
@@ -371,9 +392,7 @@ public class Model {
         v16.setPrev(l);
         v17.setPrev(k);
 
-
-
-        engines.add(engine);
+        //engines.add(engine);
         //cars.add(cc);
         //engines.add(engine2);
         //cars.add(cc2);
@@ -444,10 +463,15 @@ public class Model {
         List<Rail> ujak = new ArrayList<>();
         // Crosses
         for(int i = 0; i<crosses.size(); i++){
-            ujak.addAll(makeParts(crosses.get(i), crosses.get(i).getPrev(), 20));
-            ujak.addAll(makeParts(crosses.get(i), crosses.get(i).getNext(), 20));
-            ujak.addAll(makeParts(crosses.get(i), crosses.get(i).getPrev2(), 20));
-            ujak.addAll(makeParts(crosses.get(i), crosses.get(i).getNext2(), 20));
+            List<Rail> most=null;
+            most=makeParts(crosses.get(i), crosses.get(i).getPrev(), 20);
+            if (most!=null) ujak.addAll(most);
+            most=makeParts(crosses.get(i), crosses.get(i).getNext(), 20);
+            if (most!=null) ujak.addAll(most);
+            most=makeParts(crosses.get(i), crosses.get(i).getPrev2(), 20);
+            if (most!=null) ujak.addAll(most);
+            most=makeParts(crosses.get(i), crosses.get(i).getNext2(), 20);
+            if (most!=null) ujak.addAll(most);
         }
 
         // Switch
@@ -464,11 +488,27 @@ public class Model {
         }
 
         rails.addAll(ujak);
-        engine.setOnNode(j);
-        engine.setPrevNode(j.prevNode);
+
+        //engine.setOnNode(start);
+        //engine.setPrevNode(start2);
+        //cc.setOnNode(start2);
+        //cc.setPrevNode(start3);
+//
+        //engine2.setOnNode(q);
+        //engine2.setPrevNode(q.getPrev());
+        //cc2.setOnNode(q.getPrev());
+        //cc2.setPrevNode(q.getPrev().getPrev());
+//
+//
+        //engine3.setOnNode(j);
+        //engine3.setPrevNode(j.getPrev());
+        //cc3.setOnNode(j.getNext());
+        //cc3.setPrevNode(j.getNext().getNext());
+
     }
 
     private ArrayList<Rail> makeParts(Node n1, Node n2, int a){
+        if(n1 == null || n2 == null) return null;
         int db = ((int) sqrt(((n1.getX() - n2.getX()) * (n1.getX() - n2.getX())) + ((n1.getY() - n2.getY()) * (n1.getY() - n2.getY()))))/a;
         ArrayList<Rail> ujak = new ArrayList<>();
         Rail current, prev = null;
@@ -511,82 +551,54 @@ public class Model {
         boolean options = false;
 
         for(Switch s: switches){
-            if( (x1>(s.getX()-20) && x1<(s.getX()+20)) && (y1>(s.getY()-20) && y1<(s.getY()+20))) {
+            if(Math.abs(s.getX() - x1) < 40 && Math.abs(s.getY() - y1) < 40) {
                 changeSwitch(s);
                 options = true;
+                break;
             }
         }
         if (!options) {
             for(TunnelEntrance t: tunnelEntrances){
-                if( (x1>(t.getX()-10) && x1<(t.getX()+10)) && (y1>(t.getY()-10) && y1<(t.getY()+10))) {
+                if(Math.abs(t.getX() - x1) < 30 && Math.abs(t.getY() - y1) < 30) {
                     removeTunnelEntrance(t);
                     options = true;
+                    break;
                 }
             }
         }
         if (!options) {
-            Rail rclose=null;
-            int mind=10000;
-            for (int i=0;i<rails.size();i++){
-                int d = getDistance(x1, y1, rails.get(i).getX(), rails.get(i).getY());
-                if (d<mind) {
-                    mind=d;
-                    rclose=rails.get(i);
+            for(Rail r : rails) {
+                if (Math.abs(r.getX() - x1) < 20 && Math.abs(r.getY() - y1) < 20) {
+                    rails.remove(r);
+                    if (getDistance(r.getNext().getX(), r.getNext().getY(), x2, y2) > getDistance(r.getPrev().getX(), r.getPrev().getY(), x2, y2))
+                        addTunnelEntrance(r.getPrev(), r, r.getNext());
+                    else
+                        addTunnelEntrance(r.getNext(), r, r.getPrev());
+                    break;
                 }
-               }
-            if (rclose!=null)
-            addTunnelEntrance(rclose.getPrev(), rclose.getNext(), x1, y1, x2, y2);
-
+            }
         }
-/*
-            stations.forEach( (Station r) -> {
-                int d = getDistance(x1, y1, r.getX(), r.getY(), r.getNext().getX(), r.getNext().getY());
-                if (d != -1 && d < 5) {
-                    addTunnelEntrance(r, r.getNext(), x1, y1, x2, y2);
-                }
-            });
 
-            crosses.forEach( (Cross r) -> {
-                int d = getDistance(x1, y1, r.getX(), r.getY(), r.getNext().getX(), r.getNext().getY());
-                if (d != -1 && d < 5) {
-                    addTunnelEntrance(r, r.getNext(), x1, y1, x2, y2);
-                }
-                d = getDistance(x1, y1, r.getX(), r.getY(), r.getNext2().getX(), r.getNext2().getY());
-                if (d != -1 && d < 5) {
-                    addTunnelEntrance(r, r.getNext2(), x1, y1, x2, y2);
-                }
-            });
-
- */
-        }
+    }
 
 
     /**
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
+     * @param p
+     * @param on
+     * @param n
      */
-    private void addTunnelEntrance(Node p, Node n, int x1, int y1, int x2, int y2) {
+    private void addTunnelEntrance(Node p, Node on, Node n) {
         if (tunnelEntrances.size() == 2) return;
-        int d1 =(int) sqrt(Math.pow(p.getX() - x1, 2) + Math.pow(p.getY() - y1, 2));
-        int d2 =(int) sqrt(Math.pow(p.getX() - x2, 2) + Math.pow(p.getY() - y2, 2));
-        TunnelEntrance t;
-        if (d2 < d1) t = new TunnelEntrance(x1, y1, n, null, p);
-        else t = new TunnelEntrance(x1, y1, p, null, n);
-
-        if (p.getNext() == n) p.setNext(t);
-        else ((Cross)p).setNext2(t);
-        if (n.getNext() == p) n.setPrev(t);
-        else ((Cross)n).setPrev2(t);
-
-        if (tunnelEntrances.size() == 1) {
-            tunnelEntrances.get(0).setSecond(t);
-            tunnelEntrances.get(0).changeOutput();
-            t.setSecond(tunnelEntrances.get(0));
-            t.changeOutput();
-        }
+        TunnelEntrance t = new TunnelEntrance(on.getX(), on.getY(), n, null, p);
+        p.setNode(on, t);
+        n.setNode(on, t);
         tunnelEntrances.add(t);
+        if (tunnelEntrances.size() == 2) {
+            tunnelEntrances.get(0).setSecond(tunnelEntrances.get(1));
+            tunnelEntrances.get(0).changeOutput();
+            tunnelEntrances.get(1).setSecond(tunnelEntrances.get(0));
+            tunnelEntrances.get(1).changeOutput();
+        }
     }
 
     /**
@@ -654,41 +666,42 @@ public class Model {
     }
 
     public void addTrainToMap(){
+
+        Node on = rails.get(0);
         Random r = new Random();
         int min = 1;
         int max = 3;
         int kocsiszam = r.nextInt(max-min) + min;
 
         Engine e = new Engine(); //konstruktor hova rakom és merre meg
-        //engines.add(e);        // TODO
+        engines.add(e);        // TODO
 
         Color color= null;  //nullra inicializal
         Random r1 = new Random();
 
-        int szin = r1.nextInt(5);
-
-        switch (szin){
-            case 0:
-                color = Color.BLUE;
-                break;
-            case 1:
-                color = Color.GREEN;
-                break;
-            case 2:
-                color = Color.YELLOW;
-                break;
-            case 3:
-                color = Color.RED;
-                break;
-            case 4:
-                color = Color.PINK;
-                break;
-
-        }
-
         ArrayList<Car> carsTmp = new ArrayList<>();
         for(int i = 0 ; i < kocsiszam ; i++){
-            Node onnode;
+        int szin = r1.nextInt(5);
+
+            switch (szin){
+                case 0:
+                    color = Color.BLUE;
+                    break;
+                case 1:
+                    color = Color.GREEN;
+                    break;
+                case 2:
+                    color = Color.YELLOW;
+                    break;
+                case 3:
+                    color = Color.RED;
+                    break;
+                case 4:
+                    color = Color.PINK;
+                    break;
+
+            }
+
             Car c = new Car();  //konstruktor kitoltese
             c.color = color;
             carsTmp.add(c);
@@ -704,6 +717,22 @@ public class Model {
                 carsTmp.get(i).setPrevTrain(carsTmp.get(i-1));
             }
         }
+
+        cars.addAll(carsTmp);
+
+        takeTrainToMap(e, on, on.getPrev());
+    }
+
+    private void takeTrainToMap(Train t, Node on, Node prev){
+        t.setOnNode(prev);
+        t.setPrevNode(on);
+        if(t.getNextCar()!=null)
+            takeTrainToMap(t.getNextCar(), prev, t.getOnNode().getNextNode(t));
+        t.setOnNode(on);
+        t.setPrevNode(prev);
+        on.addTrain(t);
+        t.setX(on.getX());
+        t.setY(on.getY());
     }
 
     //******************************//

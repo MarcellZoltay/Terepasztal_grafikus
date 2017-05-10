@@ -63,9 +63,9 @@ public abstract class Node extends MapItem {
      */
     public Node getNextNode(Train t) {
         Node temp = t.prevNode;
-        
+
         if (temp == t.onNode) {
-            return nextNode == null ? prevNode : nextNode; 
+            return nextNode == null ? prevNode : nextNode;
         }
         if (temp == nextNode){
             return prevNode;
@@ -77,7 +77,12 @@ public abstract class Node extends MapItem {
         return null;
     }
 
-    public void setNode(Node n, Rail r){}
+    public void setNode(Node n1, Node n2){
+        if(nextNode == n1)
+            nextNode = n2;
+        else if(prevNode == n2)
+            prevNode = n2;
+    }
 
 
     //******************************//

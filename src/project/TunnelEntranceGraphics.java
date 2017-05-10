@@ -15,10 +15,14 @@ public class TunnelEntranceGraphics {
     }
 
     public void draw(Graphics g){
-        g.setColor(Color.CYAN);
-        g.fillRect(tunnelEntrance.getX(), tunnelEntrance.getY(), 20, 20);
         g.setColor(Color.BLACK);
-        g.drawRect(tunnelEntrance.getX(), tunnelEntrance.getY(), 20, 20);
+        Polygon p = new Polygon();
+        int pointX = tunnelEntrance.getX() - tunnelEntrance.getPrev().getX();
+        int pointY = tunnelEntrance.getY() - tunnelEntrance.getPrev().getY();
+        p.addPoint(tunnelEntrance.getX(), tunnelEntrance.getY());
+        p.addPoint(-pointY + tunnelEntrance.getPrev().getX(), pointX + tunnelEntrance.getPrev().getY());
+        p.addPoint(pointY + tunnelEntrance.getPrev().getX(), -pointX + tunnelEntrance.getPrev().getY());
+        g.fillPolygon(p);
     }
 
     public TunnelEntrance getTunnelEntrance() { return tunnelEntrance; }

@@ -71,6 +71,9 @@ public class Cross extends Rail {
         else if(t.getPrevNode().equals(prev2Node))
             ret = next2Node;
 
+        if(ret == null)
+            return nextNode;
+
         return ret;
     }
 
@@ -113,15 +116,15 @@ public class Cross extends Rail {
 
 
     @Override
-    public void setNode(Node n, Rail r){
+    public void setNode(Node n, Node n2){
         if(nextNode == n)
-            nextNode = r;
+            nextNode = n2;
         else if(prevNode == n)
-            prevNode = r;
+            prevNode = n2;
         else if(next2Node == n)
-            next2Node = r;
+            next2Node = n2;
         else if(prev2Node == n)
-            prev2Node = r;
+            prev2Node = n2;
     }
 
 }
