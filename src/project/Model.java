@@ -668,8 +668,8 @@ public class Model {
 
         Node on = rails.get(0);
         Random r = new Random();
-        int min = 1;
-        int max = 3;
+        int min = 2;
+        int max = 4;
         int kocsiszam = r.nextInt(max-min) + min;
 
         Engine e = new Engine(); //konstruktor hova rakom és merre meg
@@ -680,7 +680,7 @@ public class Model {
         Train prev = null;
         for(int i=0; i<kocsiszam; i++) {
             int rand = new Random().nextInt(10);
-            if (rand < 10) {
+            if (rand < 2) {
                 CoalCar c = new CoalCar();
                 coalCars.add(c);
                 if(i==0){
