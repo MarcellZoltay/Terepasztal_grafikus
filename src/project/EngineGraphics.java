@@ -8,12 +8,19 @@ import java.awt.Color;
  */
 public class EngineGraphics{
 
+    /**
+     * A tárolt mozdony, mely kirajzolásáért felelős
+     */
     private Engine engine;
 
     public EngineGraphics(Engine e){
         engine = e;
     }
 
+    /**
+     * A mozdony kirajzolásáért felelős függvény
+     * @param g 
+     */
     public void draw(Graphics g){
         g.setColor(Color.BLACK);
         g.fillOval(engine.getX(), engine.getY(), 15, 15);

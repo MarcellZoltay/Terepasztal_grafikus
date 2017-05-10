@@ -23,7 +23,7 @@ public class StationGraphics{
         else if(station.getColor()==project.Color.BLUE)
             g.setColor(Color.BLUE);
         else if(station.getColor()==project.Color.PINK)
-            g.setColor(Color.PINK);
+            g.setColor(new Color(180,0,140));
 
         g.fillRect(station.getX(), station.getY(), 20, 20);
         g.setColor(Color.BLACK);

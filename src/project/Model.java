@@ -111,6 +111,10 @@ public class Model {
         return Status.CONTINUE;
     }
 
+    /**
+     * Betölti/Elkészíti a pályát
+     * A váz elkészítése után feldarabolja a csomopontokat, hogy folyamatosabb legyen a mozgásuk
+     */
     public void Load(){
 
         int xk=700;
@@ -121,8 +125,6 @@ public class Model {
 
         Cross c01=new Cross(xk,yk-50,          null,null,null,null);
         Cross c02=new Cross(xk,yk+50,          null,null,null,null);
-        //dc//Cross c01=new Cross(xk,yk,          null,null,null,null);
-        //dc//Cross c02=new Cross(xk,yk,          null,null,null,null);
         Cross c1=new Cross(xk,yk-100,       c01,null,null,null);
         Cross c2=new Cross(xk-75,yk-75,  c01,null,null,c1);
         Cross c3=new Cross(xk-100,yk,       c03,null,null,c2);
@@ -133,10 +135,6 @@ public class Model {
         Cross c8=new Cross(xk+75,yk-75, c01,null,c1,c7);
         //Egymásra állításuk
 
-        //dc//c01.setNext(c1);
-        //dc//c01.setPrev(c5);
-        //dc//c01.setNext2(c3);
-        //dc//c01.setPrev2(c7);
         c01.setNext(c03);
         c01.setPrev(c1);
         c01.setNext2(c2);
@@ -151,10 +149,6 @@ public class Model {
         c03.setPrev(c02);
         c03.setNext2(c3);
         c03.setPrev2(c7);
-        //dc//c02.setNext(c6);
-        //dc//c02.setPrev(c2);
-        //dc//c02.setNext2(c4);
-        //dc//c02.setPrev2(c8);
 
         c1.setPrev2(c8);
         c1.setNext2(c2);
@@ -220,28 +214,20 @@ public class Model {
         v8.setSecond(v10);
 
 
-        //Rail a=new Rail((c1.getX()+v1.getX())/2,(c1.getY()+c1.getY())/2, c1, v1);
         c1.setPrev(v1);
         v1.setPrev(c1);
-        //Rail b=new Rail((c2.getX()+v2.getX())/2,(c2.getY()+c2.getY())/2, c2, v2);
         c2.setPrev(v2);
         v2.setPrev(c2);
-        //Rail c=new Rail((c3.getX()+v3.getX())/2,(c3.getY()+c3.getY())/2, c3, v3);
         c3.setPrev(v3);
         v3.setPrev(c3);
-        //Rail d=new Rail((c4.getX()+v4.getX())/2,(c4.getY()+c4.getY())/2, c4, v4);
         c4.setPrev(v4);
         v4.setPrev(c4);
-        //Rail e=new Rail((c5.getX()+v5.getX())/2,(c5.getY()+c5.getY())/2, c5, v5);
         c5.setPrev(v5);
         v5.setPrev(c5);
-        //Rail f=new Rail((c6.getX()+v6.getX())/2,(c6.getY()+c6.getY())/2, c6, v6);
         c6.setPrev(v6);
         v6.setPrev(c6);
-        //Rail g=new Rail((c7.getX()+v7.getX())/2,(c7.getY()+c7.getY())/2, c7, v7);
         c7.setPrev(v7);
         v7.setPrev(c7);
-        //Rail h=new Rail((c8.getX()+v8.getX())/2,(c8.getY()+c8.getY())/2, c8, v8);
         c8.setPrev(v8);
         v8.setPrev(c8);
 
@@ -298,8 +284,7 @@ public class Model {
 
 
         Cross one=new Cross(xk-500,yk,null,null,null,null);
-        //Rail k=new Rail(xk-300,yk-200,v17,one);
-        Cross k=new Cross(xk-300,yk-200,v17,null,null,null);//késöbb p:s1 p2:
+        Cross k=new Cross(xk-300,yk-200,v17,null,null,null);
         Rail start=new Rail(xk-300,yk-250,k,null);
         Rail start2=new Rail(xk-310, yk-250,start,null);
         Rail start3=new Rail(xk-350, yk-250,start2,null);
@@ -359,29 +344,6 @@ public class Model {
         k.setPrev(s1);
         m.setPrev(s2);
         n.setPrev(s3);
-        q.setPrev(s4);
-
-        //Engine engine=new Engine(k.getX(),k.getY(),one.getX(),one.getY(),start);
-        //engine.setPrevNode(start2);
-        //Car cc=new Car(start2.getX()+5,start2.getY()+5,xk-2,yk-2,start2,Color.BLUE);
-        //cc.setPrevNode(start3);
-        //cc.setPrevTrain(engine);
-        //engine.setNextCar(cc);
-//
-        //Engine engine2=new Engine(start3.getX(),start3.getY(),one.getX(),one.getY(),start3);
-        //engine2.setPrevNode(start4);
-        //Car cc2=new Car(start4.getX()+5,start4.getY()+5,xk-2,yk-2,start4,Color.RED);
-        //cc2.setPrevTrain(engine2);
-        //cc2.setPrevNode(start5);
-        //engine2.setNextCar(cc2);
-//
-        //Engine engine3=new Engine(v15.getX(),v15.getY(),one.getX(),one.getY(),v15);
-        //engine3.setPrevNode(d415);
-        //Car cc3=new Car(d415.getX()+5,d415.getY()+5,xk-2,yk-2,d415,Color.GREEN);
-        //cc3.setPrevNode(v4);
-        //cc3.setPrevTrain(engine3);
-        //engine3.setNextCar(cc3);
-
 
         v10.setPrev(n);
         v11.setPrev(o);
@@ -392,24 +354,11 @@ public class Model {
         v16.setPrev(l);
         v17.setPrev(k);
 
-        //engines.add(engine);
-        //cars.add(cc);
-        //engines.add(engine2);
-        //cars.add(cc2);
-        //engines.add(engine3);
-        //cars.add(cc3);
         stations.add(s1);
         stations.add(s2);
         stations.add(s3);
         stations.add(s4);
-        //rails.add(a);
-        //rails.add(b);
-        //rails.add(c);
-        //rails.add(d);
-        //rails.add(e);
-        //rails.add(f);
-        //rails.add(g);
-        //rails.add(h);
+        
         rails.add(a117);
         rails.add(a110);
         rails.add(b217);
@@ -437,6 +386,7 @@ public class Model {
         crosses.add(c6);
         crosses.add(c7);
         crosses.add(c8);
+        
         switches.add(v1);
         switches.add(v2);
         switches.add(v3);
@@ -445,9 +395,6 @@ public class Model {
         switches.add(v6);
         switches.add(v7);
         switches.add(v8);
-        //rails.put("",rail);
-        //rails.put("",rail1);
-        //rails.put("",rail2);
         switches.add(v10);
         switches.add(v11);
         switches.add(v12);
@@ -457,8 +404,6 @@ public class Model {
         switches.add(v16);
         switches.add(v17);
 
-        //makeParts(o,v11,15);
-        //Math.sqrt(((k.getX()-v17.getX())*(k.getX()-v17.getX()))+((k.getY()-v17.getY())*(k.getY()-v17.getY())));
 
         List<Rail> ujak = new ArrayList<>();
         // Crosses
@@ -488,25 +433,15 @@ public class Model {
         }
 
         rails.addAll(ujak);
-
-        //engine.setOnNode(start);
-        //engine.setPrevNode(start2);
-        //cc.setOnNode(start2);
-        //cc.setPrevNode(start3);
-//
-        //engine2.setOnNode(q);
-        //engine2.setPrevNode(q.getPrev());
-        //cc2.setOnNode(q.getPrev());
-        //cc2.setPrevNode(q.getPrev().getPrev());
-//
-//
-        //engine3.setOnNode(j);
-        //engine3.setPrevNode(j.getPrev());
-        //cc3.setOnNode(j.getNext());
-        //cc3.setPrevNode(j.getNext().getNext());
-
     }
 
+    /**
+     * Két csomópont között feldarabolja egy pixel méret szerint az utat kisebb szakaszokra
+     * @param n1 Az első csomópont
+     * @param n2 A második csomópont
+     * @param a A pixel szám mely szerint darabol
+     * @return Visszaadja az elkészült elemek listáját
+     */
     private ArrayList<Rail> makeParts(Node n1, Node n2, int a){
         if(n1 == null || n2 == null) return null;
         int db = ((int) sqrt(((n1.getX() - n2.getX()) * (n1.getX() - n2.getX())) + ((n1.getY() - n2.getY()) * (n1.getY() - n2.getY()))))/a;
@@ -532,21 +467,28 @@ public class Model {
         return ujak;
     }
 
-    private int getDistance(int x, int y, int lx1, int ly1, int lx2, int ly2) {
-        if (((x < lx1 && x > lx2) || (x > lx1 && x < lx2)) && ((y < ly1 && y > ly2) || (y > ly1 && y < ly2))) {
-            int normX = lx1 - lx2, normY = ly1 - ly2;
-            int C = normX * x + normY * y;
-            int lineC = lx1 * normX * -1 + ly1 * normY;
-            int intersectY = (lineC + C) / (normY * 2);
-            int intersectX = (normY * intersectY + C) / normX;
-            return (int) sqrt(Math.pow(intersectX - x, 2) + Math.pow(intersectY - y, 2));
-        }
-        return -1;
-    }
+    /**
+     * Megadja 2 pont között a távolságot, x-y szerinti koordináta szerint
+     * @param x
+     * @param y
+     * @param rx
+     * @param ry
+     * @return Távolság
+     */
     private int getDistance(int x, int y, int rx, int ry) {
         return (int) sqrt(abs((x-rx)*(x-rx))+abs((y-ry)*(y-ry)));
     }
 
+    /**
+     * Eldönti a felhasználó kattintásából, és felengedéséből, hogy mit akart
+     * Először azt nézi hogy váltót akar e váltani, ha nem
+     * akkor alagutat akar e törölni, ha nem
+     * alagutat akar e építeni
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2 
+     */
     public void decideActions(int x1, int y1, int x2, int y2) {
         boolean options = false;
 
@@ -586,6 +528,7 @@ public class Model {
 
 
     /**
+     * beszúr egy alagutat egy már meglévő csomópont helyére
      * @param p
      * @param on
      * @param n
@@ -664,6 +607,9 @@ public class Model {
         return engines.isEmpty();
     }
 
+    /**
+     * Hozzáad a modell-hez egy random generált vonatot
+     */
     public void addTrainToMap(){
 
         Node on = rails.get(0);
@@ -730,6 +676,12 @@ public class Model {
         takeTrainToMap(e, on, on.getPrev());
     }
 
+    /**
+     * Elhelyezi a random generált vonatot a pályán
+     * @param t
+     * @param on
+     * @param prev 
+     */
     private void takeTrainToMap(Train t, Node on, Node prev){
         t.setOnNode(prev);
         t.setPrevNode(on);

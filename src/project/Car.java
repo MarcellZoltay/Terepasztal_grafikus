@@ -78,7 +78,12 @@ public class Car extends Train{
     public void getOnPassengers() {
         color=color.opposit();
     }
-
+    
+    /**
+     * Mozgatja a Vagonokat, meghívja a következő vonat mozgató függvényét
+     * Ha üres volt eddig a vonat, értesíti az őt meghívó osztályt erről.
+     * @return A státusz mely, szólhat hogy töröljék e a vonatot
+     */
     @Override
     public Status move(){
         Node next = onNode.getNextNode(this);

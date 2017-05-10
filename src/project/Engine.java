@@ -31,6 +31,11 @@ public class Engine extends Train {
     //******************************//
     //          Metodusok           //
     //******************************//
+    /**
+     * Mozgatja a mozdonyt, nézi hogy ütközik e a következő csomóponton álló Vonatok bármelyikével
+     * Meghívja a hozzá kapcsolt vonatok mozgató függvényét
+     * @return A mozgatások végén kapott státusz, mely alapján dől el a vonat sorsa
+     */
     @Override
     public Status move(){
 

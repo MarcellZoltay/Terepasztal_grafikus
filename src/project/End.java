@@ -8,6 +8,11 @@ import java.util.*;
  */
 public class End implements State {
 
+    /**
+     * output: A kirajzolt menü visszatérési értéke
+     * ending: 2 érték állítódhat be, vagy játék nyerése, vagy vesztése, ez alapján rajzolja ki a megfelelő ending screen-t
+     * view: Tárolja a view-t
+     */
     private volatile Status output;
     private Status ending;
     private View view;

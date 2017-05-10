@@ -14,6 +14,10 @@ public class RailGraphics {
         rail = r;
     }
 
+    /**
+     * A sín csomópontok kirajzolásáért felel
+     * @param g 
+     */
     public void draw(Graphics g){
         g.setColor(Color.GRAY);
         //g.drawLine(x1, y1, x2, y2);

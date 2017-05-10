@@ -12,6 +12,10 @@ public class Menu implements State {
     private View view;
     private volatile Status output;
 
+    /**
+     * Beállítja a view attribútumait
+     * @param view Paraméterül kapott view
+     */
     public Menu(View view) {
         this.view = view;
         view.setState(this);
@@ -20,6 +24,10 @@ public class Menu implements State {
         view.updateScreen();
     }
 
+    /**
+     * Várakozik a felhasználó választására
+     * @return visszaadja a választást
+     */
     @Override
     public Status start() {
         while(output == null);

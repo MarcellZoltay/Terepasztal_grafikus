@@ -8,12 +8,19 @@ import java.awt.Color;
  */
 public class CoalCarGraphics{
 
+    /**
+     * A tárolt szenes kocsi, mely kirajzolásáért felel az osztály
+     */
     private CoalCar coalCar;
 
     public CoalCarGraphics(CoalCar c){
         coalCar = c;
     }
 
+    /**
+     * A szeneskocsi kirajzolását végzi
+     * @param g 
+     */
     public void draw(Graphics g){
         g.setColor(Color.WHITE);
         g.fillOval(coalCar.getX(), coalCar.getY(), 15,15);

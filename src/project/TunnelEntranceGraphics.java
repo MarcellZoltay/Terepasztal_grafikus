@@ -8,12 +8,19 @@ import java.awt.Color;
  */
 public class TunnelEntranceGraphics {
 
+    /**
+     * A kirajzolásra váró objektumot tárolja
+     */
     private TunnelEntrance tunnelEntrance;
 
     public TunnelEntranceGraphics(TunnelEntrance te){
         tunnelEntrance = te;
     }
 
+    /**
+     * Az alagút kirajzolásáért felelős
+     * @param g 
+     */
     public void draw(Graphics g){
         g.setColor(Color.BLACK);
         Polygon p = new Polygon();

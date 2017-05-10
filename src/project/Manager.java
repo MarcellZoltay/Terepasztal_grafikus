@@ -9,12 +9,19 @@ import java.util.*;
  */
 public class Manager {
 
+    /**
+     * Az állapotok tárolására használt stack
+     */
     private Stack<State> states;
 
     public Manager() {
         states = new Stack<>();
     }
 
+    /**
+     * Az állapotok visszatérési értéke alapján tölti be a következő állapotot,
+     * kezdő állapot a menü
+     */
     public void run() {
         View view = new View();
         Menu menu = new Menu(view);

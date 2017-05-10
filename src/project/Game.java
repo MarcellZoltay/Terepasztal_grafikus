@@ -14,6 +14,11 @@ public class Game implements State {
     private volatile Status output;
     public Timer timer;
 
+    /**
+     * Megfelelő időegységenként, Vonatokat ad hozzá a pályához ameddig vannak.
+     * Beállítja a view attribútumait, hogy megfelelően működjenek
+     * @param view 
+     */
     public Game(View view) {
         map = new Model();
         numberOfTrains = 5;
@@ -43,15 +48,10 @@ public class Game implements State {
     private long waitingTime;     // The waiting time between adding trains
 
     /**
-     * The 'load' command got implemented here, because it just loads more of the commands it would already use
-     * @return 
-     */
-    private void read() {
-
-    }
-
-    /* Azért van itt külön függvény, mert a végleges programban, a start fog új vonatokat hozzáadni a Modellhez
-     * Itt ez is parancssorból történik
+     * A vonatokat mozgatja figyeli hogy ütköztek-e
+     * Frissíti a kijelzőt
+     * Figyeli, hogy a játékos nem Szünetelteti-e a játékot
+     * @return A státusz mely alapján az állapot kezelő ösztály meghatározza azok sorsát
      */
     @Override
     public Status start() {

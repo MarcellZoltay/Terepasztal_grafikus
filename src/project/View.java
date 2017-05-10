@@ -8,12 +8,11 @@ import java.util.*;
 
 import static project.Status.*;
 
-/**
- *
- * 
- */
 public class View extends JFrame {
 
+    /**
+     * A view állapotai, a pálya, A pálya elemek grafikus változatai
+     */
     private Model map;
     private State state;
     private Status status;
@@ -49,6 +48,9 @@ public class View extends JFrame {
 
     public void updateScreen(){ repaint(); }
 
+    /**
+     * Frissíti a pálya elemek listáját, új grafikus elemeket készít ha szükséges
+     */
     private void updateMap(){
         getContentPane().removeAll();
 
@@ -80,6 +82,9 @@ public class View extends JFrame {
 
     }
     
+    /**
+     * Kirajzolja a panelt, mely a szünetért, a menüért és a játékot befejező képernypért felelős
+     */
     private void drawPanel(){
         panel.removeAll();
         getContentPane().removeAll();
@@ -146,6 +151,11 @@ public class View extends JFrame {
         getContentPane().add(panel);
         setVisible(true);
     }
+    
+    /**
+     * Frissítni a gombokat melyeket a panel betesz magának
+     * @param buttons A Gombok nevei
+     */
      public void updatePanel(String[] buttons) {
          this.buttons = buttons;
     }
@@ -154,15 +164,10 @@ public class View extends JFrame {
     public void setStatus(Status s) { status = s; }
     public void setMap(Model map) { this.map = map; }
 
+    /**
+     * A pálya elemek egyesével való frissítéséért felel
+     */
     private void refreshStations(){
-        //stations = map.getStations();
-//
-        //for(Station s: stations){
-        //    StationGraphics tmp = new StationGraphics(s);
-        //    stationGraphics.add(tmp);
-        //    getContentPane().add(tmp);
-        //}
-
         ArrayList<Station> tmp = map.getStations();
 
         // Újak hozzáadása
@@ -346,6 +351,9 @@ public class View extends JFrame {
         tunnelEntranceGraphics.addAll(ujak);
     }
 
+    /**
+     * Az összes csomópont összekötéséért, kirajzolásáért felel
+     */
     private void drawRails(){
 
         Graphics g = getGraphics();
@@ -403,14 +411,12 @@ public class View extends JFrame {
             if(c.getPrev2()!=null)
                 g.drawLine(c.getX(), c.getY(), c.getPrev2().getX(), c.getPrev2().getY());
         }
-//
-        //for(TunnelEntranceGraphics te: tunnelEntranceGraphics){
-        //    if(te.getTunnelEntrance().getSecond()!=null)
-        //        g.drawLine(te.getTunnelEntrance().getX(), te.getTunnelEntrance().getY(), te.getTunnelEntrance().getSecond().getX(), te.getTunnelEntrance().getSecond().getY());
-        //}
-
     }
 
+    /**
+     * A megfellelő állapotok alapján a megfelelő panel-t rajzolja ki
+     * @param g 
+     */
     @Override
     public void paint(Graphics g){
         super.paint(g);
@@ -419,6 +425,9 @@ public class View extends JFrame {
         else drawPanel();
     }
 
+    /**
+     * Billentyű és Egér figyelők, meghívják a megfelelő függvényeket
+     */
     private class MyKeyListener implements KeyListener {
 
         @Override
