@@ -609,25 +609,20 @@ public class Model {
      * @param tE A törlendő alagút bejárat
      */
     private void removeTunnelEntrance(TunnelEntrance tE) {
+        Rail r;
         if (tunnelEntrances.size() == 2) {
-            try {
-                ((TunnelEntrance)tE.getNext()).getSecond();
-                tE.getPrev().setNext(tE.getSecond());
-                tE.getSecond().setPrev(tE.getPrev());
-                ((TunnelEntrance)tE.getNext()).changeOutput();
-            }
-            catch (Exception e) {
-                tE.getNext().setPrev(tE.getSecond());
-                tE.getSecond().setNext(tE.getNext());
-                ((TunnelEntrance)tE.getPrev()).changeOutput();
-            }
+            r = new Rail(tE.getX(), tE.getY(), tE.getSecond(), tE.getPrev());
+            tE.getSecond().setNode(tE, r);
+            tunnelEntrances.get(0).changeOutput();
+            tunnelEntrances.get(1).changeOutput();
         }
         else {
-            tE.getPrev().setNext(tE.getNext());
-            tE.getNext().setPrev(tE.getPrev());
+            r = new Rail(tE.getX(), tE.getY(), tE.getNext(), tE.getPrev());
+            tE.getNext().setNode(tE, r);
         }
-
+        tE.getPrev().setNode(tE, r);
         tunnelEntrances.remove(tE);
+        rails.add(r);
     }
 
     /**
