@@ -17,7 +17,7 @@ public class Game implements State {
     public Game(View view) {
         map = new Model();
         numberOfTrains = 5;
-        waitingTime = 4000;
+        waitingTime = 8000;
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
