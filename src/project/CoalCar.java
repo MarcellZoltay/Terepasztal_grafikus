@@ -25,6 +25,7 @@ public class CoalCar extends Train {
      */
     public CoalCar(){
         super();
+        color = Color.COAL_CAR;
         prevTrain=null;
     }
 

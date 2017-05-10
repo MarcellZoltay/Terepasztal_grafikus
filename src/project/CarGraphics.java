@@ -22,8 +22,6 @@ public class CarGraphics {
             g.setColor(Color.GREEN);
         else if(car.getColor()==project.Color.BLUE)
             g.setColor(Color.BLUE);
-        else if(car.getColor()==project.Color.YELLOW)
-            g.setColor(Color.YELLOW);
         else if(car.getColor()==project.Color.PINK)
             g.setColor(Color.PINK);
         else if(car.getColor()==project.Color.RED_GRAY)

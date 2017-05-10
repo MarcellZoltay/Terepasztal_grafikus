@@ -71,8 +71,6 @@ public enum Color {
             ret = RED;
         else if(s.equalsIgnoreCase("GREEN"))
             ret = GREEN;
-        else if(s.equalsIgnoreCase("YELLOW"))
-            ret = YELLOW;
         else if(s.equalsIgnoreCase("PINK"))
             ret = PINK;
 

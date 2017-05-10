@@ -675,50 +675,58 @@ public class Model {
         Engine e = new Engine(); //konstruktor hova rakom és merre meg
         engines.add(e);        // TODO
 
-        Color color= null;  //nullra inicializal
         Random r1 = new Random();
 
-        ArrayList<Car> carsTmp = new ArrayList<>();
-        for(int i = 0 ; i < kocsiszam ; i++){
-        int szin = r1.nextInt(5);
+        Train prev = null;
+        for(int i=0; i<kocsiszam; i++) {
+            int rand = new Random().nextInt(10);
+            if (rand < 10) {
+                CoalCar c = new CoalCar();
+                coalCars.add(c);
+                if(i==0){
+                    e.setNextCar(c);
+                    c.setPrevTrain(e);
+                }
+                else{
+                    prev.setNextCar(c);
+                    c.setPrevTrain(prev);
+                }
+                prev = c;
 
-            switch (szin){
-                case 0:
-                    color = Color.BLUE;
-                    break;
-                case 1:
-                    color = Color.GREEN;
-                    break;
-                case 2:
-                    color = Color.YELLOW;
-                    break;
-                case 3:
-                    color = Color.RED;
-                    break;
-                case 4:
-                    color = Color.PINK;
-                    break;
-
-            }
-
-            Car c = new Car();  //konstruktor kitoltese
-            c.color = color;
-            carsTmp.add(c);
-        }
-
-        for(int i =0; i<kocsiszam;i++){
-            if(i == 0){
-                e.setNextCar(carsTmp.get(i));
-                carsTmp.get(i).setPrevTrain(e);
             }
             else {
-                carsTmp.get(i-1).setNextCar(carsTmp.get(i));
-                carsTmp.get(i).setPrevTrain(carsTmp.get(i-1));
+                Car c = new Car();  //konstruktor kitoltese
+                cars.add(c);
+                int szin = r1.nextInt(4);
+
+                switch (szin) {
+                    case 0:
+                        c.setColor(Color.BLUE);
+                        break;
+                    case 1:
+                        c.setColor(Color.GREEN);
+                        break;
+                    case 2:
+                        c.setColor(Color.PINK);
+                        break;
+                    case 3:
+                        c.setColor(Color.RED);
+                        break;
+                }
+
+                if(i==0){
+                    e.setNextCar(c);
+                    c.setPrevTrain(e);
+                }
+                else{
+                    prev.setNextCar(c);
+                    c.setPrevTrain(prev);
+                }
+                prev = c;
             }
+
         }
-
-        cars.addAll(carsTmp);
-
+        
         takeTrainToMap(e, on, on.getPrev());
     }
 

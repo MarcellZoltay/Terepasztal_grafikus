@@ -22,8 +22,6 @@ public class StationGraphics{
             g.setColor(Color.GREEN);
         else if(station.getColor()==project.Color.BLUE)
             g.setColor(Color.BLUE);
-        else if(station.getColor()==project.Color.YELLOW)
-            g.setColor(Color.YELLOW);
         else if(station.getColor()==project.Color.PINK)
             g.setColor(Color.PINK);
 

@@ -19,10 +19,6 @@ public class Station extends Node {
      */
     private boolean canGetOff;
 
-    /**
-     * Az első nem üres kocsi, amiről le kell szállítani az utasokat
-     */
-    private Car firstEmptyCar;
 
     /**
      * Az azonos színű üres kocsi, amibe utasok szállnak fel
@@ -41,7 +37,6 @@ public class Station extends Node {
         super(0, 0, null, null);
         this.color = null;
         this.canGetOff = false;
-        this.firstEmptyCar = null;
     }
 
     /**
@@ -55,7 +50,6 @@ public class Station extends Node {
         super(x, y, n, p);
         this.color = c;
         this.canGetOff = false;
-        this.firstEmptyCar = null;
     }
 
 
@@ -70,6 +64,7 @@ public class Station extends Node {
      */
     @Override
     public void addTrain(Train t) {
+        if (t == null) System.out.println("asdfasdf");
         trainsOn.add(t);
         t.setOnNode(this);
         if (canGetOff && t.getColor().equals(color))
