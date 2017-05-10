@@ -47,11 +47,9 @@ public class Switch extends Node {
      * megcsereli a valto kimenetet
      */
     public void changeOutput() {
-        if(trainsOn.isEmpty()) {
-            Node temp = nextNode;
-            nextNode = next2Node;
-            next2Node = temp;
-        }
+        Node temp = nextNode;
+        nextNode = next2Node;
+        next2Node = temp;
     }
 
     /**

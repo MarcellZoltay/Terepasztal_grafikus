@@ -552,6 +552,7 @@ public class Model {
 
         for(Switch s: switches){
             if(Math.abs(s.getX() - x1) < 40 && Math.abs(s.getY() - y1) < 40) {
+                if (!s.trainsOn.isEmpty()) return;
                 changeSwitch(s);
                 options = true;
                 break;
@@ -560,6 +561,7 @@ public class Model {
         if (!options) {
             for(TunnelEntrance t: tunnelEntrances){
                 if(Math.abs(t.getX() - x1) < 30 && Math.abs(t.getY() - y1) < 30) {
+                    if (!t.trainsOn.isEmpty()) return;
                     removeTunnelEntrance(t);
                     options = true;
                     break;
@@ -569,6 +571,7 @@ public class Model {
         if (!options) {
             for(Rail r : rails) {
                 if (Math.abs(r.getX() - x1) < 20 && Math.abs(r.getY() - y1) < 20) {
+                    if (!r.trainsOn.isEmpty()) return;
                     rails.remove(r);
                     if (getDistance(r.getNext().getX(), r.getNext().getY(), x2, y2) > getDistance(r.getPrev().getX(), r.getPrev().getY(), x2, y2))
                         addTunnelEntrance(r.getPrev(), r, r.getNext());
