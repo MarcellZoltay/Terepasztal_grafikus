@@ -573,7 +573,7 @@ public class Model {
                 if (Math.abs(r.getX() - x1) < 20 && Math.abs(r.getY() - y1) < 20) {
                     if (!r.trainsOn.isEmpty()) return;
                     rails.remove(r);
-                    if (getDistance(r.getNext().getX(), r.getNext().getY(), x2, y2) > getDistance(r.getPrev().getX(), r.getPrev().getY(), x2, y2))
+                    if (getDistance(r.getNext().getX(), r.getNext().getY(), x2, y2) >= getDistance(r.getPrev().getX(), r.getPrev().getY(), x2, y2))
                         addTunnelEntrance(r.getPrev(), r, r.getNext());
                     else
                         addTunnelEntrance(r.getNext(), r, r.getPrev());
