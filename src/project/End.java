@@ -8,7 +8,7 @@ import java.util.*;
  */
 public class End implements State {
 
-    private Status output;
+    private volatile Status output;
     private Status ending;
     private View view;
 
@@ -17,7 +17,7 @@ public class End implements State {
         this.view = view;
         view.setState(this);
         view.setStatus(Status.END);
-        view.updatePanel(new String[]{ending == Status.END ? "New Game" : "Next Level", "Exit Game", ending == Status.END ? "You Lost" : "You Won"});
+        view.updatePanel(new String[]{ending == Status.CRASHED ? "New Game" : "Next Level", "Exit Game", ending == Status.CRASHED ? "You Lost" : "You Won"});
         view.updateScreen();
     }
 
